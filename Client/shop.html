@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MumsNeeds</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Css/styles.css">
+    <link rel="stylesheet" href="../Css/shop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <!--NAV BAR-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary py-2 p-0 fixed-top">
+  <div class="container">
+<a href="index.html"> <img class="MumsNeeds-logo" src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MumsNeeds Logo"> </a>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i id="bar" class="fa-solid fa-bars"></i> </span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        
+
+        <li class="nav-item">
+          <a class="nav-link active" href="shop.html">Shop</a>
+        </li>       
+
+
+        
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact Us</a>
+        </li>
+<br>
+        <li class="nav-item">
+         <a style="color: rgb(30, 9, 50);" href="/Client/login.html"><i class="fa-solid fa-circle-user"></i>  </a>
+        </li>
+<br>
+        <!-- Search -->
+      <div class="nav-item">
+      <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i>
+
+      <!-- Desktop Search -->
+      <div class="search-box" id="searchBox">
+        <input type="text" placeholder="Search products..." />
+        <i class="fa-solid fa-xmark" id="closeSearch"></i>
+      </div>
+    </div>
+
+    <!-- Mobile Search Overlay -->
+    <div class="mobile-search" id="mobileSearch">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search products..." />
+      <i class="fa-solid fa-xmark" id="closeMobileSearch"></i>
+    </div>
+
+            
+    <br>
+            <li class="nav-item">
+            <a style="color: rgb(30, 9, 50);" href="">  <i class="fa-solid fa-cart-shopping"></i></a>
+            </li>
+            
+      
+    </div>
+  </div>
+</nav>
+  <!--END OF NAV BAR-->
+
+
+<section id="featured" >
+      <div class="container  mt-5 py-5">
+          <h3 style="font-weight: bold;">Products</h3>
+          <hr style="border: 1px solid purple; width: 40%;">
+          <p>Here you can find all our products</p>
+        </div>
+            
+  <div class="featured-section">
+
+                  
+    <div class="shop-container" id="productContainer" >
+
+        <!-- repeat product cards -->
+
+        
+          <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+
+        
+
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+        <div class="product text-center">
+            <img src="../images/shoes/shoes-1.webp" alt=""> 
+            <h5 class="p-name">Sport shoes</h5>
+            <h4 class="p-price">₦ 24,500</h4>
+            <h5 class="discount-price">₦ 35,000</h5>
+            <button class="addToCart-Btn">Add To Cart</button>
+        </div>
+
+       
+
+  
+        
+          
+    </div>
+       <!-- repeat product cards -->
+    
+
+
+
+       <!-- Pagination -->  
+<nav aria-label="Page navigation example">
+  <ul class="pagination fancy-pagination"  id="pagination-container" >
+    <li class="page-item prev"><a class="page-link" href="#">Previous</a></li>
+
+    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+    <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+
+
+</div>
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+<footer class="site-footer">
+<div class="footer-container">
+    <!-- Logo & About -->
+    <div class="footer-brand">
+
+       <div class="footer-logo">
+        <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MyStore Logo">
+      </div>
+
+      <p>For Mothers who care.</p>
+
+      <div class="social-icons">
+        <a href="https://www.instagram.com/mumsneedsbackup/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://l.instagram.com/?u=https%3A%2F%2Fwa.me%2F2348053788620%3Futm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio%26fbclid%3DPAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnJ6DFAXesjGKpVN5yr8AkeAfcX2QKNWbBrXVvhbshaXdOaWIv6cQnOBFRN7c_aem_sjNBWI2J7iwcz7qdz3NjpQ&e=AT1LEppFxr2PRsB8YAMKd8s158akPEr9xJ2rJH4M4vXWISepENLOZISHDED5wlJv2dprpspt0-N_p_8WgqWwJ42S2dYZ_s8CMfAhujfSrQ" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        
+      </div>
+    </div>
+
+    <!-- Contact Us -->
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+      <p><i class="fas fa-phone"></i> +234 805 378 8620</p>
+      <p><i class="fas fa-envelope"></i> isabelimobio@yahoo.com</p>
+      <p><i class="fas fa-location-dot"></i> 9 Ajibade Babatola St Ajao Isolo Lagos</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 MumsNeeds. All rights reserved.</p>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  const searchIcon = document.getElementById("searchIcon");
+  const searchBox = document.getElementById("searchBox");
+  const closeSearch = document.getElementById("closeSearch");
+  const mobileSearch = document.getElementById("mobileSearch");
+  const closeMobileSearch = document.getElementById("closeMobileSearch");
+  const sliders = document.querySelectorAll(".products-wrapper");
+
+
+
+  searchIcon.addEventListener("click", () => {
+    if (window.innerWidth <= 768) {
+      mobileSearch.classList.add("active");
+    } else {
+      searchBox.classList.add("active");
+    }
+  });
+
+  closeSearch.addEventListener("click", () => {
+    searchBox.classList.remove("active");
+  });
+
+  closeMobileSearch.addEventListener("click", () => {
+    mobileSearch.classList.remove("active");
+  });
+
+
+
+// Drag to scroll functionality
+   sliders.forEach((slider) => {
+  let isDragging = false;
+  let startX;
+  let scrollStart;
+
+  slider.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    slider.classList.add("dragging");
+    startX = e.pageX;
+    scrollStart = slider.scrollLeft;
+  });
+
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    slider.classList.remove("dragging");
+  });
+
+  slider.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const walk = e.pageX - startX;
+    slider.scrollLeft = scrollStart - walk;
+  });
+
+  slider.addEventListener("mouseleave", () => {
+    isDragging = false;
+    slider.classList.remove("dragging");
+  });
+
+  slider.addEventListener("click", (e) => {
+    if (isDragging) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+});
+
+
+
+// Thgis script handles pagination for the product listing
+
+const products = document.querySelectorAll('.product');
+const productsPerPage = 20;
+const maxPages = 10;
+
+let totalPages = Math.ceil(products.length / productsPerPage);
+totalPages = Math.min(totalPages, maxPages);
+
+let currentPage = 1;
+const paginationContainer = document.getElementById('pagination-container');
+
+function renderPagination() {
+  paginationContainer.innerHTML = '';
+
+  // Previous button
+  const prev = document.createElement('li');
+  prev.className = 'page-item prev';
+  prev.innerHTML = `<a class="page-link" href="#">Previous</a>`;
+  prev.addEventListener('click', e => {
+    e.preventDefault();
+    if (currentPage > 1) showPage(currentPage - 1);
+  });
+  paginationContainer.appendChild(prev);
+
+  // Page numbers
+  for (let i = 1; i <= totalPages; i++) {
+    const li = document.createElement('li');
+    li.className = 'page-item' + (i === currentPage ? ' active' : '');
+    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+    li.addEventListener('click', e => {
+      e.preventDefault();
+      showPage(i);
+    });
+    paginationContainer.appendChild(li);
+  }
+
+  // Next button
+  const next = document.createElement('li');
+  next.className = 'page-item next';
+  next.innerHTML = `<a class="page-link" href="#">Next</a>`;
+  next.addEventListener('click', e => {
+    e.preventDefault();
+    if (currentPage < totalPages) showPage(currentPage + 1);
+  });
+  paginationContainer.appendChild(next);
+}
+
+// Show products for the selected page
+function showPage(page) {
+  const start = (page - 1) * productsPerPage;
+  const end = start + productsPerPage;
+
+  products.forEach((product, index) => {
+    product.style.display = index >= start && index < end ? 'block' : 'none';
+  });
+
+  // Update active state
+  const pageItems = paginationContainer.querySelectorAll('.page-item:not(.prev):not(.next)');
+  pageItems.forEach(item => item.classList.remove('active'));
+  pageItems[page - 1]?.classList.add('active');
+
+  currentPage = page;
+}
+
+// Initial render
+renderPagination();
+showPage(1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MumsNeeds</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Css/styles.css">
+    <link rel="stylesheet" href="../Css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+
+
+            <!--NAV BAR-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary py-2 p-0 fixed-top">
+        <div class="container">
+        <a href="index.html"> <img class="MumsNeeds-logo" src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MumsNeeds Logo"> </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span><i id="bar" class="fa-solid fa-bars"></i> </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                
+                <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+                </li>
+                
+
+                <li class="nav-item">
+                <a class="nav-link" href="shop.html">Shop</a>
+                </li>       
+
+
+                
+                <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+                </li>
+
+                <li class="nav-item">
+                <a class="nav-link" href="#">Contact Us</a>
+                </li>
+        <br>
+                <li class="nav-item">
+                <i class="fa-solid fa-circle-user"></i>
+                </li>
+        <br>
+                <!-- Search -->
+            <div class="nav-item">
+            <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i>
+
+            <!-- Desktop Search -->
+            <div class="search-box" id="searchBox">
+                <input type="text" placeholder="Search products..." />
+                <i class="fa-solid fa-xmark" id="closeSearch"></i>
+            </div>
+            </div>
+
+            <!-- Mobile Search Overlay -->
+            <div class="mobile-search" id="mobileSearch">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search products..." />
+            <i class="fa-solid fa-xmark" id="closeMobileSearch"></i>
+            </div>
+
+                    
+            <br>
+                    <li class="nav-item">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    </li>
+                    
+            
+            </div>
+        </div>
+        </nav>
+        <!--END OF NAV BAR-->
+
+
+
+
+        <h1 class="Login-css"> Sign In</h1>
+
+
+
+
+
+
+
+
+        <!-- FOOTER -->
+        <footer class="site-footer ">
+        <div class="footer-container">
+
+            <!-- Logo & About -->
+            <div class="footer-brand">
+
+            <div class="footer-logo">
+                <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MyStore Logo">
+            </div>
+
+            <p>For Mothers who care.</p>
+
+            <div class="social-icons">
+                <a href="https://www.instagram.com/mumsneedsbackup/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://l.instagram.com/?u=https%3A%2F%2Fwa.me%2F2348053788620%3Futm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio%26fbclid%3DPAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnJ6DFAXesjGKpVN5yr8AkeAfcX2QKNWbBrXVvhbshaXdOaWIv6cQnOBFRN7c_aem_sjNBWI2J7iwcz7qdz3NjpQ&e=AT1LEppFxr2PRsB8YAMKd8s158akPEr9xJ2rJH4M4vXWISepENLOZISHDED5wlJv2dprpspt0-N_p_8WgqWwJ42S2dYZ_s8CMfAhujfSrQ" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                
+            </div>
+            </div>
+
+            <!-- Contact Us -->
+            <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <p><i class="fas fa-phone"></i> +234 805 378 8620</p>
+            <p><i class="fas fa-envelope"></i> isabelimobio@yahoo.com</p>
+            <p><i class="fas fa-location-dot"></i> 9 Ajibade Babatola St Ajao Isolo Lagos</p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 MumsNeeds. All rights reserved.</p>
+        </div>
+        </footer>
+
+   
+
+
+
+
+
+
+
+
+
+<script>
+  const searchIcon = document.getElementById("searchIcon");
+const searchBox = document.getElementById("searchBox");
+const closeSearch = document.getElementById("closeSearch");
+
+const mobileSearch = document.getElementById("mobileSearch");
+const closeMobileSearch = document.getElementById("closeMobileSearch");
+
+/* ---------- OPEN SEARCH ---------- */
+searchIcon.addEventListener("click", (e) => {
+  e.stopPropagation(); // 🔥 CRITICAL
+
+  if (window.innerWidth <= 768) {
+    mobileSearch.classList.add("active");
+  } else {
+    searchBox.classList.add("active");
+  }
+});
+
+/* ---------- CLOSE BUTTONS ---------- */
+closeSearch.addEventListener("click", (e) => {
+  e.stopPropagation();
+  searchBox.classList.remove("active");
+});
+
+closeMobileSearch.addEventListener("click", (e) => {
+  e.stopPropagation();
+  mobileSearch.classList.remove("active");
+});
+
+/* ---------- PREVENT AUTO CLOSE ---------- */
+searchBox.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
+
+mobileSearch.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
+
+/* ---------- CLICK OUTSIDE TO CLOSE ---------- */
+document.addEventListener("click", () => {
+  searchBox.classList.remove("active");
+  mobileSearch.classList.remove("active");
+});
+
+
+
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+</body>
+</html>

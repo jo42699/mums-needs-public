@@ -1,0 +1,622 @@
+.MumsNeeds-logo {
+    width: 60px;   /* or whatever size you want */
+    height: auto;
+    padding: 0;
+    margin: 0;
+    display: block; /* removes inline image spacing */
+}
+
+.navbar {
+    font-size: 16px;
+    top: 0;
+    left: 0;
+}
+
+
+.navbar-nav .nav-link {
+    position: relative;
+}
+
+.navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background-color: purple;
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%;
+}
+
+
+/* Space between nav items (links) */
+.navbar-nav .nav-item {
+    margin-left: 20px;
+}
+
+/* Icon container spacing */
+.navbar-nav .nav-item i {
+    margin-left: 15px;   /* space between icons */
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Purple hover effect for icons */
+.navbar-nav .nav-item i:hover {
+    color: purple;
+}
+
+.navbar i {
+    font-size: 1.2rem;
+    padding: 0.7px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#Home {
+    background-image: url('../images/banner/of-a-vibrant-purple-dress-hanging-on-a-colorful-pink-wall-with-plenty-of-space-for-text-or-graphics-with-copy-space-free-photo.jpg');
+    width: 100%;
+    min-height: 100svh;   /* 👈 STOPS SHRINKING */
+    
+    background-size: cover;
+    background-position: top 60px center;
+    background-repeat: no-repeat;
+    image-rendering: auto;
+    flex-direction: column;
+    display: flex; 
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    position: relative;
+}
+
+#Home span {
+    color: purple;
+}   
+
+button {
+   background-color: rgb(45, 15, 45);
+   font-size: 0.8rem;
+   font-weight: 700;
+   outline: none;
+   border: none;
+   color: aliceblue;
+   padding: 10px 20px;
+   cursor: pointer;
+   text-transform: uppercase;
+   transition: 0.3s ease        ;
+}  
+
+.Hero-btn {
+    border-radius: 9px;
+}
+
+button:hover {
+    background-color: rgb(150, 21, 150);
+    transition: 0.3s;
+    border-radius: 12px;
+}
+
+
+
+/* BRAND SECTION OVERFLOW */
+/* BRAND SECTION */
+#brand {
+    position: relative;
+   padding: 30px 0 80px; /* bottom space */
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 20px;   /* reduce this value */
+}
+
+/* Horizontal scroll row */
+#brand .row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    width: max-content;
+    width: max-content;
+    animation: brandScroll 25s linear infinite;
+}
+
+@keyframes brandScroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Hide scrollbar */
+#brand .row::-webkit-scrollbar {
+    display: none;
+}
+
+/* Logo styling */
+#brand img {
+    flex: 0 0 auto;
+    max-width: 160px;
+    margin: 0 25px;
+    filter: grayscale(100%);
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Hover effect */
+#brand img:hover {
+    transform: scale(1.15);
+    filter: grayscale(0%);
+}
+
+/* Gradient edges */
+#brand::before,
+#brand::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+#brand::before {
+    left: 0;
+    background: linear-gradient(to right, white, transparent);
+}
+
+#brand::after {
+    right: 0;
+    background: linear-gradient(to left, white, transparent);
+}
+
+
+/* ===== NAV SEARCH (DESKTOP) ===== */
+.nav-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#searchIcon {
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+#searchIcon:hover {
+    color: purple;
+}
+
+/* Desktop search box */
+.search-box {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 8px 14px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+    z-index: 100;
+}
+
+.search-box.active {
+    transform: translateY(-50%) scaleX(1);
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    width: 200px;
+    font-size: 14px;
+}
+
+.search-box i {
+    cursor: pointer;
+}
+
+/* ===== MOBILE SEARCH ===== */
+.mobile-search {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transform: translateY(-100%);
+    transition: transform 0.35s ease;
+    z-index: 999;
+}
+
+.mobile-search.active {
+    transform: translateY(0);
+}
+
+.mobile-search input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+#new {
+    background: #ffffff;
+    padding: 60px 0;
+    padding-top: 0px;
+    margin: 0%;
+    position: relative;
+    z-index: 1;
+    
+}
+
+
+#new .one img{
+    width: 100%;
+    height: 90%;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    
+
+}
+
+#new .one .details{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: 0.3s ease;
+    
+
+}
+
+
+
+
+
+#new .one .details button{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    background: none;
+    text-transform: uppercase;
+    border-bottom: 1px solid black;
+    padding: 2.5px;
+    transform: translate(70px);
+    transition: 0.3s ease;
+}
+
+.discount-price{
+    color: rgb(144, 72, 176);
+    font-weight: 500;
+    font-size: 20px;
+    text-decoration: line-through 1px;
+    display: none;
+}
+
+
+/* PRODUCT CARD STYLING */
+.product {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  width: 260px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.product:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image */
+.product img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+/* Product Name */
+.p-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+/* Original Price */
+.p-price {
+  font-size: 0.95rem;
+  color: #000000;
+
+  margin-bottom: 4px;
+}
+
+
+
+
+.featured-section .row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 16px 8px;
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar (optional but looks clean) */
+.featured-section .row::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+
+
+
+.featured-section .row {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+.products-wrapper {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto; 
+  overflow-x: auto;
+  padding: 20px 10px;
+  scroll-behavior: smooth;
+  cursor: grab;
+}
+
+.products-wrapper:active {
+  cursor: grabbing;
+}
+
+.products-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.products-wrapper {
+  scrollbar-width: none;
+}
+
+.product {
+  flex: 0 0 auto;
+  width: 260px;
+}
+
+.products-wrapper,
+.products-wrapper * {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+
+
+
+
+.site-footer {
+  background: #111;
+  color: #eee;
+  padding: 60px 20px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+/* Brand section */
+.footer-brand {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-brand .logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footer-brand p {
+  color: #bbb;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* Social icons */
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons a {
+  width: 40px;
+  height: 40px;
+  background: #222;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+  background: #c140bf;
+  transform: translateY(-3px);
+}
+
+/* Contact section */
+.footer-contact {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-contact h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.footer-contact p {
+  color: #bbb;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  margin-top: 40px;
+  border-top: 1px solid #222;
+  padding-top: 15px;
+  text-align: center;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Logo container */
+.footer-logo {
+  width: 140px;
+  margin-bottom: 15px;
+}
+
+.footer-logo img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MOBILE: swipe overflow */
+@media (max-width: 768px) {
+    #brand {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    #brand::-webkit-scrollbar {
+        display: none;
+    }
+
+    #brand img {
+        max-width: 120px;
+        margin: 0 15px;
+       
+    }
+
+  #new {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      gap: 0;        /* no space between cards */
+      padding: 0;    /* remove container padding */
+  }
+
+  /* Override Bootstrap row */
+  #new .row {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      gap: 0;        /* no space between cards */
+      margin: 0;     /* remove row margin */
+  }
+
+  /* Override Bootstrap columns */
+  #new .col-12,
+  #new .col-md-12,
+  #new .col-lg-4 {
+      flex: 0 0 80% !important;  /* width of each card */
+      max-width: 80% !important;
+      float: none !important;
+      margin: 0 !important;       /* remove any column margin */
+  }
+
+  /* Hide scrollbar */
+  #new::-webkit-scrollbar,
+  #new .row::-webkit-scrollbar {
+      display: none;
+  }
+  #new {
+      scrollbar-width: none; /* Firefox */
+  }
+
+ .footer-contact {
+    font-size: 12px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

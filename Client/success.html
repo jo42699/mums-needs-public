@@ -6,7 +6,7 @@
     <title>MumsNeeds</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../Css/styles.css">
-    <link rel="stylesheet" href="../Css/login.css">
+    <link rel="stylesheet" href="../Css/success.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -25,48 +25,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 
-                <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
-                </li>
-                
-
-                <li class="nav-item">
-                <a class="nav-link" href="shop.html">Shop</a>
-                </li>       
-
-
-                
-                <li class="nav-item">
-                <a class="nav-link" href="about-us.html">About us</a>
-                </li>
-
-                <li class="nav-item">
-                <a class="nav-link" href="contact-us.html">Contact Us</a>
-                </li>
+             
         <br>
-                <li class="nav-item">
-                  <a href="./login.html"></a>
-                <i class="fa-solid fa-circle-user"></i>
-                </li>
-        <br>
-                <!-- Search -->
-            <div class="nav-item">
-            <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i>
-
-            <!-- Desktop Search -->
-            <div class="search-box" id="searchBox">
-                <input type="text" placeholder="Search products..." />
-                <i class="fa-solid fa-xmark" id="closeSearch"></i>
-            </div>
-            </div>
-
-            <!-- Mobile Search Overlay -->
-            <div class="mobile-search" id="mobileSearch">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search products..." />
-            <i class="fa-solid fa-xmark" id="closeMobileSearch"></i>
-            </div>
-
+               
+        
                     
             <br>
               <li class="nav-item cart-icon">
@@ -86,38 +48,51 @@
        
        
 
+        
+        <br>
+        <br>
+        <br>
+        <br>
+<div class="payment-success-page">
 
-    <div class="auth-container">
-      <div class="auth-card">
-        <h2>Welcome </h2>
-        <p class="auth-subtitle">Sign in to continue</p>
+  <div class="success-card">
+    <div class="checkmark">
+      <svg viewBox="0 0 52 52">
+        <path d="M14 27l7 7 17-17"></path>
+      </svg>
+    </div>
 
-        <form>
-          <div class="input-group">
-            <input type="email" required />
-            <label>Email</label>
-          </div>
+    <h1>Payment Successful!</h1>
+    <p>
+      Thank you for your purchase. Your order has been confirmed and is being
+      processed. A confirmation message will be sent to your email and WhatsApp.
+    </p>
 
-         
-          <button type="submit" class="auth-btn">Continue with Email</button>
+    <div class="order-info">
+      <span><strong>Order Number:</strong> AMZ-135796-8506-457</span>
+      <span><strong>Amount Paid:</strong> ₦70,000</span>
+      <span><strong>Estimated Delivery:</strong> 2–3  days</span>
+    </div>
 
-          <p class="auth-footer">
-            Sign up with Google  <img style="height: 20px; width: 40px;   " src="../images/icons/google.webp" alt=""> &nbsp; | &nbsp;
-            <a href="#">Sign up</a>
-          </p>
+    <div class="actions">
+      <a style="text-decoration: none;" href="./index.html" class="btn btn-primary">Continue Shopping</a>
+      
+    </div>
 
-          
-
-
-
-    </form>
+    <div class="support">
+      Need help?
+      <a href="https://api.whatsapp.com/send/?phone=2348053788620&text&type=phone_number&app_absent=0" target="_blank">
+        Chat with us on WhatsApp
+      </a>
+    </div>
   </div>
+
 </div>
 
 
-
-
-
+<br>
+<br>
+<br>
 
 
 
@@ -211,6 +186,83 @@ document.addEventListener("click", () => {
   searchBox.classList.remove("active");
   mobileSearch.classList.remove("active");
 });
+
+
+
+// maps 
+
+
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll(".reveal");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  }, { threshold: 0.15 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Counter animation
+  const counters = document.querySelectorAll(".stat h3");
+
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.dataset.count;
+      const count = +counter.innerText;
+      const speed = target / 60;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + speed);
+        setTimeout(updateCount, 30);
+      } else {
+        counter.innerText = target;
+      }
+    };
+
+    observer.observe(counter);
+    counter.addEventListener("animationstart", updateCount);
+    updateCount();
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

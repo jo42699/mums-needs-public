@@ -88,6 +88,32 @@
 }
 
 
+.cart-icon {
+  position: relative;
+}
+
+.cart-icon a {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: rgb(139, 21, 165);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+
 
 
 

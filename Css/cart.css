@@ -1,0 +1,253 @@
+/* PAGE CONTAINER */
+.cart-page-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* CART CARD */
+.cart-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.cart-card h2 {
+  margin-bottom: 5px;
+}
+
+.cart-card h3 {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* CART ITEM */
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ITEM INFO */
+.item-info h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.item-info p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.item-info .price {
+  font-weight: 600;
+}
+
+/* ITEM ACTIONS */
+.item-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-actions input {
+  width: 55px;
+  padding: 6px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.item-actions i {
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.item-actions i:hover {
+  color: #ff00c8;
+  transform: scale(1.1);
+}
+
+/* CHECKOUT SECTION */
+.Checkout-card {
+  position: sticky;
+  top: 100px;
+}
+
+/* SUMMARY CARD */
+.summary-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.summary-card h3 {
+  margin-bottom: 20px;
+}
+
+/* SUMMARY ROWS */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.summary-row.total {
+  font-size: 16px;
+  font-weight: 700;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
+
+/* CHECKOUT BUTTON */
+.checkout-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.checkout-btn:hover {
+  background: #c100c4;
+  transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+
+
+
+/* MOBILE: login or page layout adjustments */
+@media (max-width: 768px) {
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* prevent horizontal scroll */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Navbar taller for mobile */
+  .navbar {
+    flex: 0 0 80px; /* fixed height 80px */
+    width: 100%;
+    z-index: 1000;
+    background-color: #f8f9fa;
+  }
+
+  /* Scrollable main content */
+  #scroll-container {
+    flex: 1 1 auto; /* take remaining space between navbar and footer */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    padding: 15px;
+  }
+
+  /* Footer taller for mobile */
+  footer.site-footer {
+    flex: 0 0 150px; /* fixed height 150px */
+    width: 100%;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    padding: 20px 10px;
+    box-sizing: border-box;
+  }
+
+
+  .footer-contact {
+    font-size: 12px;
+  }
+
+
+
+  /* Stack layout */
+  .cart-page-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  /* Cart card spacing */
+  .cart-card {
+    padding: 20px;
+  }
+
+  /* Make items breathe on mobile */
+  .cart-item {
+    align-items: flex-start;
+  }
+
+  .cart-item img {
+    width: 70px;
+    height: 70px;
+  }
+
+  /* Stack quantity + delete vertically */
+  .item-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+ .Checkout-card {
+    position: static;
+    bottom: 0;
+    background: #fff;
+    z-index: 10;
+  }
+
+  footer {
+    margin-top: 80px; /* space for sticky card */
+  }
+
+  .summary-card {
+    padding: 22px;
+  }
+
+  /* Bigger CTA for thumbs */
+  .checkout-btn {
+    padding: 16px;
+    font-size: 15px;
+  }
+
+
+  
+
+  
+}

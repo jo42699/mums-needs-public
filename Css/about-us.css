@@ -1,0 +1,240 @@
+/* GLOBAL */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #0f0f14;
+  color: #fff;
+}
+
+/* HERO */
+.about-hero {
+  height: 80vh;
+  background: linear-gradient(120deg, #1a1a2e, #16213e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.about-hero-content h1 {
+  
+  font-size: 64px;
+  font-weight: 600;
+  color: #c800e2;
+  
+}
+
+.about-hero-content p {
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+/* GLASS CARDS */
+.about-glass {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 80px 10%;
+}
+
+.about-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 35px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+/* STATS */
+.about-stats {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.stat h3 {
+  font-size: 48px;
+  color: #c600d4;
+}
+
+/* LOCATION */
+.location-section {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 40px;
+  padding: 80px 10%;
+}
+
+.location-card {
+  background: linear-gradient(135deg, #d50ddc, #bf36ff);
+  color: #000;
+  border-radius: 18px;
+  padding: 40px;
+}
+
+.location-btn {
+  margin-top: 20px;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 50px;
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.location-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* MAP */
+.map-container iframe {
+  width: 100%;
+  height: 320px;
+  border-radius: 18px;
+  border: none;
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MOBILE: login or page layout adjustments */
+@media (max-width: 768px) {
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* prevent horizontal scroll */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Navbar taller for mobile */
+  .navbar {
+    flex: 0 0 80px; /* fixed height 80px */
+    width: 100%;
+    z-index: 1000;
+    background-color: #f8f9fa;
+  }
+
+  /* Scrollable main content */
+  #scroll-container {
+    flex: 1 1 auto; /* take remaining space between navbar and footer */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    padding: 15px;
+  }
+
+  /* Footer taller for mobile */
+  footer.site-footer {
+    flex: 0 0 150px; /* fixed height 150px */
+    width: 100%;
+    background-color: #111;
+    color: #fff;
+    text-align: left;
+    padding: 20px 10px;
+    box-sizing: border-box;
+  }
+
+
+  .footer-contact {
+    font-size: 12px;
+  }
+
+
+
+
+
+    /* HERO */
+  .about-hero {
+    height: 65vh;
+    padding: 0 20px;
+    margin-top: 80px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 40px;
+    margin-top: 0px;
+  }
+
+  .about-hero-content p {
+    font-size: 16px;
+  }
+
+  /* GLASS CARDS */
+  .about-glass {
+    padding: 50px 20px;
+    gap: 20px;
+  }
+
+  .about-card {
+    padding: 28px;
+  }
+
+  /* STATS */
+  .about-stats {
+    flex-direction: column;
+    gap: 30px;
+    padding: 50px 20px;
+  }
+
+  .stat h3 {
+    font-size: 36px;
+  }
+
+   /* LOCATION */
+  .location-section {
+    grid-template-columns: 1fr; /* 👈 forces separate lines */
+    padding: 50px 20px;
+    gap: 30px;
+  }
+
+  .location-card {
+    padding: 30px;
+  }
+
+  /* MAP */
+  .map-container iframe {
+    height: 260px;
+  }
+
+  
+
+
+
+  
+}

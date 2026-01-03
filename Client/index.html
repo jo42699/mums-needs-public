@@ -14,7 +14,7 @@
     <!--NAV BAR-->
   <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary py-2 p-0 fixed-top">
   <div class="container">
-<a href="index.html"> <img class="MumsNeeds-logo" src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MumsNeeds Logo"> </a>
+  <a href="index.html"> <img class="MumsNeeds-logo" src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MumsNeeds Logo"> </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span><i id="bar" class="fa-solid fa-bars"></i> </span>
@@ -34,11 +34,11 @@
 
         
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" href="about-us.html">About us</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Contact Us</a>
+          <a class="nav-link" href="contact-us.html">Contact Us</a>
         </li>
 <br>
         <li class="nav-item">
@@ -63,11 +63,15 @@
       <i class="fa-solid fa-xmark" id="closeMobileSearch"></i>
     </div>
 
-            
+            <!-- Cart -->
     <br>
-            <li class="nav-item">
-             <a style="color: rgb(32, 19, 33);" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
-            </li>
+      <li class="nav-item cart-icon">
+          <a href="./cart.html" style="color: rgb(32, 19, 33);">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="cart-count">0</span>
+        </a>
+      </li>
+
             
       
     </div>
@@ -78,7 +82,7 @@
 
 <section id="Home">
   <div class="container"> 
-    <h5> New Arrivals</h5>
+    <h5>  </h5>
     <h1><span> Best prices</span> all year round</h1>
     <p> MumsNeeds offers the best prices for mums who care </p>
     <a href="shop.html"><button class="Hero-btn"> Shop now</button></a> 
@@ -116,8 +120,8 @@
     <div class="one col-lg-4 col-md-12 col-12 p-0">
       <img class="img-fluid" src="../images/banner/model-1.avif" alt="">
       <div class="details">
-        <h2>Pairs</h2>
-        <button class="text-uppercase">Shop Now</button>
+        <h2> &nbsp; Pairs</h2>
+         <a style="text-decoration: none;" href="shop.html"> <button class="text-uppercase">Shop Now</button></a>
       </div>
     </div>
 
@@ -125,7 +129,7 @@
       <img class="img-fluid" src="../images/banner/model-2.jpg" alt="">
       <div class="details">
         <h2>New Shoes</h2>
-        <button class="text-uppercase">Shop Now</button>
+         <a style="text-decoration: none;" href="shop.html"> <button class="text-uppercase">Shop Now</button></a>
       </div>
     </div>
 
@@ -133,7 +137,7 @@
       <img class="img-fluid" src="../images/banner/model-3.avif" alt="">
       <div class="details">
         <h2>New Bottles</h2>
-        <button class="text-uppercase">Shop Now</button>
+         <a style="text-decoration: none;" href="shop.html"> <button class="text-uppercase">Shop Now</button></a>
       </div>
     </div>
 
@@ -141,62 +145,52 @@
 </section>
 
   <!-- section 1 -->
-<section id="featured" >
-      <div class="container text-center mt-5 py-3">
+ <section id="featured" >
+        <div class="container text-center mt-5 py-3">
           <h3>Featured Products</h3>
           <hr style="border: solid 1px;">
           <p>Here you can find our featured products</p>
-          </div>
+        </div>
             
-          <div class="featured-section">
+   <div class="featured-section">          
+     <div class="products-wrapper">  <!-- to allow horizontal scrolling -->
+        <div class="product text-center">
+          <img src="../images/shoes/shoes-1.webp" alt=""> 
+          <h5 class="p-name">Sport shoes</h5>
+          <h4 class="p-price">₦ 24,500</h4>
+          <h5 class="discount-price">₦ 35,000</h5>
+        </div>
 
-                  
-    <div class="products-wrapper">
+        <div class="product text-center">
+          <img src="../images/shoes/shoes-1.webp" alt=""> 
+          <h5 class="p-name">Sport shoes</h5>
+          <h4 class="p-price">₦ 24,500</h4>
+          <h5 class="discount-price">₦ 35,000</h5>
+        </div>
 
-      <div class="product text-center">
-        <img src="../images/shoes/shoes-1.webp" alt=""> 
-        <h5 class="p-name">Sport shoes</h5>
-        <h4 class="p-price">₦ 24,500</h4>
-        <h5 class="discount-price">₦ 35,000</h5>
-      </div>
+        <div class="product text-center">
+          <img src="../images/shoes/shoes-1.webp" alt=""> 
+          <h5 class="p-name">Sport shoes</h5>
+          <h4 class="p-price">₦ 24,500</h4>
+          <h5 class="discount-price">₦ 35,000</h5>
+        </div>
 
-      <div class="product text-center">
-        <img src="../images/shoes/shoes-1.webp" alt=""> 
-        <h5 class="p-name">Sport shoes</h5>
-        <h4 class="p-price">₦ 24,500</h4>
-        <h5 class="discount-price">₦ 35,000</h5>
-      </div>
+        <div class="product text-center">
+          <img src="../images/shoes/shoes-1.webp" alt=""> 
+          <h5 class="p-name">Sport shoes</h5>
+          <h4 class="p-price">₦ 24,500</h4>
+          <h5 class="discount-price">₦ 35,000</h5>
+        </div>
 
-      <div class="product text-center">
-        <img src="../images/shoes/shoes-1.webp" alt=""> 
-        <h5 class="p-name">Sport shoes</h5>
-        <h4 class="p-price">₦ 24,500</h4>
-        <h5 class="discount-price">₦ 35,000</h5>
-      </div>
-
-      <div class="product text-center">
-        <img src="../images/shoes/shoes-1.webp" alt=""> 
-        <h5 class="p-name">Sport shoes</h5>
-        <h4 class="p-price">₦ 24,500</h4>
-        <h5 class="discount-price">₦ 35,000</h5>
-      </div>
-
-      <div class="product text-center">
-      <img src="../images/shoes/shoes-1.webp" alt=""> 
-      <h5 class="p-name">Sport shoes</h5>
-      <h4 class="p-price">₦ 24,500</h4>
-      <h5 class="discount-price">₦ 35,000</h5>
+        <div class="product text-center">
+          <img src="../images/shoes/shoes-1.webp" alt=""> 
+          <h5 class="p-name">Sport shoes</h5>
+          <h4 class="p-price">₦ 24,500</h4>
+          <h5 class="discount-price">₦ 35,000</h5>
+        </div>            
+       </div>   
     </div>
-          
-   
-    </div>
-
-    <!-- repeat product cards -->
-    
-  </div>
-</div>
-
-</section>
+ </section>
 
 <br>
 <br>
@@ -207,8 +201,8 @@
     <div class="one col-lg-4 col-md-12 col-12 p-0">
       <img class="img-fluid" src="../images/banner/graphic-backpack.avif" alt="">
       <div class="details">
-        <h2>Bags</h2>
-        <button class="text-uppercase">Shop Now</button>
+        <h2>&nbsp;  Bags</h2> 
+       <a style="text-decoration: none;" href="shop.html"> <button class="text-uppercase">Shop Now</button></a>
       </div>
     </div>
 
@@ -216,7 +210,7 @@
       <img class="img-fluid" src="../images/banner/dress.avif" alt="">
       <div class="details">
         <h2>Two piece</h2>
-        <button class="text-uppercase">Shop Now</button>
+         <a style="text-decoration: none;" href="shop.html"> <button class="text-uppercase">Shop Now</button></a>
       </div>
     </div>
 
@@ -224,7 +218,7 @@
       <img class="img-fluid" src="../images/banner/suite-kids.jpg" alt="">
       <div class="details">
         <h2>Formal</h2>
-        <button class="text-uppercase">Shop Now</button>
+        <a style="text-decoration: none;" href="shop.html"> <button class="text-uppercase">Shop Now</button></a>
       </div>
     </div>
 
@@ -369,8 +363,8 @@
       <p>For Mothers who care.</p>
 
       <div class="social-icons">
-        <a href="https://www.instagram.com/mumsneedsbackup/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://l.instagram.com/?u=https%3A%2F%2Fwa.me%2F2348053788620%3Futm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio%26fbclid%3DPAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnJ6DFAXesjGKpVN5yr8AkeAfcX2QKNWbBrXVvhbshaXdOaWIv6cQnOBFRN7c_aem_sjNBWI2J7iwcz7qdz3NjpQ&e=AT1LEppFxr2PRsB8YAMKd8s158akPEr9xJ2rJH4M4vXWISepENLOZISHDED5wlJv2dprpspt0-N_p_8WgqWwJ42S2dYZ_s8CMfAhujfSrQ" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a style= "text-decoration: none;" href="https://www.instagram.com/mumsneedsbackup/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a style= "text-decoration: none;" href="https://api.whatsapp.com/send/?phone=2348053788620&text&type=phone_number&app_absent=0&utm_source=ig" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         
       </div>
     </div>
@@ -378,7 +372,7 @@
     <!-- Contact Us -->
     <div class="footer-contact">
       <h3>Contact Us</h3>
-      <p><i class="fas fa-phone"></i> +234 805 378 8620</p>
+      <a style= "text-decoration: none;" href="https://api.whatsapp.com/send/?phone=2348053788620&text&type=phone_number&app_absent=0&utm_source=ig"><p><i class="fas fa-phone"></i> +234 805 378 8620</p> </a>
       <p><i class="fas fa-envelope"></i> isabelimobio@yahoo.com</p>
       <p><i class="fas fa-location-dot"></i> 9 Ajibade Babatola St Ajao Isolo Lagos</p>
     </div>

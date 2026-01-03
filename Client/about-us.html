@@ -6,7 +6,7 @@
     <title>MumsNeeds</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../Css/styles.css">
-    <link rel="stylesheet" href="../Css/login.css">
+    <link rel="stylesheet" href="../Css/about-us.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -44,9 +44,8 @@
                 <a class="nav-link" href="contact-us.html">Contact Us</a>
                 </li>
         <br>
-                <li class="nav-item">
-                  <a href="./login.html"></a>
-                <i class="fa-solid fa-circle-user"></i>
+               <li class="nav-item">
+                <a style="color: rgb(32, 19, 33);" href="login.html"> <i class="fa-solid fa-circle-user"></i></a>
                 </li>
         <br>
                 <!-- Search -->
@@ -87,32 +86,64 @@
        
 
 
-    <div class="auth-container">
-      <div class="auth-card">
-        <h2>Welcome </h2>
-        <p class="auth-subtitle">Sign in to continue</p>
-
-        <form>
-          <div class="input-group">
-            <input type="email" required />
-            <label>Email</label>
-          </div>
-
-         
-          <button type="submit" class="auth-btn">Continue with Email</button>
-
-          <p class="auth-footer">
-            Sign up with Google  <img style="height: 20px; width: 40px;   " src="../images/icons/google.webp" alt=""> &nbsp; | &nbsp;
-            <a href="#">Sign up</a>
-          </p>
-
-          
-
-
-
-    </form>
+ <section class="about-hero">
+  <div class="about-hero-content">
+    <h1>We Create Little Moments</h1>
+    <p style="color: aliceblue;">More than clothes — we dress memories in the making.</p>
   </div>
-</div>
+</section>
+
+<section class="about-glass">
+  <div class="about-card reveal">
+    <h2>Who We Are</h2>
+    <p>
+      A modern children’s clothing shop dedicated to quality, craftsmanship, and meaningful moments. Owned and led by a mother of four, our brand is built on over 20 years of experience delivering and styling children with care and intention. Having styled more than 10,000 children, every garment we offer is thoughtfully chosen and designed with purpose and passion.
+    </p>
+  </div>
+
+  <div class="about-card reveal">
+    <h2>Our Mission</h2>
+    <p>
+     To deliver thoughtfully made children’s clothing crafted with care, quality, and attention to detail, while creating seamless, elevated shopping experiences that families love, trust, and feel confident choosing every day.
+    </p>
+  </div>
+</section>
+
+<section class="about-stats">
+  <div class="stat reveal">
+    <h3 data-count="11000">0</h3>
+    <p>Kids Styled</p>
+  </div>
+  <div class="stat reveal">
+    <h3 data-count="1000">0</h3>
+    <p>Products</p>
+  </div>
+  <div class="stat reveal">
+    <h3 data-count="20">0</h3>
+    <p>Years of Excellence</p>
+  </div>
+</section>
+
+<section class="location-section">
+  <div class="location-card reveal">
+    <h2>Visit Our Store</h2>
+    <p>
+      9 Ajibade Babatola St <br>
+      Ajao Est Isolo<br>
+      Lagos, Nigeria
+    </p>
+
+    <button class="location-btn">
+      <a style="text-decoration: none;  color: #ffffff;" href="https://www.google.co.uk/maps/place/Ajibade+Babatola+St,+Oshodi-Isolo,+Ajao+Estate+102214,+Lagos,+Nigeria/@6.5443578,3.318836,16.75z/data=!4m6!3m5!1s0x103b8e6b1c19ddcd:0x5145b2519bfa54fa!8m2!3d6.5444183!4d3.321417!16s%2Fg%2F1hjgk6t7b?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D">View on Map</a>
+    </button>
+
+  </div>
+
+  <div class="map-container reveal">
+    <iframe src="https://www.google.com/maps/embed?pb=!4v1767344974401!6m8!1m7!1sYpEc6sOPMjT6Cx6nOAl_Kg!2m2!1d6.544401393547597!2d3.321609517448851!3f259.8869077260306!4f-0.8772503802276788!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
 
 
 
@@ -211,6 +242,83 @@ document.addEventListener("click", () => {
   searchBox.classList.remove("active");
   mobileSearch.classList.remove("active");
 });
+
+
+
+// maps 
+
+
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll(".reveal");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  }, { threshold: 0.15 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Counter animation
+  const counters = document.querySelectorAll(".stat h3");
+
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.dataset.count;
+      const count = +counter.innerText;
+      const speed = target / 60;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + speed);
+        setTimeout(updateCount, 30);
+      } else {
+        counter.innerText = target;
+      }
+    };
+
+    observer.observe(counter);
+    counter.addEventListener("animationstart", updateCount);
+    updateCount();
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -4,6 +4,162 @@
 }
 
 
+/* Page center */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa, #e4e8ef);
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Card */
+.auth-card {
+  width: 100%;
+  max-width: 360px;
+  background: #fff;
+  padding: 30px;
+  padding-top: 50px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+/* Title */
+.auth-card h2 {
+  margin-bottom: 6px;
+  font-size: 24px;
+}
+
+.auth-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* Floating inputs */
+.input-group {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  color: #888;
+  font-size: 13px;
+  pointer-events: none;
+  transform: translateY(-50%);
+  background: #fff;
+  padding: 0 4px;
+  transition: 0.2s ease;
+}
+
+/* Floating effect */
+.input-group input:focus + label,
+.input-group input:valid + label {
+  top: -6px;
+  font-size: 11px;
+  color: #000;
+}
+
+/* Button */
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  background: #000;
+  color: #ededed;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.auth-btn:hover {
+  background: #222;
+  transform: translateY(-1px);
+}
+
+/* Footer */
+.auth-footer {
+  margin-top: 18px;
+  font-size: 13px;
+  color: #555;
+}
+
+.auth-footer a {
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
+
+.circle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Image inside */
+.circle-btn img {
+  width: 50px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 100px;
+}
+
+/* Hover / click */
+.circle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.circle-btn:active {
+  transform: scale(0.95);
+}
+
+
+.circle-btn:hover {
+  background-color: #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -42,7 +198,7 @@
     width: 100%;
     background-color: #111;
     color: #fff;
-    text-align: center;
+    text-align: left;
     padding: 20px 10px;
     box-sizing: border-box;
   }
@@ -51,4 +207,15 @@
   .footer-contact {
     font-size: 12px;
   }
+
+
+  .auth-card {
+    margin-top: 50px;
+  }
+
+  .for-moms {
+    margin-left: -10px;
+  }
+
+  
 }

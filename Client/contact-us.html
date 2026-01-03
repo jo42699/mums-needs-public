@@ -6,7 +6,7 @@
     <title>MumsNeeds</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../Css/styles.css">
-    <link rel="stylesheet" href="../Css/login.css">
+    <link rel="stylesheet" href="../Css/contact-us.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -44,9 +44,8 @@
                 <a class="nav-link" href="contact-us.html">Contact Us</a>
                 </li>
         <br>
-                <li class="nav-item">
-                  <a href="./login.html"></a>
-                <i class="fa-solid fa-circle-user"></i>
+               <li class="nav-item">
+                <a style="color: rgb(32, 19, 33);" href="login.html"> <i class="fa-solid fa-circle-user"></i></a>
                 </li>
         <br>
                 <!-- Search -->
@@ -87,32 +86,37 @@
        
 
 
-    <div class="auth-container">
-      <div class="auth-card">
-        <h2>Welcome </h2>
-        <p class="auth-subtitle">Sign in to continue</p>
-
-        <form>
-          <div class="input-group">
-            <input type="email" required />
-            <label>Email</label>
-          </div>
-
-         
-          <button type="submit" class="auth-btn">Continue with Email</button>
-
-          <p class="auth-footer">
-            Sign up with Google  <img style="height: 20px; width: 40px;   " src="../images/icons/google.webp" alt=""> &nbsp; | &nbsp;
-            <a href="#">Sign up</a>
-          </p>
-
-          
-
-
-
-    </form>
+ <section class="about-hero">
+  <div class="about-hero-content">
+    <h1>Contact Us</h1>
+    <p style="color: aliceblue;">Lets start a conversation</p>
   </div>
-</div>
+</section>
+
+<section class="about-glass">
+  <div class="about-card reveal">
+    <h2 class="title-card" style="text-align: center;">Talk to a member of our sales team</h2>
+    <p class="card-details">
+      Have a question or need assistance? Our team is here to help with product inquiries, orders via WhatsApp, and support with refunds or exchanges, making your experience smooth and stress-free.
+    </p>
+    <a style="text-decoration: none;" class="whatsapp-btn" href="https://api.whatsapp.com/send/?phone=2348053788620&text&type=phone_number&app_absent=0&utm_source=ig" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </div>
+
+  <div class="about-card reveal">
+    <h2 class="title-card" style="text-align: center;" >Follow Along</h2>
+    <p class="card-details">
+     Stay up to date with our latest collections, exclusive discounts, and everyday style inspiration for little ones plus special announcements, styling ideas, and moments from our community
+    </p>
+
+    <a style="text-decoration: none;" class="insta-btn" href="https://www.instagram.com/mumsneedsbackup/" aria-label="WhatsApp"><i class="fab fa-instagram"></i></a></a>
+
+  </div>
+
+  
+</section>
+
+
+
 
 
 
@@ -129,15 +133,15 @@
             <!-- Logo & About -->
             <div class="footer-brand">
 
-            <div class="footer-logo">
+            <div style="text-decoration: none;" class="footer-logo">
                 <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MyStore Logo">
             </div>
 
             <p>For Mothers who care.</p>
 
-            <div class="social-icons">
+            <div style="text-decoration: none;" class="social-icons">
                 <a href="https://www.instagram.com/mumsneedsbackup/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://l.instagram.com/?u=https%3A%2F%2Fwa.me%2F2348053788620%3Futm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio%26fbclid%3DPAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnJ6DFAXesjGKpVN5yr8AkeAfcX2QKNWbBrXVvhbshaXdOaWIv6cQnOBFRN7c_aem_sjNBWI2J7iwcz7qdz3NjpQ&e=AT1LEppFxr2PRsB8YAMKd8s158akPEr9xJ2rJH4M4vXWISepENLOZISHDED5wlJv2dprpspt0-N_p_8WgqWwJ42S2dYZ_s8CMfAhujfSrQ" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a style="text-decoration: none;" href="https://api.whatsapp.com/send/?phone=2348053788620&text&type=phone_number&app_absent=0&utm_source=ig" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 
             </div>
             </div>
@@ -177,7 +181,7 @@ const closeMobileSearch = document.getElementById("closeMobileSearch");
 
 /* ---------- OPEN SEARCH ---------- */
 searchIcon.addEventListener("click", (e) => {
-  e.stopPropagation(); // 🔥 CRITICAL
+  e.stopPropagation(); 
 
   if (window.innerWidth <= 768) {
     mobileSearch.classList.add("active");
@@ -211,6 +215,83 @@ document.addEventListener("click", () => {
   searchBox.classList.remove("active");
   mobileSearch.classList.remove("active");
 });
+
+
+
+// maps 
+
+
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll(".reveal");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  }, { threshold: 0.15 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Counter animation
+  const counters = document.querySelectorAll(".stat h3");
+
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.dataset.count;
+      const count = +counter.innerText;
+      const speed = target / 60;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + speed);
+        setTimeout(updateCount, 30);
+      } else {
+        counter.innerText = target;
+      }
+    };
+
+    observer.observe(counter);
+    counter.addEventListener("animationstart", updateCount);
+    updateCount();
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

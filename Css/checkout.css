@@ -1,0 +1,207 @@
+/* GLOBAL */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #0f0f14;
+  color: #fff;
+}
+
+/* HERO */
+.about-hero {
+  height: 80vh;
+  background: linear-gradient(120deg, #1a1a2e, #16213e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.about-hero-content h1 {
+  
+  font-size: 64px;
+  font-weight: 600;
+  color: #c800e2;
+  
+}
+
+.about-hero-content p {
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+.checkout-section {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+  font-family: 'Poppins', sans-serif;
+}
+
+.checkout-section h2 {
+  font-size: 26px;
+  margin-bottom: 8px;
+  color: #1f1f1f;
+}
+
+.checkout-section p {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.form-group input {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #facaff;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #9c00cb;
+  box-shadow: 0 0 0 3px rgba(201, 166, 107, 0.15);
+}
+
+.checkout-btn {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 50px;
+  border: none;
+  background: #1f1f1f;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background: #9f23fe;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MOBILE: login or page layout adjustments */
+@media (max-width: 768px) {
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* prevent horizontal scroll */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Navbar taller for mobile */
+  .navbar {
+    flex: 0 0 80px; /* fixed height 80px */
+    width: 100%;
+    z-index: 1000;
+    background-color: #f8f9fa;
+  }
+
+  /* Scrollable main content */
+  #scroll-container {
+    flex: 1 1 auto; /* take remaining space between navbar and footer */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    padding: 15px;
+  }
+
+  /* Footer taller for mobile */
+  footer.site-footer {
+    flex: 0 0 150px; /* fixed height 150px */
+    width: 100%;
+    background-color: #111;
+    color: #fff;
+    text-align: left;
+    padding: 20px 10px;
+    box-sizing: border-box;
+  }
+
+
+  .footer-contact {
+    font-size: 12px;
+  }
+
+
+
+
+
+    /* HERO */
+  .about-hero {
+    height: 65vh;
+    padding: 0 20px;
+    margin-top: 80px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 40px;
+    margin-top: 0px;
+  }
+
+  .about-hero-content p {
+    font-size: 16px;
+  }
+
+  
+  
+
+
+
+  
+}

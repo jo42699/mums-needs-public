@@ -1,0 +1,250 @@
+.payment-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.order-summary,
+.payment-section {
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.order-item img {
+  border-radius: 12px;
+  height: 70px;
+  width: 70px;
+}
+
+.product-name {
+  font-weight: 500;
+}
+
+.product-meta {
+  font-size: 13px;
+  color: #777;
+}
+
+.price {
+  margin-left: auto;
+  font-weight: 500;
+}
+
+.summary-line,
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.summary-total {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.payment-note {
+  font-size: 13px;
+  color: #777;
+  margin: 20px 0;
+}
+
+.pay-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 50px;
+  border: none;
+  background: #1f1f1f;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pay-btn:hover {
+  background: #e133dc;
+  transform: translateY(-2px);
+}
+
+.whatsapp-help {
+  display: block;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  color: #25d366;
+  text-decoration: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .payment-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MOBILE: login or page layout adjustments */
+@media (max-width: 768px) {
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* prevent horizontal scroll */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Navbar taller for mobile */
+  .navbar {
+    flex: 0 0 80px; /* fixed height 80px */
+    width: 100%;
+    z-index: 1000;
+    background-color: #f8f9fa;
+  }
+
+  /* Scrollable main content */
+  #scroll-container {
+    flex: 1 1 auto; /* take remaining space between navbar and footer */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    padding: 15px;
+  }
+
+  /* Footer taller for mobile */
+  footer.site-footer {
+    flex: 0 0 150px; /* fixed height 150px */
+    width: 100%;
+    background-color: #111;
+    color: #fff;
+    text-align: left;
+    padding: 20px 10px;
+    box-sizing: border-box;
+  }
+
+
+  .footer-contact {
+    font-size: 12px;
+  }
+
+
+
+
+
+    /* HERO */
+  .about-hero {
+    height: 65vh;
+    padding: 0 20px;
+    margin-top: 80px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 40px;
+    margin-top: 0px;
+  }
+
+  .about-hero-content p {
+    font-size: 16px;
+  }
+
+  /* GLASS CARDS */
+  .about-glass {
+    padding: 50px 20px;
+    gap: 20px;
+  }
+
+  .about-card {
+    padding: 28px;
+  }
+
+  /* STATS */
+  .about-stats {
+    flex-direction: column;
+    gap: 30px;
+    padding: 50px 20px;
+  }
+
+  .stat h3 {
+    font-size: 36px;
+  }
+
+   /* LOCATION */
+  .location-section {
+    grid-template-columns: 1fr; /* 👈 forces separate lines */
+    padding: 50px 20px;
+    gap: 30px;
+  }
+
+  .location-card {
+    padding: 30px;
+  }
+
+  /* MAP */
+  .map-container iframe {
+    height: 260px;
+  }
+
+
+  .title-card {
+    font-size: 25px;
+  }
+
+  .card-details {
+    font-size: 15px;
+  }
+  
+
+
+
+  
+}
+

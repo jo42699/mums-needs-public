@@ -1,0 +1,329 @@
+/* ======================================
+   PAYMENT SUCCESS PAGE (SCOPED ONLY)
+   ====================================== */
+
+.payment-success-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffffff, #ffffff);
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.payment-success-page * {
+  box-sizing: border-box;
+}
+
+/* ======================================
+   SUCCESS CARD
+   ====================================== */
+
+.payment-success-page .success-card {
+  max-width: 520px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 50px 40px;
+  text-align: center;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+  animation: fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================================
+   CHECKMARK ICON
+   ====================================== */
+
+.payment-success-page .checkmark {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 30px;
+  border-radius: 50%;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.payment-success-page .checkmark svg {
+  width: 46px;
+  height: 46px;
+  stroke: #ffffff;
+  stroke-width: 4;
+  fill: none;
+}
+
+/* ======================================
+   TEXT CONTENT
+   ====================================== */
+
+.payment-success-page h1 {
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: #1f1f1f;
+}
+
+.payment-success-page p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+/* ======================================
+   ORDER INFORMATION
+   ====================================== */
+
+.payment-success-page .order-info {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 16px;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.payment-success-page .order-info span {
+  display: block;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+/* ======================================
+   ACTION BUTTONS
+   ====================================== */
+
+.payment-success-page .actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.payment-success-page .btn {
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-success-page .btn-primary {
+  background: #1f1f1f;
+  color: #ffffff;
+}
+
+.payment-success-page .btn-primary:hover {
+  background: #901097;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.payment-success-page .btn-outline {
+  border: 1px solid #ddd;
+  color: #1f1f1f;
+  background: transparent;
+}
+
+.payment-success-page .btn-outline:hover {
+  border-color: #c9a66b;
+  color: #c9a66b;
+}
+
+/* ======================================
+   SUPPORT LINK
+   ====================================== */
+
+.payment-success-page .support {
+  margin-top: 25px;
+  font-size: 13px;
+  color: #555;
+}
+
+.payment-success-page .support a {
+  color: #25d366;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ======================================
+   MOBILE RESPONSIVENESS
+   ====================================== */
+
+@media (max-width: 480px) {
+  .payment-success-page .success-card {
+    padding: 40px 25px;
+  }
+
+  .payment-success-page h1 {
+    font-size: 24px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MOBILE: login or page layout adjustments */
+@media (max-width: 768px) {
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* prevent horizontal scroll */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Navbar taller for mobile */
+  .navbar {
+    flex: 0 0 80px; /* fixed height 80px */
+    width: 100%;
+    z-index: 1000;
+    background-color: #f8f9fa;
+  }
+
+  /* Scrollable main content */
+  #scroll-container {
+    flex: 1 1 auto; /* take remaining space between navbar and footer */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+    padding: 15px;
+  }
+
+  /* Footer taller for mobile */
+  footer.site-footer {
+    flex: 0 0 150px; /* fixed height 150px */
+    width: 100%;
+    background-color: #111;
+    color: #fff;
+    text-align: left;
+    padding: 20px 10px;
+    box-sizing: border-box;
+  }
+
+
+  .footer-contact {
+    font-size: 12px;
+  }
+
+
+
+
+
+    /* HERO */
+  .about-hero {
+    height: 65vh;
+    padding: 0 20px;
+    margin-top: 80px;
+  }
+
+  .about-hero-content h1 {
+    font-size: 40px;
+    margin-top: 0px;
+  }
+
+  .about-hero-content p {
+    font-size: 16px;
+  }
+
+  /* GLASS CARDS */
+  .about-glass {
+    padding: 50px 20px;
+    gap: 20px;
+  }
+
+  .about-card {
+    padding: 28px;
+  }
+
+  /* STATS */
+  .about-stats {
+    flex-direction: column;
+    gap: 30px;
+    padding: 50px 20px;
+  }
+
+  .stat h3 {
+    font-size: 36px;
+  }
+
+   /* LOCATION */
+  .location-section {
+    grid-template-columns: 1fr; /* 👈 forces separate lines */
+    padding: 50px 20px;
+    gap: 30px;
+  }
+
+  .location-card {
+    padding: 30px;
+  }
+
+  /* MAP */
+  .map-container iframe {
+    height: 260px;
+  }
+
+
+  .title-card {
+    font-size: 25px;
+  }
+
+  .card-details {
+    font-size: 15px;
+  }
+  
+
+
+
+  
+}
+

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin product</title>
+  <link rel="stylesheet" href="../Css/dashboard.css" />
+  <link rel="stylesheet" href="../Css/orders.css" />
+  <link rel="stylesheet" href="../Css/admin-product.css" />
+  <link rel="stylesheet" href="../Css/admin-settings.css">
+  
+    
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo"><img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt=""></div>
+    <button class="close-btn" id="closeSidebar">✕</button>
+    <nav>
+      <a style="text-decoration: none;" href="../Client/dashboard.html">Dashboard</a>
+      <a style="text-decoration: none;" href="./orders.html">Orders</a>
+      <a style="text-decoration: none;"  href="./admin-product.html"   >Products</a>
+      <a style="text-decoration: none;" href="./upload.html"  >Upload</a>
+      <a class="active" style="text-decoration: none;" href="../Client/admin-settings.html" >Settings &nbsp;<i class="fa-solid fa-gear"></i></a>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <a>Logout &nbsp;&nbsp; <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+    </nav>
+  </aside>
+
+
+
+
+
+
+
+  <!-- Main Content -->
+  <main class="main">
+    
+    <!-- Top Bar -->
+ <header class="topbar">
+      <button class="hamburger" id="hamburger">☰</button>
+      <h2>Settings</h2>
+      <div class="profile">Welcome</div>
+ </header>
+
+   
+
+
+   <div class="card">
+    <h2>Update Sections</h2>
+
+    <!-- Section 1 -->
+    <div class="form-group">
+      <label for="section1Title">Section 1 Title</label>
+      <input type="text" id="section1Title" placeholder="Enter section 1 title">
+    </div>
+
+    <div class="form-group">
+      <label for="section1Description">Section 1 Description</label>
+      <textarea id="section1Description" placeholder="Enter section 1 description"></textarea>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Section 2 -->
+    <div class="form-group">
+      <label for="section2Title">Section 2 Title</label>
+      <input type="text" id="section2Title" placeholder="Enter section 2 title">
+    </div>
+
+    <div class="form-group">
+      <label for="section2Description">Section 2 Description</label>
+      <textarea id="section2Description" placeholder="Enter section 2 description"></textarea>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Section 3 -->
+    <div class="form-group">
+      <label for="section3Title">Section 3 Title</label>
+      <input type="text" id="section3Title" placeholder="Enter section 3 title">
+    </div>
+
+    <div class="form-group">
+      <label for="section3Description">Section 3 Description</label>
+      <textarea id="section3Description" placeholder="Enter section 3 description"></textarea>
+    </div>
+
+    <button type="submit">Submit</button>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <br>
+  <br>
+  <br>
+
+</main>
+</div>
+
+<script>
+
+
+
+const hamburger = document.getElementById('hamburger');
+const sidebar = document.getElementById('sidebar');
+const closeSidebar = document.getElementById("closeSidebar");
+
+hamburger.addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed'); // open / close
+});
+
+closeSidebar.addEventListener('click', () => {
+  sidebar.classList.remove('collapsed'); // CLOSE
+});
+
+
+
+function previewImage(event, previewId) {
+  const file = event.target.files[0];
+  const preview = document.getElementById(previewId);
+
+  if (!file) {
+    preview.style.display = "none";
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+}
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

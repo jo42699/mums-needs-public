@@ -90,18 +90,18 @@
     <div class="product-images">
 
       <div class="product-display">
-        <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="">
+        <img src="../images/banner/model-2.jpg" alt="">
       </div>
 
-      <div class="small-img-group">
+       <div class="small-img-group">
         <div class="small-img-col">
           <img class="small-img" src="../images/banner/model-2.jpg" alt="">
         </div>
         <div class="small-img-col">
-          <img class="small-img" src="../images/banner/graphic-backpack.avif" alt="">
+          <img class="small-img" src="../images/shoes/red shoes.jpg" alt="">
         </div>
         <div class="small-img-col">
-          <img class="small-img" src="../images/banner/suite-kids.jpg" alt="">
+          <img class="small-img" src="../images/shoes/pink shoes.webp" alt="">
         </div>
       </div>
 
@@ -125,8 +125,18 @@
         <option value="XL">XL</option>
       </select>
 
-      <label for="quantity">Quantity</label>
-      <input   class="ammount-no" type="number" value="1" min="1" step="1" required>
+      <label for="quantity">Select Quantity</label>
+      
+      <div class="qty-control" data-stock="5">
+        <button class="qty-btn qty-minus" type="button">−</button>
+        <input class="qty-input" type="number" value="1" readonly>
+        <button class="qty-btn qty-plus" type="button">+</button>
+      </div>  
+
+
+      <br>
+      <br>
+      
       <button class="add-to-cart-btn"> <span class="css-tick"></span>
         Add to Cart &nbsp; <i style="color: aliceblue;" class="fa-solid fa-cart-shopping"></i>  </button>
 
@@ -285,7 +295,39 @@
  
 
 
+document.querySelectorAll(".qty-control").forEach(control => {
+  const input = control.querySelector(".qty-input");
+  const minusBtn = control.querySelector(".qty-minus");
+  const plusBtn = control.querySelector(".qty-plus");
 
+  const maxStock = parseInt(control.dataset.stock, 10);
+
+  function updateButtons() {
+    const currentQty = parseInt(input.value, 10);
+
+    minusBtn.disabled = currentQty <= 1;
+    plusBtn.disabled = currentQty >= maxStock;
+  }
+
+  minusBtn.addEventListener("click", () => {
+    let qty = parseInt(input.value, 10);
+    if (qty > 1) {
+      input.value = qty - 1;
+      updateButtons();
+    }
+  });
+
+  plusBtn.addEventListener("click", () => {
+    let qty = parseInt(input.value, 10);
+    if (qty < maxStock) {
+      input.value = qty + 1;
+      updateButtons();
+    }
+  });
+
+  // Initial state
+  updateButtons();
+});
 
 
 

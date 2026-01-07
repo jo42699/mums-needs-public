@@ -184,6 +184,147 @@
 
 
 
+/* =========================
+   QUANTITY CONTROL WRAPPER
+   ========================= */
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* =========================
+   INPUT (PERFECTLY CENTERED)
+   ========================= */
+.qty-control {
+  display: inline-flex;
+  align-items: stretch;      /* stretch children to same height */
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  height: 38px;            /* fixed height */
+}
+
+.qty-btn {
+  flex: 0 0 36px;           /* fixed width */
+  background-color: #f0f0f0;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.qty-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.qty-input {
+  flex: 1;                  /* fill remaining space */
+  text-align: center;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;   /* critical to align properly */
+  height: 100%;             /* match the button height */
+}
+
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;  /* remove number arrows in Chrome/Safari */
+  margin: 0;
+}
+  
+
+/* Remove number arrows (Chrome, Safari, Edge) */
+.qty-control .qty-input::-webkit-outer-spin-button,
+.qty-control .qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+/* =========================
+   BUTTONS
+   ========================= */
+.qty-control .qty-btn {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: #f9fafb;
+  color: #111827;
+
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hover & active states */
+.qty-control .qty-btn:hover {
+  background: #f3f4f6;
+}
+
+.qty-control .qty-btn:active {
+  background: #e5e7eb;
+  transform: scale(0.96);
+}
+
+/* Disabled state */
+.qty-control .qty-btn:disabled {
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button separators */
+.qty-control .qty-minus {
+  border-right: 1px solid #e5e7eb;
+}
+
+.qty-control .qty-plus {
+  border-left: 1px solid #e5e7eb;
+}
+
+/* =========================
+   OPTIONAL STATES
+   ========================= */
+
+/* Low stock warning */
+.qty-control[data-stock="1"] {
+  border-color: #f87171;
+}
+
+/* Out of stock */
+.qty-control.out-of-stock {
+  opacity: 0.6;
+  pointer-events: none;
+}
 
 
 

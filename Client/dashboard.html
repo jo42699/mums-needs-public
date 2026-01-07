@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="../Css/dashboard.css" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo"><img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt=""></div>
+    <button class="close-btn" id="closeSidebar">✕</button>
+    <nav>
+      <a style="text-decoration: none;" href="../Client/dashboard.html"   class="active">Dashboard</a>
+      <a style="text-decoration: none;" href="../Client/orders.html" >Orders</a>
+      <a style="text-decoration: none;" href="../Client/admin-product.html">Products</a>
+      <a style="text-decoration: none;" href="../Client/upload.html" >Upload</a>
+      <a style="text-decoration: none;" href="../Client/admin-settings.html" >Settings &nbsp;<i class="fa-solid fa-gear"></i></a>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <a>Logout &nbsp;&nbsp; <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+    </nav>
+  </aside>
+
+
+
+
+
+
+
+  <!-- Main Content -->
+  <main class="main">
+    
+    <!-- Top Bar -->
+    <header class="topbar">
+      <button class="hamburger" id="hamburger">☰</button>
+      <h2>Dashboard</h2>
+      <div class="profile">Welcome</div>
+    </header>
+
+    <!-- Cards -->
+    <section class="cards">
+      <div class="card">
+        <h4>Total Sales</h4>
+        <p class="amount">₦ 525,024</p>
+        <span class="muted">Last Month</span>
+      </div>
+      <div class="card">
+        <h4>Total Orders</h4>
+        <p class="amount">1,250</p>
+        <span class="muted">Last Month</span>
+      </div>
+      <div class="card">
+        <h4>Total Customers</h4>
+        <p class="amount">213</p>
+        <span class="muted">All Time</span>
+      </div>
+    </section>
+
+   <!-- Recent Orders -->
+  <div class="orders-overflow">
+    <section class="table-section">
+    
+    <!-- Section Header -->
+    <div class="section-header">
+      <h3>Recent Orders</h3>
+      <a href="orders.html"><button class="view-more-btn">View More</button> </a>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Order No.</th>
+          <th>Payment</th>
+          <th>Quantity</th>
+          <th>Status</th>
+          <th>Amount</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+
+  <tbody>
+
+    <!--  Order Row -->
+
+ 
+    <tr class="order-row"
+    data-order-id="85631"
+    data-customer="John Doe"
+    data-email="john@example.com"
+    data-phone="+23407452123"
+    data-payment="Paid"
+    data-status="Pending"
+    data-quantity="2"
+    data-total="₦122.00">
+
+  <!-- Customer -->
+  <td>
+    <div class="customer">
+      <div class="avatar">
+        <i class="fa-solid fa-user" style="color: rgb(211, 173, 255);"></i>
+      </div>
+      <span>John Doe</span>
+    </div>
+  </td>
+
+  <!-- Order No -->
+  <td>#85631</td>
+
+  <!-- Payment -->
+  <td>
+    <span class="badge paid">Paid</span>
+  </td>
+
+  <!-- Quantity -->
+  <td>2</td>
+
+  <!-- Status -->
+  <td>
+    <span class="badge pending">Pending</span>
+  </td>
+
+  <!-- Amount -->
+  <td>₦122.00</td>
+
+  <!-- Action -->
+  <td>
+    <button class="action-btn open-btn">View</button>
+  </td>
+
+    </tr>
+ 
+    <tr class="order-row"
+    data-order-id="85631"
+    data-customer="John Doe"
+    data-email="john@example.com"
+    data-phone="+23407452123"
+    data-payment="Paid"
+    data-status="Pending"
+    data-quantity="2"
+    data-total="₦122.00">
+
+  <!-- Customer -->
+  <td>
+    <div class="customer">
+      <div class="avatar">
+        <i class="fa-solid fa-user" style="color: rgb(211, 173, 255);"></i>
+      </div>
+      <span>John Doe</span>
+    </div>
+  </td>
+
+  <!-- Order No -->
+  <td>#85631</td>
+
+  <!-- Payment -->
+  <td>
+    <span class="badge paid">Paid</span>
+  </td>
+
+  <!-- Quantity -->
+  <td>2</td>
+
+  <!-- Status -->
+  <td>
+    <span class="badge delivered">delivered</span>
+  </td>
+
+  <!-- Amount -->
+  <td>₦122.00</td>
+
+  <!-- Action -->
+  <td>
+    <button class="action-btn open-btn">View</button>
+  </td>
+
+    </tr>
+ 
+    <tr class="order-row"
+    data-order-id="85631"
+    data-customer="John Doe"
+    data-email="john@example.com"
+    data-phone="+23407452123"
+    data-payment="Paid"
+    data-status="Pending"
+    data-quantity="2"
+    data-total="₦122.00">
+
+  <!-- Customer -->
+  <td>
+    <div class="customer">
+      <div class="avatar">
+        <i class="fa-solid fa-user" style="color: rgb(211, 173, 255);"></i>
+      </div>
+      <span>John Doe</span>
+    </div>
+  </td>
+
+  <!-- Order No -->
+  <td>#85631</td>
+
+  <!-- Payment -->
+  <td>
+    <span class="badge paid">Paid</span>
+  </td>
+
+  <!-- Quantity -->
+  <td>2</td>
+
+  <!-- Status -->
+  <td>
+    <span class="badge pending">Pending</span>
+  </td>
+
+  <!-- Amount -->
+  <td>₦122.00</td>
+
+  <!-- Action -->
+  <td>
+    <button class="action-btn open-btn">View</button>
+  </td>
+
+    </tr>
+ 
+    <tr class="order-row"
+    data-order-id="85631"
+    data-customer="John Doe"
+    data-email="john@example.com"
+    data-phone="+23407452123"
+    data-payment="Paid"
+    data-status="Pending"
+    data-quantity="2"
+    data-total="₦122.00">
+
+  <!-- Customer -->
+  <td>
+    <div class="customer">
+      <div class="avatar">
+        <i class="fa-solid fa-user" style="color: rgb(211, 173, 255);"></i>
+      </div>
+      <span>John Doe</span>
+    </div>
+  </td>
+
+  <!-- Order No -->
+  <td>#85631</td>
+
+  <!-- Payment -->
+  <td>
+    <span class="badge paid">Paid</span>
+  </td>
+
+  <!-- Quantity -->
+  <td>2</td>
+
+  <!-- Status -->
+  <td>
+    <span class="badge pending">Pending</span>
+  </td>
+
+  <!-- Amount -->
+  <td>₦122.00</td>
+
+  <!-- Action -->
+  <td>
+    <button class="action-btn open-btn">View</button>
+  </td>
+
+    </tr>
+ 
+    <tr class="order-row"
+    data-order-id="85631"
+    data-customer="John Doe"
+    data-email="john@example.com"
+    data-phone="+23407452123"
+    data-payment="Paid"
+    data-status="Pending"
+    data-quantity="2"
+    data-total="₦122.00">
+
+  <!-- Customer -->
+  <td>
+    <div class="customer">
+      <div class="avatar">
+        <i class="fa-solid fa-user" style="color: rgb(211, 173, 255);"></i>
+      </div>
+      <span>John Doe</span> <!-- customer name -->
+    </div>
+  </td>
+
+  <!-- Order No -->
+  <td>#85631</td>
+
+  <!-- Payment -->
+  <td>
+    <span class="badge paid">Paid</span>
+  </td>
+
+  <!-- Quantity -->
+  <td>2</td>
+
+  <!-- Status -->
+  <td>
+    <span class="badge pending">Pending</span>
+  </td>
+
+  <!-- Amount -->
+  <td>₦122.00</td>
+
+  <!-- Action -->
+  <td>
+    <button class="action-btn open-btn">View</button>
+  </td>
+
+    </tr>
+
+    </tbody>
+
+  </table>
+  </section>
+  </div>
+
+  <br>
+  <br>
+
+
+<!-- ORDER DRAWER -->
+<div class="order-drawer" id="orderDrawer">
+
+  <div class="drawer-header">
+    <h3>Order <span>#85631</span></h3>
+    <button class="drawer-close" id="closeDrawer">✕</button>
+  </div>
+
+  <div class="drawer-content">
+    <p><strong>Customer:</strong> John Doe</p>
+    <br>
+    <p><strong>Purchase Date:</strong> 24/5/26</p>
+    <br>
+    <p><strong>Email:</strong> john@example.com</p>
+    <br>
+    <p><strong>Phone:</strong> +23407452123</p>
+    <br>
+    <p><strong>Payment:</strong> Paid</p> 
+    <br>
+    <p><strong>Status:</strong> Pending</p> 
+    <br>
+    <p><strong>Address:</strong> 401 KFC LANE on zone 4 </p>
+    <br>
+
+    <hr>
+
+
+    
+    <br>
+    <h4>Items</h4>
+
+    <div class="drawer-items">
+
+      <div class="drawer-item">
+        <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product A">
+        <div>
+          <div class="item-name">Product A</div>
+          <div class="item-meta">Qty: 1 · ₦62.00</div>
+        </div>
+      </div>
+
+      <div class="drawer-item">
+        <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product B">
+        <div>
+          <div class="item-name">Product B</div>
+          <div class="item-meta">Qty: 1 · ₦60.00</div>
+        </div>
+      </div>
+
+      
+
+    </div>
+
+    <hr>
+    <br>
+    <p style="font-size: 15px;"><strong>Total:</strong> ₦ 112,223 </p>
+
+    <div class="drawer-actions">
+      <button class="primary-btn">Mark as delivered</button>
+      <button class="secondary-btn">Delete   &nbsp;<i class="fa-solid fa-trash"></i> </button>
+    </div>
+  </div>
+</div>
+
+
+  </main>
+</div>
+
+<script>
+
+
+const hamburger = document.getElementById('hamburger');
+const sidebar = document.getElementById('sidebar');
+const closeSidebar = document.getElementById("closeSidebar");
+
+hamburger.addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed'); // open / close
+});
+
+closeSidebar.addEventListener('click', () => {
+  sidebar.classList.remove('collapsed'); // CLOSE
+});
+
+
+
+
+
+const drawer = document.getElementById("orderDrawer");
+const closeBtn = document.getElementById("closeDrawer");
+const openButtons = document.querySelectorAll(".open-btn");
+
+function openDrawer() {
+  if (!drawer) return;
+  drawer.classList.add("open");
+}
+
+function closeDrawer() {
+  if (!drawer) return;
+  drawer.classList.remove("open");
+}
+
+openButtons.forEach(btn => {
+  btn.addEventListener("click", openDrawer);
+});
+
+if (closeBtn) {
+  closeBtn.addEventListener("click", closeDrawer);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

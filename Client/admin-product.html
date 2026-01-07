@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin product</title>
+  <link rel="stylesheet" href="../Css/dashboard.css" />
+  <link rel="stylesheet" href="../Css/orders.css" />
+  <link rel="stylesheet" href="../Css/admin-product.css" />
+    
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const table = document.querySelector(".table-section table");
+  if (!table) return;
+
+  const tbody = table.querySelector("tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr.product-row"));
+
+  const rowsPerPage = 10;
+  const pageCount = Math.ceil(rows.length / rowsPerPage);
+  let currentPage = 1;
+
+  let pagination = document.getElementById("pagination");
+  if (!pagination) {
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.classList.add("pagination");
+    table.parentNode.appendChild(pagination);
+  }
+
+  function showPage(page) {
+    currentPage = page;
+    rows.forEach(row => (row.style.display = "none"));
+
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    rows.slice(start, end).forEach(row => {
+      row.style.display = "table-row";
+    });
+
+    renderPagination();
+  }
+
+  function renderPagination() {
+    pagination.innerHTML = "";
+    for (let i = 1; i <= pageCount; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i;
+      if (i === currentPage) btn.classList.add("active");
+      btn.addEventListener("click", () => showPage(i));
+      pagination.appendChild(btn);
+    }
+  }
+
+  showPage(1);
+});
+</script>
+
+<body>
+
+
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo"><img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt=""></div>
+    <button class="close-btn" id="closeSidebar">✕</button>
+    <nav>
+      <a style="text-decoration: none;" href="../Client/dashboard.html">Dashboard</a>
+      <a style="text-decoration: none;" href="./orders.html">Orders</a>
+      <a style="text-decoration: none;"  class="active" href="./admin-product.html"   >Products</a>
+      <a style="text-decoration: none;" href="../Client/upload.html" >Upload</a>
+      <a style="text-decoration: none;" href="../Client/admin-settings.html" >Settings &nbsp;<i class="fa-solid fa-gear"></i></a>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <a>Logout &nbsp;&nbsp; <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+    </nav>
+  </aside>
+
+
+
+
+
+
+
+  <!-- Main Content -->
+  <main class="main">
+    
+    <!-- Top Bar -->
+    <header class="topbar">
+      <button class="hamburger" id="hamburger">☰</button>
+      <h2>Products</h2>
+      <div class="profile">Welcome</div>
+    </header>
+
+   
+
+        <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search..." />
+        </div>
+
+
+
+  <!-- All products -->
+<div class="orders-overflow">
+  <section class="table-section">
+
+    <!-- Section Header -->
+    <div class="section-header">
+      <h3>All Products</h3>
+      <h4>Product count : <span>200</span></h4>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Product ID</th>
+          <th>Status</th>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- Product Row -->
+
+        <tr class="product-row">
+
+          <!-- Product -->
+          <td>
+            <div class="product-info">
+              <div class="product-image">
+                <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="">
+              </div>
+              <span class="product-name">pink shoes</span>
+            </div>
+          </td>
+
+          <!-- Product ID -->
+          <td>#PRD-85631</td>
+
+          <!-- Status -->
+          <td>
+            <span class="badge active">Active</span>
+          </td>
+
+          <!-- Stock -->
+          <td>
+            <span class="stock in-stock">In Stock</span>
+          </td>
+
+          <!-- Price -->
+          <td>₦ 500,000</td>
+
+          <!-- Action -->
+          <td>
+            <button class="action-btn delete-btn">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+
+        </tr>
+
+        <tr class="product-row">
+
+          <!-- Product -->
+          <td>
+            <div class="product-info">
+              <div class="product-image">
+                <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="">
+              </div>
+              <span class="product-name">Wireless Headset</span>
+            </div>
+          </td>
+
+          <!-- Product ID -->
+          <td>#PRD-85631</td>
+
+          <!-- Status -->
+          <td>
+            <span class="badge active">Active</span>
+          </td>
+
+          <!-- Stock -->
+          <td>
+            <span class="stock out-of-stock">out of stock</span>
+          </td>
+
+          <!-- Price -->
+          <td>₦ 500,000</td>
+
+          <!-- Action -->
+          <td>
+            <button class="action-btn delete-btn">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+
+        </tr>
+
+    
+
+      </tbody>
+    </table>
+
+  </section>
+
+  <!-- Pagination -->
+  <div id="pagination" class="pagination"></div>
+</div>
+
+
+
+
+
+
+
+
+  <br>
+  <br>
+  <br>
+
+
+
+
+</main>
+</div>
+
+<script>
+
+
+
+const hamburger = document.getElementById('hamburger');
+const sidebar = document.getElementById('sidebar');
+const closeSidebar = document.getElementById("closeSidebar");
+
+hamburger.addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed'); // open / close
+});
+
+closeSidebar.addEventListener('click', () => {
+  sidebar.classList.remove('collapsed'); // CLOSE
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

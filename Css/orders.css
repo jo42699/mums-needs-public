@@ -1,0 +1,113 @@
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+}
+
+.search-container input {
+  width: 100%;
+  height: 44px;
+  padding: 0 1rem 0 2.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: #ffffff;
+  font-size: 0.95rem;
+  color: #111827;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Hover */
+.search-container input:hover {
+  background-color: #fafafa;
+}
+
+/* Focus */
+.search-container input:focus {
+  border-color: #b55aff;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25);
+  background-color: #ffffff;
+}
+
+/* Placeholder */
+.search-container input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Search icon */
+.search-container i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 0.95rem;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+/* Icon reacts on focus */
+.search-container input:focus + i,
+.search-container:focus-within i {
+  color: #b838f8;
+}
+
+
+/* Pagination buttons styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.pagination button {
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.pagination button.active {
+  background-color: #bf38f8;
+  color: white;
+}
+
+.pagination button:hover {
+  background: #cbd5f5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mobile refinement */
+@media (max-width: 480px) {
+  .search-container {
+    max-width: 100%;
+  }
+
+  .search-container input {
+    height: 42px;
+    font-size: 0.9rem;
+  }
+}

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MumsNeeds</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="../Css/styles.css">
-    <link rel="stylesheet" href="../Css/cart.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/contact-us.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -17,7 +17,7 @@
             <!--NAV BAR-->
         <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary py-2 p-0 fixed-top">
         <div class="container">
-        <a href="index.html"> <img class="MumsNeeds-logo" src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MumsNeeds Logo"> </a>
+        <a href="index.html"> <img class="MumsNeeds-logo" src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MumsNeeds Logo"> </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span><i id="bar" class="fa-solid fa-bars"></i> </span>
@@ -44,11 +44,8 @@
                 <a class="nav-link" href="contact-us.html">Contact Us</a>
                 </li>
         <br>
-                <li class="nav-item">
-                <a   style="color: rgb(32, 19, 33);"  href="./login.html">
-                <i class="fa-solid fa-circle-user"></i>
-                </a>
-                
+               <li class="nav-item">
+                <a style="color: rgb(32, 19, 33);" href=" login.html"> <i class="fa-solid fa-circle-user"></i></a>
                 </li>
         <br>
                 <!-- Search -->
@@ -71,12 +68,13 @@
 
                     
             <br>
-                    <li class="nav-item cart-icon">
-                        <a href="./cart.html" style="color: rgb(32, 19, 33);">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="cart-count">0</span>
-                        </a>
-                     </li>
+              <li class="nav-item cart-icon">
+                  <a href="cart.html" style="color: rgb(32, 19, 33);">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <span class="cart-count">0</span>
+                </a>
+              </li>
+
                     
             
             </div>
@@ -87,83 +85,39 @@
        
        
 
-<br>
-<br>
-<br>
-<br>
-<br>
 
-<div class="cart-page-container">
+ <section class="about-hero">
+  <div class="about-hero-content">
+    <h1>Contact Us</h1>
+    <p style="color: aliceblue;">Lets start a conversation</p>
+  </div>
+</section>
 
-  <!-- CART ITEMS CARD -->
-      <div class="cart-card">
-        <h2>Shopping Cart</h2>
-        <h3>(Checkout <span>2</span> items)</h3>
+<section class="about-glass">
+  <div class="about-card reveal">
+    <h2 class="title-card" style="text-align: center;">Talk to a member of our sales team</h2>
+    <p class="card-details">
+      Have a question or need assistance? Our team is here to help with product inquiries, orders via WhatsApp, and support with refunds or exchanges, making your experience smooth and stress-free.
+    </p>
+    <a style="text-decoration: none;" class="whatsapp-btn" href="https://api.whatsapp.com/send/?phone=2348053788620&text&type=phone_number&app_absent=0&utm_source=ig" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </div>
 
-        <div class="cart-item">
-          <img src="../images/shoes/shoes-1.webp" alt="Product">
+  <div class="about-card reveal">
+    <h2 class="title-card" style="text-align: center;" >Follow Along</h2>
+    <p class="card-details">
+     Stay up to date with our latest collections, exclusive discounts, and everyday style inspiration for little ones plus special announcements, styling ideas, and moments from our community
+    </p>
 
-          <div class="item-info">
-            <h4>Kids Shoes</h4>
-            <p>Quantity: <span>1</span></p>
-            <p>Size: M</p>
-            <span class="price">₦ 35,000</span>
-          </div>
+    <a style="text-decoration: none;" class="insta-btn" href="https://www.instagram.com/mumsneedsbackup/" aria-label="WhatsApp"><i class="fab fa-instagram"></i></a></a>
 
-          <div class="item-actions">
-            
-            <i class="fa-solid fa-trash"></i>
-          </div>
-        </div>
+  </div>
 
-        <div class="cart-item">
-          <img src="../images/shoes/shoes-1.webp" alt="Product">
-
-          <div class="item-info">
-            <h4>Kids Sneakers</h4>
-            <p>Quantity: <span>1</span></p>
-            <p>Size: L</p>
-            <span class="price">₦ 25,000</span>
-          </div>
-
-          <div class="item-actions">
-            <i class="fa-solid fa-trash"></i>
-          </div>
-        </div>
+  
+</section>
 
 
-        
-      </div>
 
-    <section class="Checkout-card">
 
-      <!-- TOTAL CARD -->
-      <div class="summary-card">
-        <h3>Order Summary</h3>
-
-        <div class="summary-row">
-          <span>Subtotal</span>
-          <span>₦ 60,000</span>
-        </div>
-
-        <div class="summary-row">
-          <span>Shipping</span>
-          <span>₦ 2,000</span>
-        </div>
-
-        <div class="summary-row total">
-          <span>Total</span>
-          <span>₦ 62,000</span>
-        </div>
-
-        <button class="checkout-btn">
-          Proceed to Checkout
-        </button>
-      </div>
-
-    </section> 
-
-</div>
 
 
 
@@ -179,15 +133,15 @@
             <!-- Logo & About -->
             <div class="footer-brand">
 
-            <div class="footer-logo">
-                <img src="../images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MyStore Logo">
+            <div style="text-decoration: none;" class="footer-logo">
+                <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="MyStore Logo">
             </div>
 
             <p>For Mothers who care.</p>
 
-            <div class="social-icons">
+            <div style="text-decoration: none;" class="social-icons">
                 <a href="https://www.instagram.com/mumsneedsbackup/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://l.instagram.com/?u=https%3A%2F%2Fwa.me%2F2348053788620%3Futm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio%26fbclid%3DPAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnJ6DFAXesjGKpVN5yr8AkeAfcX2QKNWbBrXVvhbshaXdOaWIv6cQnOBFRN7c_aem_sjNBWI2J7iwcz7qdz3NjpQ&e=AT1LEppFxr2PRsB8YAMKd8s158akPEr9xJ2rJH4M4vXWISepENLOZISHDED5wlJv2dprpspt0-N_p_8WgqWwJ42S2dYZ_s8CMfAhujfSrQ" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a style="text-decoration: none;" href="https://api.whatsapp.com/send/?phone=2348053788620&text&type=phone_number&app_absent=0&utm_source=ig" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 
             </div>
             </div>
@@ -256,11 +210,88 @@ mobileSearch.addEventListener("click", (e) => {
   e.stopPropagation();
 });
 
-/* ----------TO CLOSE ---------- */
+/* ---------- CLICK OUTSIDE TO CLOSE ---------- */
 document.addEventListener("click", () => {
   searchBox.classList.remove("active");
   mobileSearch.classList.remove("active");
 });
+
+
+
+// maps 
+
+
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll(".reveal");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  }, { threshold: 0.15 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Counter animation
+  const counters = document.querySelectorAll(".stat h3");
+
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.dataset.count;
+      const count = +counter.innerText;
+      const speed = target / 60;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + speed);
+        setTimeout(updateCount, 30);
+      } else {
+        counter.innerText = target;
+      }
+    };
+
+    observer.observe(counter);
+    counter.addEventListener("animationstart", updateCount);
+    updateCount();
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

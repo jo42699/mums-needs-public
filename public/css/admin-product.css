@@ -67,3 +67,36 @@
 .delete-btn:hover {
   color: #a71d2a;
 }
+
+
+
+.action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.open-btn {
+    background-color: #b303a1; /* blue */
+    color: #ffffff;
+}
+
+.open-btn:hover {
+    background-color: #813ec0;
+}
+
+.open-btn:active {
+    transform: scale(0.97);
+}
+
+.open-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4);
+}

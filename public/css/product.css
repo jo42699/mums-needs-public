@@ -15,6 +15,7 @@
 .small-img{
     height: 130px;
     width: 100px;
+    max-width: 150px;
 }
 
 .small-img-col img {
@@ -146,7 +147,9 @@
  height: auto;
 }
 
-
+/* =====================================================================================================
+   DISCOUNT PRICE STYLES
+   ========================= */ 
 
 .discount-price-card{
   font-size: 30px;
@@ -156,6 +159,45 @@
   
  
 }
+
+/* Pagination container */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px 0;
+}
+
+/* Pagination buttons */
+.pagination {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.pagination button {
+  padding: 10px 16px;
+  border: 2px solid #b57edc;
+  background: #fff;
+  color: #4a2c6d;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.pagination button:hover {
+  background: #b57edc;
+  color: white;
+}
+
+.pagination button.active {
+  background: #6a0dad;
+  color: white;
+  border-color: #6a0dad;
+}
+
 
 
 

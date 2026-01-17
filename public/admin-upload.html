@@ -56,257 +56,86 @@
   <div class="card">
     
 
-    <form action="/upload" method="post" enctype="multipart/form-data">
+    <form id="productForm" action="http://localhost:5000/v1/product/" method="post" enctype="multipart/form-data">
 
       <!-- Images -->
-      <h3>Upload Image 1</h3>
-      <input type="file" name="image1" accept="image/*" onchange="previewImage(event, 'preview1')">
+      <h3>Upload Main Image</h3>
+      <input type="file" name="image" accept="image/*" onchange="previewImage(event, 'preview1')">
        <img id="preview1" class="image-preview">
-      <h4>Amount in stock</h4>
-      <input min="0" type="number" name="stock_image1">
-
-      <h3>Upload Image 2  (Variant)</h3>
-      <input type="file" name="image2" accept="image/*" onchange="previewImage(event, 'preview2')">
-      <img id="preview2" class="image-preview">
-      <h4>Amount in stock</h4>
-      <input min="0" type="number" name="stock_image2">
-
-          <!-- Sizes -->
-          <h3>Baby Sizes</h3>
-          <div class="checkbox-group">
-            <label><input type="checkbox" name="sizes[]" value="0-3"> 0–3 months</label>
-            <label><input type="checkbox" name="sizes[]" value="3-6"> 3–6 months</label>
-            <label><input type="checkbox" name="sizes[]" value="6-9"> 6–9 months</label>
-            <label><input type="checkbox" name="sizes[]" value="9-12"> 9–12 months</label>
-            <label><input type="checkbox" name="sizes[]" value="12-18"> 12–18 months</label>
-            <label><input type="checkbox" name="sizes[]" value="18-24"> 18–24 months</label>
-          </div>
-
-          <h3>Kids Sizes</h3>
-          <div class="checkbox-group">
-            <label><input type="checkbox" name="sizes[]" value="2-3"> 2–3 years</label>
-            <label><input type="checkbox" name="sizes[]" value="3-4"> 3–4 years</label>
-            <label><input type="checkbox" name="sizes[]" value="4-5"> 4–5 years</label>
-            <label><input type="checkbox" name="sizes[]" value="5-6"> 5–6 years</label>
-            <label><input type="checkbox" name="sizes[]" value="6-7"> 6–7 years</label>
-            <label><input type="checkbox" name="sizes[]" value="7-8"> 7–8 years</label>
-            <label><input type="checkbox" name="sizes[]" value="8-9"> 8–9 years</label>
-            <label><input type="checkbox" name="sizes[]" value="9-10"> 9–10 years</label>
-            <label><input type="checkbox" name="sizes[]" value="10-11"> 10–11 years</label>
-            <label><input type="checkbox" name="sizes[]" value="11-12"> 11–12 years</label>
-            <label><input type="checkbox" name="sizes[]" value="12-13"> 12–13 years</label>
-            <label><input type="checkbox" name="sizes[]" value="13-14"> 13–14 years</label>
-            <label><input type="checkbox" name="sizes[]" value="14-15"> 14–15 years</label>
-            <label><input type="checkbox" name="sizes[]" value="16-17"> 16–17 years</label>
-            <label><input type="checkbox" name="sizes[]" value="17-18"> 17–18 years</label>
-          </div>
-
-          <h3>Adult Sizes</h3>
-          <div class="checkbox-group">
-            <label><input type="checkbox" name="sizes[]" value="XS"> XS</label>
-            <label><input type="checkbox" name="sizes[]" value="S"> S</label>
-            <label><input type="checkbox" name="sizes[]" value="M"> M</label>
-            <label><input type="checkbox" name="sizes[]" value="L"> L</label>
-            <label><input type="checkbox" name="sizes[]" value="XL"> XL</label>
-          </div>
-
-        <h3>Shoe Sizes</h3>
-
-        <div class="shoe-sizes">
-      <div class="shoe-header">
-        <span>UK</span>
-        <span>EU</span>
-        <span>US</span>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="4"> 4</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="36"> 36</label>
-        <label><input type="checkbox" name="shoe_us[]" value="5"> 5</label>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="5"> 5</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="37"> 37</label>
-        <label><input type="checkbox" name="shoe_us[]" value="6"> 6</label>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="6"> 6</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="38"> 38</label>
-        <label><input type="checkbox" name="shoe_us[]" value="7"> 7</label>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="7"> 7</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="40"> 40</label>
-        <label><input type="checkbox" name="shoe_us[]" value="8"> 8</label>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="8"> 8</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="42"> 42</label>
-        <label><input type="checkbox" name="shoe_us[]" value="9"> 9</label>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="9"> 9</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="43"> 43</label>
-        <label><input type="checkbox" name="shoe_us[]" value="10"> 10</label>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="10"> 10</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="45"> 45</label>
-        <label><input type="checkbox" name="shoe_us[]" value="11"> 11</label>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="11"> 11</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="46"> 46</label>
-        <label><input type="checkbox" name="shoe_us[]" value="12"> 12</label>
-      </div>
-
-      <div class="shoe-row">
-        <label><input type="checkbox" name="shoe_uk[]" value="12"> 12</label>
-        <label><input type="checkbox" name="shoe_eu[]" value="47"> 47</label>
-        <label><input type="checkbox" name="shoe_us[]" value="13"> 13</label>
-      </div>
-        </div>
-
-        <br>
-        <hr>
-        <br>
-        <br>
-
-
-
-      <h3>Upload Image 3 (Variant)</h3>
-      <input type="file" name="image3" accept="image/*" onchange="previewImage(event, 'preview3')">
-      <img id="preview3" class="image-preview">
-      <h4>Amount in stock</h4>
-      <input min="0"  type="number" name="stock_image3">
-
-
-       <!-- Sizes -->
-      <h3>Baby Sizes</h3>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="sizes[]" value="0-3"> 0–3 months</label>
-        <label><input type="checkbox" name="sizes[]" value="3-6"> 3–6 months</label>
-        <label><input type="checkbox" name="sizes[]" value="6-9"> 6–9 months</label>
-        <label><input type="checkbox" name="sizes[]" value="9-12"> 9–12 months</label>
-        <label><input type="checkbox" name="sizes[]" value="12-18"> 12–18 months</label>
-        <label><input type="checkbox" name="sizes[]" value="18-24"> 18–24 months</label>
-      </div>
-
-      <h3>Kids Sizes</h3>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="sizes[]" value="2-3"> 2–3 years</label>
-        <label><input type="checkbox" name="sizes[]" value="3-4"> 3–4 years</label>
-        <label><input type="checkbox" name="sizes[]" value="4-5"> 4–5 years</label>
-        <label><input type="checkbox" name="sizes[]" value="5-6"> 5–6 years</label>
-        <label><input type="checkbox" name="sizes[]" value="6-7"> 6–7 years</label>
-        <label><input type="checkbox" name="sizes[]" value="7-8"> 7–8 years</label>
-        <label><input type="checkbox" name="sizes[]" value="8-9"> 8–9 years</label>
-        <label><input type="checkbox" name="sizes[]" value="9-10"> 9–10 years</label>
-        <label><input type="checkbox" name="sizes[]" value="10-11"> 10–11 years</label>
-        <label><input type="checkbox" name="sizes[]" value="11-12"> 11–12 years</label>
-        <label><input type="checkbox" name="sizes[]" value="12-13"> 12–13 years</label>
-        <label><input type="checkbox" name="sizes[]" value="13-14"> 13–14 years</label>
-        <label><input type="checkbox" name="sizes[]" value="14-15"> 14–15 years</label>
-        <label><input type="checkbox" name="sizes[]" value="16-17"> 16–17 years</label>
-        <label><input type="checkbox" name="sizes[]" value="17-18"> 17–18 years</label>
-      </div>
-
-      <h3>Adult Sizes</h3>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="sizes[]" value="XS"> XS</label>
-        <label><input type="checkbox" name="sizes[]" value="S"> S</label>
-        <label><input type="checkbox" name="sizes[]" value="M"> M</label>
-        <label><input type="checkbox" name="sizes[]" value="L"> L</label>
-        <label><input type="checkbox" name="sizes[]" value="XL"> XL</label>
-      </div>
-
-    <h3>Shoe Sizes</h3>
-
-    <div class="shoe-sizes">
-  <div class="shoe-header">
-    <span>UK</span>
-    <span>EU</span>
-    <span>US</span>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="4"> 4</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="36"> 36</label>
-    <label><input type="checkbox" name="shoe_us[]" value="5"> 5</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="5"> 5</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="37"> 37</label>
-    <label><input type="checkbox" name="shoe_us[]" value="6"> 6</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="6"> 6</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="38"> 38</label>
-    <label><input type="checkbox" name="shoe_us[]" value="7"> 7</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="7"> 7</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="40"> 40</label>
-    <label><input type="checkbox" name="shoe_us[]" value="8"> 8</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="8"> 8</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="42"> 42</label>
-    <label><input type="checkbox" name="shoe_us[]" value="9"> 9</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="9"> 9</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="43"> 43</label>
-    <label><input type="checkbox" name="shoe_us[]" value="10"> 10</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="10"> 10</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="45"> 45</label>
-    <label><input type="checkbox" name="shoe_us[]" value="11"> 11</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="11"> 11</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="46"> 46</label>
-    <label><input type="checkbox" name="shoe_us[]" value="12"> 12</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="12"> 12</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="47"> 47</label>
-    <label><input type="checkbox" name="shoe_us[]" value="13"> 13</label>
-  </div>
-  </div>
-
-  <br>
-  <hr>
-  <br>
-
-
- 
-
       <!-- Product Info -->
       <h3>Product Name</h3>
       <input type="text" name="product_name">
+      <h3>Product Sizes & Stock</h3>
+
+    <div id="sizes-container-1">
+        <div class="size-row">
+            <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)" required>
+            <input type="number" name="stock[]" placeholder="Stock" min="0" required>
+            <button class="button-css" type="button" onclick="removeRow(this)">✕</button>
+        </div>
+    </div>
+
+    <button class="button-css" type="button" id="" onclick="addRowOne()">Add Size</button>
+
+    <br><br>
+
+      <h4>Amount in stock</h4>
+      <input min="0" type="number" name="stock_image1">
+
 
       <h3>Product Price</h3>
       <input type="number" name="price" min="0">
 
       <h3>Product Discount in % (if any)</h3>
       <input type="number" name="discount" min="0">
+<br>
+<br>
+<hr>
+<h2>Variants (if any)</h2>
+<br>
+ <h3>Variant Name</h3>
+      <input type="text" name="variant_name">
+      <br>
+      <h3>Variant Image 1</h3>
+      <input type="file" name="variantImages" accept="image/*" onchange="previewImage(event, 'preview1')">
+       <img id="preview1" class="image-preview">
+      <h3>Variant Sizes & Stock</h3>
+
+    <div id="sizes-container-2">
+        <div class="size-row">
+            <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)" >
+            <input type="number" name="stock[]" placeholder="Stock" min="0">
+            <button class="button-css" type="button" onclick="removeRow(this)">✕</button>
+        </div>
+    </div>
+
+    <button class="button-css" type="button" onclick="addRowTwo()">Add Size</button>  
+
+    <br><br>
+<br>
+<br>
+ <h3>Variant Name</h3>
+      <input type="text" name="variant_name">
+      <br>
+      <h3>Variant Image 2</h3>
+      <input type="file" name="variantImages" accept="image/*" onchange="previewImage(event, 'preview1')">
+       <img id="preview1" class="image-preview">
+      <h3>Variant Sizes & Stock</h3>
+
+    <div id="sizes-container-3">
+        <div class="size-row">
+            <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)">
+            <input type="number" name="stock[]" placeholder="Stock" min="0" >
+            <button class="button-css" type="button" onclick="removeRowThree(this)">✕</button>
+        </div>
+    </div>
+
+    <button class="button-css" type="button" onclick="addRowThree()">Add Size</button>  
+    <br><br>
+
+<br>
+<br>
+<hr>
 
       
       <h3>Product Description</h3>
@@ -315,108 +144,6 @@
       <h3>Product Keywords</h3>
       <input type="text" name="keywords" placeholder="comma separated">
 
-      <!-- Sizes -->
-      <h3>Baby Sizes</h3>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="sizes[]" value="0-3"> 0–3 months</label>
-        <label><input type="checkbox" name="sizes[]" value="3-6"> 3–6 months</label>
-        <label><input type="checkbox" name="sizes[]" value="6-9"> 6–9 months</label>
-        <label><input type="checkbox" name="sizes[]" value="9-12"> 9–12 months</label>
-        <label><input type="checkbox" name="sizes[]" value="12-18"> 12–18 months</label>
-        <label><input type="checkbox" name="sizes[]" value="18-24"> 18–24 months</label>
-      </div>
-
-      <h3>Kids Sizes</h3>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="sizes[]" value="2-3"> 2–3 years</label>
-        <label><input type="checkbox" name="sizes[]" value="3-4"> 3–4 years</label>
-        <label><input type="checkbox" name="sizes[]" value="4-5"> 4–5 years</label>
-        <label><input type="checkbox" name="sizes[]" value="5-6"> 5–6 years</label>
-        <label><input type="checkbox" name="sizes[]" value="6-7"> 6–7 years</label>
-        <label><input type="checkbox" name="sizes[]" value="7-8"> 7–8 years</label>
-        <label><input type="checkbox" name="sizes[]" value="8-9"> 8–9 years</label>
-        <label><input type="checkbox" name="sizes[]" value="9-10"> 9–10 years</label>
-        <label><input type="checkbox" name="sizes[]" value="10-11"> 10–11 years</label>
-        <label><input type="checkbox" name="sizes[]" value="11-12"> 11–12 years</label>
-        <label><input type="checkbox" name="sizes[]" value="12-13"> 12–13 years</label>
-        <label><input type="checkbox" name="sizes[]" value="13-14"> 13–14 years</label>
-        <label><input type="checkbox" name="sizes[]" value="14-15"> 14–15 years</label>
-        <label><input type="checkbox" name="sizes[]" value="16-17"> 16–17 years</label>
-        <label><input type="checkbox" name="sizes[]" value="17-18"> 17–18 years</label>
-      </div>
-
-      <h3>Adult Sizes</h3>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="sizes[]" value="XS"> XS</label>
-        <label><input type="checkbox" name="sizes[]" value="S"> S</label>
-        <label><input type="checkbox" name="sizes[]" value="M"> M</label>
-        <label><input type="checkbox" name="sizes[]" value="L"> L</label>
-        <label><input type="checkbox" name="sizes[]" value="XL"> XL</label>
-      </div>
-
-    <h3>Shoe Sizes</h3>
-
-    <div class="shoe-sizes">
-  <div class="shoe-header">
-    <span>UK</span>
-    <span>EU</span>
-    <span>US</span>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="4"> 4</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="36"> 36</label>
-    <label><input type="checkbox" name="shoe_us[]" value="5"> 5</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="5"> 5</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="37"> 37</label>
-    <label><input type="checkbox" name="shoe_us[]" value="6"> 6</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="6"> 6</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="38"> 38</label>
-    <label><input type="checkbox" name="shoe_us[]" value="7"> 7</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="7"> 7</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="40"> 40</label>
-    <label><input type="checkbox" name="shoe_us[]" value="8"> 8</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="8"> 8</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="42"> 42</label>
-    <label><input type="checkbox" name="shoe_us[]" value="9"> 9</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="9"> 9</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="43"> 43</label>
-    <label><input type="checkbox" name="shoe_us[]" value="10"> 10</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="10"> 10</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="45"> 45</label>
-    <label><input type="checkbox" name="shoe_us[]" value="11"> 11</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="11"> 11</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="46"> 46</label>
-    <label><input type="checkbox" name="shoe_us[]" value="12"> 12</label>
-  </div>
-
-  <div class="shoe-row">
-    <label><input type="checkbox" name="shoe_uk[]" value="12"> 12</label>
-    <label><input type="checkbox" name="shoe_eu[]" value="47"> 47</label>
-    <label><input type="checkbox" name="shoe_us[]" value="13"> 13</label>
-  </div>
-    </div>
 
 
     <h3>Section</h3>
@@ -428,10 +155,12 @@
   <option value="section3">Shop Section </option>
   </select>
 
-
+      <!-- REQUIRED HIDDEN FIELD -->
+      <input type="hidden" name="data" id="dataField">
 
       <button type="submit">Submit</button>
-    </form>
+</form>
+
   </div>
 
 
@@ -452,44 +181,10 @@
 </main>
 </div>
 
-<script>
 
 
+<script src="./js/admin-product-upload.js"></script>
+<script src="./js/admin-main.js"></script>
 
-const hamburger = document.getElementById('hamburger');
-const sidebar = document.getElementById('sidebar');
-const closeSidebar = document.getElementById("closeSidebar");
-
-hamburger.addEventListener('click', () => {
-  sidebar.classList.toggle('collapsed'); // open / close
-});
-
-closeSidebar.addEventListener('click', () => {
-  sidebar.classList.remove('collapsed'); // CLOSE
-});
-
-
-
-function previewImage(event, previewId) {
-  const file = event.target.files[0];
-  const preview = document.getElementById(previewId);
-
-  if (!file) {
-    preview.style.display = "none";
-    return;
-  }
-
-  preview.src = URL.createObjectURL(file);
-  preview.style.display = "block";
-}
-
-
-
-
-
-
-
-
-</script>
 </body>
 </html>

@@ -166,6 +166,20 @@
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
+ .size-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .size-row input {
+            padding: 5px;
+        }
+        .size-row button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .checkbox-group {
@@ -181,4 +195,20 @@
   .shoe-sizes label {
     justify-content: flex-start;
   }
+}
+
+
+.button-css {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #8c28a7; /* green */
+    color: #ffffff;
 }

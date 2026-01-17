@@ -168,6 +168,10 @@ document.addEventListener("DOMContentLoaded", function() {
               <i class="fa-solid fa-trash"></i>
             </button>
           </td>
+             <!-- Action -->
+          <td>
+            <button class="action-btn open-btn">View</button>
+          </td>
 
         </tr>
 
@@ -203,9 +207,12 @@ document.addEventListener("DOMContentLoaded", function() {
           <td>
             <button class="action-btn delete-btn">
               <i class="fa-solid fa-trash"></i>
-            </button>
+            </button>           
           </td>
-
+             <!-- Action -->
+          <td>
+            <button class="action-btn open-btn">View</button>
+          </td>
         </tr>
 
     
@@ -230,6 +237,112 @@ document.addEventListener("DOMContentLoaded", function() {
   <br>
   <br>
 
+  <br>
+  <br>
+  <br>
+
+<!-- ORDER DRAWER -->
+<div class="order-drawer" id="orderDrawer">
+
+  <div class="drawer-header">
+    <h3>product name:&nbsp;<span> shoes</span></h3>
+    <button class="drawer-close" id="closeDrawer">✕</button>
+  </div>
+
+  <div class="drawer-content">
+
+    <table class="stock-table">
+    <thead>
+        <tr>
+            <th>Size</th>
+            <th>Stock Available</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>S</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>M</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>XL</td>
+            <td>5</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+    
+
+
+    
+    <br>
+    <h4>product</h4>
+
+    <div class="drawer-items">
+
+      <div class="drawer-item">
+        <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product A">
+
+      </div>
+
+  <hr>
+<br>
+    <h4>Variant if any</h4>  
+        <table class="stock-table">
+    <thead>
+        <tr>
+            <th>Size</th>
+            <th>Stock Available</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>S</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>M</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>XL</td>
+            <td>5</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+    <h4>variant</h4>
+     <div class="drawer-item">
+        <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product A">
+
+      </div>
+    </div>
+
+    <hr>
+    <br>
+    <p style="font-size: 15px;"><strong>Price:</strong> ₦ 112,223 </p>
+
+    <div class="drawer-actions">
+
+      <button class="secondary-btn">Delete   &nbsp;<i class="fa-solid fa-trash"></i> </button>
+    </div>
+    <br>
+  </div>
+</div>
+
 
 
 
@@ -253,6 +366,30 @@ closeSidebar.addEventListener('click', () => {
 });
 
 
+
+
+
+const drawer = document.getElementById("orderDrawer");
+const closeBtn = document.getElementById("closeDrawer");
+const openButtons = document.querySelectorAll(".open-btn");
+
+function openDrawer() {
+  if (!drawer) return;
+  drawer.classList.add("open");
+}
+
+function closeDrawer() {
+  if (!drawer) return;
+  drawer.classList.remove("open");
+}
+
+openButtons.forEach(btn => {
+  btn.addEventListener("click", openDrawer);
+});
+
+if (closeBtn) {
+  closeBtn.addEventListener("click", closeDrawer);
+}
 
 
 

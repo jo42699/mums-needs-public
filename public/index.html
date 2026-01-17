@@ -393,78 +393,8 @@
 
 
 
-<script>
-  const searchIcon = document.getElementById("searchIcon");
-  const searchBox = document.getElementById("searchBox");
-  const closeSearch = document.getElementById("closeSearch");
-  const mobileSearch = document.getElementById("mobileSearch");
-  const closeMobileSearch = document.getElementById("closeMobileSearch");
-  const sliders = document.querySelectorAll(".products-wrapper");
+<script src="./js/main.js"></script>
 
-
-
-  searchIcon.addEventListener("click", () => {
-    if (window.innerWidth <= 768) {
-      mobileSearch.classList.add("active");
-    } else {
-      searchBox.classList.add("active");
-    }
-  });
-
-  closeSearch.addEventListener("click", () => {
-    searchBox.classList.remove("active");
-  });
-
-  closeMobileSearch.addEventListener("click", () => {
-    mobileSearch.classList.remove("active");
-  });
-
-
-
-// Drag to scroll functionality
-   sliders.forEach((slider) => {
-  let isDragging = false;
-  let startX;
-  let scrollStart;
-
-  slider.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    slider.classList.add("dragging");
-    startX = e.pageX;
-    scrollStart = slider.scrollLeft;
-  });
-
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
-    slider.classList.remove("dragging");
-  });
-
-  slider.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-
-    const walk = e.pageX - startX;
-    slider.scrollLeft = scrollStart - walk;
-  });
-
-  slider.addEventListener("mouseleave", () => {
-    isDragging = false;
-    slider.classList.remove("dragging");
-  });
-
-  slider.addEventListener("click", (e) => {
-    if (isDragging) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-});
-
-
-
-
-
-</script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 </body>

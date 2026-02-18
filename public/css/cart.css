@@ -146,6 +146,33 @@
 
 
 
+.cartloader {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  margin-left: 20px;
+}
+
+.cart-skeleton {
+  
+  height: 120px; /* rectangle height */
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ececec, #f7f7f7, #ececec);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  margin-left: 20px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+
+
+
+
 
 
 

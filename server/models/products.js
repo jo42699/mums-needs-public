@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-//
+
 // VARIANT SCHEMA
-//
+
 const variantSchema = new mongoose.Schema(
   {
     variantName: {
@@ -33,9 +33,9 @@ const variantSchema = new mongoose.Schema(
 );
 
 
-//
+
 // PRODUCT SCHEMA
-//
+
 const productSchema = new mongoose.Schema(
   {
     name: {

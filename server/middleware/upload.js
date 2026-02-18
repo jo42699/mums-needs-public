@@ -14,7 +14,8 @@ const storage = multer.diskStorage({
 
 // File filter
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|webp|gif/;
+  const allowedTypes =
+    /jpeg|jpg|png|webp|gif|avif|svg|mp4|mov|avi|mp3|wav|ogg|pdf|doc|docx|xls|xlsx|ppt|pptx|txt|zip|rar/;
 
   const extName = allowedTypes.test(
     path.extname(file.originalname).toLowerCase()
@@ -25,17 +26,29 @@ const fileFilter = (req, file, cb) => {
   if (extName && mimeType) {
     cb(null, true);
   } else {
-    cb(new Error('Only image files (jpg, jpeg, png, webp, gif) are allowed'));
+    cb(
+      new Error(
+        'Invalid file type. Allowed: images, videos, audio, documents, archives.'
+      )
+    );
   }
 };
+
 
 // Multer instance
 const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB (optional but recommended)
+    fileSize: 5 * 1024 * 1024 // 5MB limit
   }
 });
 
 module.exports = upload;
+
+
+
+
+
+
+// used AI to help with this multer file upload middleware to add more file types

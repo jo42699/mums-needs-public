@@ -73,7 +73,7 @@
       <li class="nav-item cart-icon">
           <a href="cart.html" style="color: rgb(32, 19, 33);">
           <i class="fa-solid fa-cart-shopping"></i>
-          <span class="cart-count">0</span>
+          <span  id="added-to-cart" class="cart-count">0</span>
         </a>
       </li>
             
@@ -92,10 +92,36 @@
   </div>
 
   <div class="featured-section">
+    <div id="productLoader" class="product-loader">
 
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+      <div class="loader-card"></div>
+
+
+    </div>
+    
     <!-- Product Container -->
     <div class="shop-container" id="productContainer">
       <!-- repeat product cards -->
+    
+
     </div>
 
     <!-- Pagination INSIDE featured section -->
@@ -104,6 +130,8 @@
     </div>
 
   </div>
+
+
 </section>
 
 
@@ -164,10 +192,9 @@
 
 
 
-
-
-<script src="./js/shop.js"  defer ></script>
-<script  src="./js/main.js" ></script>
+<script type="module" src="./js/cart.js"></script>
+<script type="module" src="./js/shop.js"  defer ></script>
+<script type="module" src="./js/main.js" ></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>

@@ -1,8 +1,8 @@
+import { getCartCount } from "./cart.js";
+
 const searchIcon = document.getElementById("searchIcon");
 const searchBox = document.getElementById("searchBox");
 const closeSearch = document.getElementById("closeSearch");
-
-// FIXED: renamed to avoid conflict
 const mobileSearchBox = document.getElementById("mobileSearch");
 const closeMobileSearch = document.getElementById("closeMobileSearch");
 
@@ -27,58 +27,12 @@ closeMobileSearch.addEventListener("click", () => {
 
 
 
- 
-// Drag to scroll functionality
-   sliders.forEach((slider) => {
-  let isDragging = false;
-  let startX;
-  let scrollStart;
 
-  slider.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    slider.classList.add("dragging");
-    startX = e.pageX;
-    scrollStart = slider.scrollLeft;
-  });
-
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
-    slider.classList.remove("dragging");
-  });
-
-  slider.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-
-    const walk = e.pageX - startX;
-    slider.scrollLeft = scrollStart - walk;
-  });
-
-  slider.addEventListener("mouseleave", () => {
-    isDragging = false;
-    slider.classList.remove("dragging");
-  });
-
-  slider.addEventListener("click", (e) => {
-    if (isDragging) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
+// Update cart count on page load
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("added-to-cart");
+  if (el) el.textContent = getCartCount();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -124,7 +78,7 @@ closeMobileSearch.addEventListener("click", () => {
 
 
 
-
+// not realy needed rn because its handled in my product.js file
 // to make images change on click
     const productDisplay = document.querySelector('.product-display img');
     const smallImages = document.querySelectorAll('.small-img');
@@ -134,32 +88,6 @@ closeMobileSearch.addEventListener("click", () => {
         productDisplay.src = img.src;
       });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //shop
-
-
 
 
 

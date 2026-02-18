@@ -4,13 +4,17 @@
 }
 
 
+
+
+
 /* Page center */
 .auth-container {
+  margin-top: 50px;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa, #e4e8ef);
+  background: linear-gradient(135deg, #f5f7fa, #ffffff);
   font-family: "Segoe UI", sans-serif;
 }
 
@@ -18,6 +22,7 @@
 .auth-card {
   width: 100%;
   max-width: 360px;
+  height: auto;
   background: #fff;
   padding: 30px;
   padding-top: 50px;
@@ -94,7 +99,7 @@
 
 /* Footer */
 .auth-footer {
-  margin-top: 18px;
+  margin-top: 8px;
   font-size: 13px;
   color: #555;
 }
@@ -123,7 +128,7 @@
 
 /* Image inside */
 .circle-btn img {
-  width: 50px;
+  width: 70px;
   height: 100px;
   object-fit: contain;
   border-radius: 100px;
@@ -144,12 +149,159 @@
   background-color: #ffffff;
 }
 
+.auth-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  position: relative;
+  width: 360px;
+  height: 430px;
+  padding: 32px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.1);
+}
+
+.auth-panel {
+  position: absolute;
+  inset: 0;
+  padding: 32px;
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.auth-panel.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+.google-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
 
 
 
+.google-btn {
+  width: 100%;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  font-size: 15px;
+  font-weight: 500;
+  color: #3c4043;
+
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 12px;
+
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+/* Google icon */
+.google-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Hover */
+.google-btn:hover {
+  background: #f8f9fa;
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Active (click) */
+.google-btn:active {
+  transform: scale(0.97);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Focus (keyboard users) */
+.google-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(66, 133, 244, 0.35),
+    0 3px 8px rgba(0, 0, 0, 0.12);
+}
 
 
+/* Hide elements */
 
+.hidden {
+  display: none;
+}
+
+/* Logged-in message */
+.message-container {
+
+  margin-top: 100px;
+  max-width: 400px;
+  margin: 40px auto;
+  height: 300px;
+  padding: 80px;
+  background: #ffffff;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.message-container h1 {
+  margin-bottom: 10px;
+  font-size: 26px;
+  color: #222;
+}
+
+.message-container p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  background: #ff03ab;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  opacity: 0.9;
+}
 
 
 

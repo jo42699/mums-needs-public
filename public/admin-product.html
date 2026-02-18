@@ -10,54 +10,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const table = document.querySelector(".table-section table");
-  if (!table) return;
 
-  const tbody = table.querySelector("tbody");
-  const rows = Array.from(tbody.querySelectorAll("tr.product-row"));
-
-  const rowsPerPage = 10;
-  const pageCount = Math.ceil(rows.length / rowsPerPage);
-  let currentPage = 1;
-
-  let pagination = document.getElementById("pagination");
-  if (!pagination) {
-    pagination = document.createElement("div");
-    pagination.id = "pagination";
-    pagination.classList.add("pagination");
-    table.parentNode.appendChild(pagination);
-  }
-
-  function showPage(page) {
-    currentPage = page;
-    rows.forEach(row => (row.style.display = "none"));
-
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    rows.slice(start, end).forEach(row => {
-      row.style.display = "table-row";
-    });
-
-    renderPagination();
-  }
-
-  function renderPagination() {
-    pagination.innerHTML = "";
-    for (let i = 1; i <= pageCount; i++) {
-      const btn = document.createElement("button");
-      btn.textContent = i;
-      if (i === currentPage) btn.classList.add("active");
-      btn.addEventListener("click", () => showPage(i));
-      pagination.appendChild(btn);
-    }
-  }
-
-  showPage(1);
-});
-</script>
 
 <body>
 
@@ -101,130 +54,47 @@ document.addEventListener("DOMContentLoaded", function() {
 
    
 
-        <div class="search-container">
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search..." />
-        </div>
+  <div class="search-container">
+  <i class="fas fa-search"></i>
+  <input type="text" id="productSearch" placeholder="Search..." />
+  </div>
 
 
 
   <!-- All products -->
 <div class="orders-overflow">
-  <section class="table-section">
+ <section class="table-section">
 
-    <!-- Section Header -->
-    <div class="section-header">
-      <h3>All Products</h3>
-      <h4>Product count : <span>200</span></h4>
-    </div>
+  <!-- Section Header -->
+  <div class="section-header">
+    <h3>All Products</h3>
+    <h4>Product count : <span>0</span></h4>
+  </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Product ID</th>
-          <th>Status</th>
-          <th>Stock</th>
-          <th>Price</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Product ID</th>
+        <th>Stock</th>
+        <th>Price</th>
+        <th>Delete</th>
+        <th>View</th>
+      </tr>
+    </thead>
 
-      <tbody>
+    <tbody>
+      <!-- JS will insert product rows here -->
+    </tbody>
+  </table>
 
-        <!-- Product Row -->
-
-        <tr class="product-row">
-
-          <!-- Product -->
-          <td>
-            <div class="product-info">
-              <div class="product-image">
-                <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="">
-              </div>
-              <span class="product-name">pink shoes</span>
-            </div>
-          </td>
-
-          <!-- Product ID -->
-          <td>#PRD-85631</td>
-
-          <!-- Status -->
-          <td>
-            <span class="badge active">Active</span>
-          </td>
-
-          <!-- Stock -->
-          <td>
-            <span class="stock in-stock">In Stock</span>
-          </td>
-
-          <!-- Price -->
-          <td>₦ 500,000</td>
-
-          <!-- Action -->
-          <td>
-            <button class="action-btn delete-btn">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </td>
-             <!-- Action -->
-          <td>
-            <button class="action-btn open-btn">View</button>
-          </td>
-
-        </tr>
-
-        <tr class="product-row">
-
-          <!-- Product -->
-          <td>
-            <div class="product-info">
-              <div class="product-image">
-                <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="">
-              </div>
-              <span class="product-name">Wireless Headset</span>
-            </div>
-          </td>
-
-          <!-- Product ID -->
-          <td>#PRD-85631</td>
-
-          <!-- Status -->
-          <td>
-            <span class="badge active">Active</span>
-          </td>
-
-          <!-- Stock -->
-          <td>
-            <span class="stock out-of-stock">out of stock</span>
-          </td>
-
-          <!-- Price -->
-          <td>₦ 500,000</td>
-
-          <!-- Action -->
-          <td>
-            <button class="action-btn delete-btn">
-              <i class="fa-solid fa-trash"></i>
-            </button>           
-          </td>
-             <!-- Action -->
-          <td>
-            <button class="action-btn open-btn">View</button>
-          </td>
-        </tr>
-
-    
-
-      </tbody>
-    </table>
-
-  </section>
-
-  <!-- Pagination -->
+  <!-- Pagination (optional) -->
   <div id="pagination" class="pagination"></div>
-</div>
+
+</section>
+
+
+
 
 
 
@@ -260,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function() {
     </thead>
     <tbody>
         <tr>
-            <td>S</td>
+            <td>S</td>   <!-- main stock details -->
             <td>12</td>
         </tr>
         <tr>
@@ -276,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <td>5</td>
         </tr>
     </tbody>
-</table>
+    </table>
 
 
 
@@ -285,59 +155,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
     <br>
-    <h4>product</h4>
+    <h4>Main Product Image</h4>
 
     <div class="drawer-items">
 
       <div class="drawer-item">
-        <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product A">
+        <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="NAN">
 
       </div>
 
   <hr>
 <br>
-    <h4>Variant if any</h4>  
-        <table class="stock-table">
-    <thead>
-        <tr>
-            <th>Size</th>
-            <th>Stock Available</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>S</td>
-            <td>12</td>
-        </tr>
-        <tr>
-            <td>M</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>L</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>XL</td>
-            <td>5</td>
-        </tr>
-    </tbody>
-</table>
-<br>
-    <h4>variant</h4>
-     <div class="drawer-item">
-        <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product A">
-
-      </div>
-    </div>
+    
+<div class="variants-container"></div>
 
     <hr>
     <br>
-    <p style="font-size: 15px;"><strong>Price:</strong> ₦ 112,223 </p>
+    <p style="font-size: 15px;"><strong>Price:</strong> ₦ 112,223 </p> <!-- Price detail -->
 
     <div class="drawer-actions">
 
-      <button class="secondary-btn">Delete   &nbsp;<i class="fa-solid fa-trash"></i> </button>
+ <button class="secondary-btn" id="drawerDeleteBtn">
+  Delete &nbsp;<i class="fa-solid fa-trash"></i>
+</button>
+
+
     </div>
     <br>
   </div>
@@ -349,9 +191,9 @@ document.addEventListener("DOMContentLoaded", function() {
 </main>
 </div>
 
+
+<script src="./js/admin-products.js"></script>
 <script>
-
-
 
 const hamburger = document.getElementById('hamburger');
 const sidebar = document.getElementById('sidebar');
@@ -367,29 +209,6 @@ closeSidebar.addEventListener('click', () => {
 
 
 
-
-
-const drawer = document.getElementById("orderDrawer");
-const closeBtn = document.getElementById("closeDrawer");
-const openButtons = document.querySelectorAll(".open-btn");
-
-function openDrawer() {
-  if (!drawer) return;
-  drawer.classList.add("open");
-}
-
-function closeDrawer() {
-  if (!drawer) return;
-  drawer.classList.remove("open");
-}
-
-openButtons.forEach(btn => {
-  btn.addEventListener("click", openDrawer);
-});
-
-if (closeBtn) {
-  closeBtn.addEventListener("click", closeDrawer);
-}
 
 
 

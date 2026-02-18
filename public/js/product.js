@@ -1,3 +1,5 @@
+import { auth } from "./auth.js";
+
 // ELEMENT REFERENCES
 const mainImage = document.getElementById("mainImage");
 const smallImgGroup = document.getElementById("variantImages");
@@ -20,24 +22,26 @@ const formatter = new Intl.NumberFormat("en-NG");
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
-// Disable Add to Cart initially
-addToCartBtn.disabled = true;
+// Disable Add to Cart initially until size is selected
+//addToCartBtn.disabled = true;
 
-/* ---------------- LOAD PRODUCT DETAILS ---------------- */
+// LOAD PRODUCT DETAILS
 async function loadProduct() {
   try {
     const res = await fetch(`http://localhost:5000/v1/product/${productId}`);
     const product = await res.json();
 
-    /* MAIN IMAGE */
+    window.currentProduct = product;
+
+    // MAIN IMAGE
     mainImage.src = `http://localhost:5000${product.image.url}`;
     mainImage.alt = product.image.alt;
 
-    /* TITLE + DESCRIPTION */
+    // TITLE + DESCRIPTION
     productTitle.textContent = product.name;
     productDescription.textContent = product.description;
 
-    /* PRICE + DISCOUNT */
+    // PRICE + DISCOUNT
     const originalPrice = product.price / 100;
 
     if (product.discount > 0) {
@@ -48,32 +52,31 @@ async function loadProduct() {
         <span style="font-size: 18px; text-decoration: line-through; color: #888; display:block;">
           ₦ ${formatter.format(originalPrice)}
         </span>
-        <span style="color: #38223f; font-weight: bold; display:block;">
+        <span style="color: #1d1420; font-weight: bold; display:block;">
           ₦ ${formatter.format(discountedPrice)}
         </span>
       `;
 
       discountPrice.textContent = `${product.discount}% OFF`;
       discountPrice.style.display = "inline-block";
-
     } else {
       productPrice.textContent = `₦ ${formatter.format(originalPrice)}`;
       discountPrice.style.display = "none";
     }
 
-    /* VARIANT DROPDOWN */
+    // VARIANT DROPDOWN
     priceSelect.innerHTML = `<option value="base">Default</option>`;
     product.variants.forEach(v => {
       priceSelect.innerHTML += `<option value="${v._id}">${v.variantName}</option>`;
     });
 
-    /* SIZE SELECT (BASE PRODUCT) */
-    sizeSelect.innerHTML = `<option disabled selected>Choose a size</option>`;
+    // SIZE SELECT (BASE PRODUCT)
+    sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
     Object.keys(product.stockBySize).forEach(size => {
       sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
     });
 
-    /* THUMBNAILS */
+    // THUMBNAILS
     smallImgGroup.innerHTML = `
       <div class="small-img-col">
         <img class="small-img"
@@ -93,7 +96,7 @@ async function loadProduct() {
       `;
     });
 
-    /* THUMBNAIL CLICK HANDLERS */
+    // THUMBNAIL CLICK HANDLERS
     document.querySelectorAll(".small-img").forEach(img => {
       img.addEventListener("click", () => {
         mainImage.src = img.src;
@@ -103,7 +106,7 @@ async function loadProduct() {
 
           priceSelect.value = variant._id;
 
-          sizeSelect.innerHTML = `<option disabled selected>Choose a size</option>`;
+          sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
           Object.keys(variant.VariantStockBySize).forEach(size => {
             sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
           });
@@ -111,7 +114,7 @@ async function loadProduct() {
         } else {
           priceSelect.value = "base";
 
-          sizeSelect.innerHTML = `<option disabled selected>Choose a size</option>`;
+          sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
           Object.keys(product.stockBySize).forEach(size => {
             sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
           });
@@ -124,18 +127,17 @@ async function loadProduct() {
       });
     });
 
-    /* VARIANT SELECT HANDLER */
+    // VARIANT SELECT HANDLER
     priceSelect.addEventListener("change", () => {
       const selected = priceSelect.value;
 
-      sizeSelect.innerHTML = `<option disabled selected>Choose a size</option>`;
+      sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
       addToCartBtn.disabled = true;
 
       if (selected === "base") {
         Object.keys(product.stockBySize).forEach(size => {
           sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
         });
-
       } else {
         const variant = product.variants.find(v => v._id === selected);
 
@@ -149,7 +151,7 @@ async function loadProduct() {
       updateQtyButtons();
     });
 
-    /* SIZE SELECT HANDLER */
+    // SIZE SELECT HANDLER
     sizeSelect.addEventListener("change", () => {
       const selectedSize = sizeSelect.value;
       let maxStock = 0;
@@ -168,7 +170,7 @@ async function loadProduct() {
       addToCartBtn.disabled = false;
     });
 
-    /* QUANTITY BUTTONS */
+    // QUANTITY BUTTONS
     function updateQtyButtons() {
       const maxStock = parseInt(qtyControl.dataset.stock || 1);
       const qty = parseInt(qtyInput.value);
@@ -192,7 +194,7 @@ async function loadProduct() {
 
     updateQtyButtons();
 
-    /* LOAD SIMILAR PRODUCTS */
+    // LOAD SIMILAR PRODUCTS
     loadMoreLikeThis(product);
 
   } catch (err) {
@@ -202,12 +204,11 @@ async function loadProduct() {
 
 loadProduct();
 
-/* ---------------- MORE LIKE THIS SECTION ---------------- */
-
+// MORE LIKE THIS SECTION
 const moreLikeThisContainer = document.querySelector(".products-wrapper");
 const allProductsURL = "http://localhost:5000/v1/product/";
 
-/* Load similar products */
+// Load similar products
 async function loadMoreLikeThis(currentProduct) {
   try {
     const res = await fetch(allProductsURL);
@@ -235,7 +236,25 @@ async function loadMoreLikeThis(currentProduct) {
   }
 }
 
-/* Render similar products */
+// Increment cart count in UI
+
+/*function incrementCartCount() {
+  const countEl = document.getElementById("cart-count");
+  if (!countEl) return;
+
+  let current = parseInt(countEl.textContent) || 0;
+  countEl.textContent = current + 1;
+}
+
+
+*/
+
+
+
+
+
+
+// Render similar products
 function renderMoreLikeThis(list) {
   moreLikeThisContainer.innerHTML = "";
 
@@ -260,11 +279,93 @@ function renderMoreLikeThis(list) {
   });
 }
 
-/* Make similar products clickable */
+// Make similar products clickable
 moreLikeThisContainer.addEventListener("click", e => {
   const card = e.target.closest(".product");
   if (!card) return;
 
   const id = card.dataset.id;
   window.location.href = `product.html?id=${id}`;
+});
+
+// ADD TO CART HANDLER
+addToCartBtn.addEventListener("click", async () => {
+  const user = auth.currentUser;
+  const product = window.currentProduct;
+
+  const selectedVariant = priceSelect.value;
+  const selectedSize = sizeSelect.value;
+  const quantity = parseInt(qtyInput.value);
+
+  if (!selectedSize) {
+    alert("Please select a size");
+    return;
+  }
+
+  // BASE PRICE (variants do NOT have their own price)
+  let unitPrice = product.price;
+
+  // IMAGE
+  let image = {
+    url: product.image.url,
+    alt: product.image.alt
+  };
+
+  // VARIANT SELECTED
+  if (selectedVariant !== "base") {
+    const variant = product.variants.find(v => v._id === selectedVariant);
+
+    image = {
+      url: variant.Variantimage.url,
+      alt: variant.Variantimage.alt
+    };
+  }
+
+  const cartItem = {
+    productId,
+    name: product.name,
+    size: selectedSize,
+    quantity,
+    unitPrice,
+    totalPrice: unitPrice * quantity,
+    image
+  };
+
+  // GUEST CART
+  if (!user) {
+    let guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
+
+    cartItem._id =
+      Date.now().toString() + Math.random().toString(36).substring(2);
+
+    guestCart.push(cartItem);
+    localStorage.setItem("guest_cart", JSON.stringify(guestCart));
+    
+    alert("Added to cart!");
+    return;
+  }
+
+  // USER CART
+  try {
+    const response = await fetch("http://localhost:5000/v1/cart/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        customerId: user.uid,
+        ...cartItem
+      })
+    });
+
+    if (!response.ok) {
+      alert("Could not add to cart");
+      return;
+    }
+   
+    alert("Added to cart!");
+
+  } catch (err) {
+    console.error("Error adding to cart:", err);
+    alert("Something went wrong");
+  }
 });

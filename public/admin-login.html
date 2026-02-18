@@ -131,6 +131,47 @@
     .footer-text a:hover {
       text-decoration: underline;
     }
+
+
+
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .login-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 30px 20px;
+  }
+
+  .login-card {
+    width: 100%;
+    padding: 35px 28px;
+    border-radius: 18px;
+    transform: scale(1.05);
+  }
+
+  body {
+    padding: 20px;
+    min-height: 100vh;
+  }
+}
+
+
+ 
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
   </style>
 </head>
 <body>
@@ -139,24 +180,26 @@
     <h2>Welcome </h2>
     <p>Please login to your account</p>
 
-    <form>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" placeholder="Enter your email">
-      </div>
+    <form id="adminForm">
+  <div class="form-group">
+    <label>Email</label>
+    <input id="email" type="text" placeholder="Enter your email">
+  </div>
 
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" placeholder="Enter your password">
-      </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Enter your password">
+  </div>
 
-      
-      <button class="login-btn" type="submit">Login</button>
-    </form>
+  <button class="login-btn" type="submit">Login</button>
+</form>
+
+
+
 
    
   </div>
 
-
+<script type="module" src="js/admin-login.js" ></script>  
 </body>
 </html>

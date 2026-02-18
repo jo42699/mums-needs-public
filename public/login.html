@@ -12,8 +12,6 @@
 </head>
 <body>
 
-
-
             <!--NAV BAR-->
         <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary py-2 p-0 fixed-top">
         <div class="container">
@@ -72,7 +70,7 @@
               <li class="nav-item cart-icon">
                   <a href="cart.html" style="color: rgb(32, 19, 33);">
                   <i class="fa-solid fa-cart-shopping"></i>
-                  <span class="cart-count">0</span>
+                  <span  id="added-to-cart" class="cart-count">0</span>
                 </a>
               </li>
 
@@ -82,42 +80,109 @@
         </div>
         </nav>
         <!--END OF NAV BAR-->
-
+     
        
-       
+<div style="display: none; " class="auth-container">
+  <div class="auth-card" id="authCard">
 
+    <!-- ================= SIGN IN ================= -->
+    <div class="auth-panel active" id="signInPanel">
+      <h2>Welcome back</h2>
+      <p class="auth-subtitle">Sign in to continue</p>
 
-    <div class="auth-container">
-      <div class="auth-card">
-        <h2>Welcome </h2>
-        <p class="auth-subtitle">Sign in to continue</p>
+      <form id="email-login-form">
+        <div class="input-group">
+          <input type="email" id="emailInput" required />
+          <label>Email</label>
+        </div>
 
-        <form>
-          <div class="input-group">
-            <input type="email" required />
-            <label>Email</label>
-          </div>
+        <div class="input-group">
+          <input type="password" id="passwordInput" required />
+          <label>Password</label>
+        </div>
 
-         
-          <button type="submit" class="auth-btn">Continue with Email</button>
+        <button type="submit" class="auth-btn">
+          Sign in
+        </button>
+      </form>
 
-          <p class="auth-footer">
-            Sign up with Google  <img style="height: 20px; width: 40px;   " src="images/icons/google.webp" alt=""> &nbsp; | &nbsp;
-            <a href="#">Sign up</a>
-          </p>
+      <div class="divider">or</div>
 
-          
+      <button  id="googleSigninBtn" class="google-btn">
+        <img
+          src="images/icons/google-lens-icon-logo-symbol-free-png.webp"
+          alt="Google"
+          style="width: 40px; height: 40px;"
+        />
+        Sign in with Google
+      </button>
+      
+       <div class="auth-extra">
+          <a style="font-size: 13px;" href="#" id="forgotPasswordLink">Forgot password?</a>
+        </div>
+      <p class="auth-footer">
+        New here?
+        <a href="#" id="goToSignup">Create an account</a>
+      </p>
+      <br>
+      
+    </div>
 
+    <!-- ================= SIGN UP ================= -->
+    <div class="auth-panel" id="signUpPanel">
+      <h2>Create account</h2>
+      <p class="auth-subtitle">Sign up to get started</p>
 
+      <form id="email-signup-form">
+        <div class="input-group">
+          <input type="email" id="signupEmailInput" required />
+          <label>Email</label>
+        </div>
 
-    </form>
+        <div class="input-group">
+          <input type="password" id="signupPasswordInput" required />
+          <label>Password</label>
+        </div>
+
+        <button type="submit" class="auth-btn">
+          Sign up 
+        </button>
+      </form>
+
+      <div class="divider">or</div>
+
+      <button id="googleSignupBtn" class="google-btn">
+        <img
+          src="images/icons/google-lens-icon-logo-symbol-free-png.webp"
+          alt="Google"
+          style="width: 40px; height: 40px;"
+        />
+        Continue with Google
+      </button>
+
+      <p class="auth-footer">
+        Already have an account?
+        <a href="#" id="goToSignin">Back to sign in</a>
+      </p>
+    </div>
+
   </div>
 </div>
 
 
 
 
+<br>
+<!-- LOGGED IN MESSAGE -->
+<div style="margin-top: 100px; margin-bottom: 150px;" class="message-container hidden" id="loggedInContainer">
+  <h1>Welcome!</h1>
+  <p>You are successfully logged in.</p>
+  <button class="logout-btn" id="logoutBtn">Logout &nbsp;<i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+</div>
 
+
+
+<div style=" padding: 150px;" ></div>
 
 
 
@@ -157,15 +222,10 @@
         </div>
         </footer>
 
-   
-
-
-
-
-
-
-
-
+        
+<script type="module" src="./js/cart.js"></script>
+<script type="module" src="./js/login.js"></script>
+<script type="module" src="./js/auth.js"></script>
 
 <script>
   const searchIcon = document.getElementById("searchIcon");
@@ -175,9 +235,9 @@ const closeSearch = document.getElementById("closeSearch");
 const mobileSearch = document.getElementById("mobileSearch");
 const closeMobileSearch = document.getElementById("closeMobileSearch");
 
-/* ---------- OPEN SEARCH ---------- */
+// Open search boxes
 searchIcon.addEventListener("click", (e) => {
-  e.stopPropagation(); // 🔥 CRITICAL
+  e.stopPropagation(); 
 
   if (window.innerWidth <= 768) {
     mobileSearch.classList.add("active");
@@ -186,7 +246,7 @@ searchIcon.addEventListener("click", (e) => {
   }
 });
 
-/* ---------- CLOSE BUTTONS ---------- */
+// Close search boxes
 closeSearch.addEventListener("click", (e) => {
   e.stopPropagation();
   searchBox.classList.remove("active");
@@ -197,7 +257,7 @@ closeMobileSearch.addEventListener("click", (e) => {
   mobileSearch.classList.remove("active");
 });
 
-/* ---------- PREVENT AUTO CLOSE ---------- */
+// Prevent closing when clicking inside
 searchBox.addEventListener("click", (e) => {
   e.stopPropagation();
 });
@@ -206,11 +266,37 @@ mobileSearch.addEventListener("click", (e) => {
   e.stopPropagation();
 });
 
-/* ---------- CLICK OUTSIDE TO CLOSE ---------- */
+//close when clicking outside
 document.addEventListener("click", () => {
   searchBox.classList.remove("active");
   mobileSearch.classList.remove("active");
 });
+
+
+
+
+
+
+
+const signInPanel = document.getElementById("signInPanel");
+const signUpPanel = document.getElementById("signUpPanel");
+
+document.getElementById("goToSignup").addEventListener("click", (e) => {
+  e.preventDefault();
+  signInPanel.classList.remove("active");
+  signUpPanel.classList.add("active");
+});
+
+document.getElementById("goToSignin").addEventListener("click", (e) => {
+  e.preventDefault();
+  signUpPanel.classList.remove("active");
+  signInPanel.classList.add("active");
+});
+
+
+
+
+
 
 
 

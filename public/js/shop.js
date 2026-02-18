@@ -1,50 +1,83 @@
 const container = document.getElementById('productContainer');
+const loader = document.getElementById('productLoader'); 
 const apiURL = 'http://localhost:5000/v1/product/';
 const nairaFormatter = new Intl.NumberFormat("en-NG");
 
-let allProducts = []; // store backend products
+let allProducts = []; 
 
-//LOAD PRODUCTS 
+// LOAD PRODUCTS 
 async function loadProducts() {
   try {
+
+    // SHOW LOADER, HIDE PRODUCTS ← ADDED
+    loader.style.display = "grid";
+    container.style.display = "none";
+
     const response = await fetch(apiURL);
     if (!response.ok) throw new Error(`Network Error: ${response.status}`);
 
     const products = await response.json();
-    console.log("Loaded products:", products);
+    //console.log("Loaded products:", products);
 
-    allProducts = products;          // store for filtering
-    renderProducts(products);        // initial render
+    allProducts = products;         
+    renderProducts(products);        
+
+    // HIDE LOADER, SHOW PRODUCTS ← ADDED
+    loader.style.display = "none";
+    container.style.display = "flex";
 
   } catch (error) {
     console.error('Error loading products:', error);
     container.innerHTML = '<p>Failed to load products.</p>';
+
+    loader.style.display = "none";
+    container.style.display = "block";
   }
 }
 
-//RENDER PRODUCTS 
+// RENDER PRODUCTS (UPDATED WITH DISCOUNT LOGIC)
 function renderProducts(products) {
   container.innerHTML = "";
 
   products.forEach(product => {
     const imgURL = `http://localhost:5000${product.image.url}`;
-    const priceInNaira = product.price / 100;
-    const discountInNaira = product.discount / 100;
+    const originalPrice = product.price / 100;
+
+    // Calculate discounted price if discount exists
+    let discountedPrice = null;
+    if (product.discount > 0) {
+      discountedPrice = (product.price * (100 - product.discount)) / 10000;
+    }
 
     container.innerHTML += `
       <div class="product text-center" data-id="${product._id}">
         <img src="${imgURL}" alt="${product.image.alt || product.name}" class="img-fluid">
         <h5 class="p-name">${product.name}</h5>
-        <h4 class="p-price">₦ ${nairaFormatter.format(priceInNaira)}</h4>
-        <h5 class="discount-price">₦ ${nairaFormatter.format(discountInNaira)}</h5>
+
+        ${
+          product.discount > 0
+            ? `
+              <h4 class="p-price" style=" font-size: 19px;    color: purple; font-weight:bold;">
+                ₦ ${nairaFormatter.format(discountedPrice)}
+              </h4>
+              <h5 class="old-price" style=" font-size: 14px; text-decoration: line-through; color:#888;">
+                ₦ ${nairaFormatter.format(originalPrice)}
+              </h5>
+            `
+            : `
+              <h4 class="p-price">
+                ₦ ${nairaFormatter.format(originalPrice)}
+              </h4>
+            `
+        }
       </div>
     `;
   });
 
-  initPagination(); // re-run pagination after rendering
+  initPagination(); 
 }
 
-/* ---------------- FILTER PRODUCTS ---------------- */
+// FILTER PRODUCTS 
 function filterProducts(query) {
   query = query.toLowerCase();
 
@@ -59,7 +92,7 @@ function filterProducts(query) {
   renderProducts(filtered);
 }
 
-/* ---------------- PAGINATION ---------------- */
+// PAGINATION
 function initPagination() {
   const products = document.querySelectorAll('.product');
   const productsPerPage = 20;
@@ -99,7 +132,7 @@ function initPagination() {
   showPage(1);
 }
 
-/* ---------------- SEARCH INPUTS ---------------- */
+// SEARCH INPUTS
 const desktopSearch = document.querySelector("#searchBox input");
 const mobileSearch = document.querySelector("#mobileSearch input");
 
@@ -116,7 +149,7 @@ document.getElementById("closeMobileSearch").addEventListener("click", () => {
   filterProducts("");
 });
 
-//RUN EVERYTHING 
+ 
 (async () => {
   await loadProducts();
 })();
@@ -140,7 +173,7 @@ document.addEventListener("click", e => {
   }
 });
 
-// PRODUCT CLICK to  DETAILS PAGE 
+// PRODUCT CLICK to the DETAILS PAGE 
 container.addEventListener("click", e => {
   const card = e.target.closest(".product");
   if (!card) return;

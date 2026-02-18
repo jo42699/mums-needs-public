@@ -30,6 +30,7 @@
 
 .navbar-nav .nav-link:hover::after {
     width: 100%;
+  
 }
 
 
@@ -290,6 +291,71 @@ button:hover {
     
 
 }
+
+/* PRODUCT GRID */
+.products-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+/* PRODUCT CARD */
+.product {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+/* PRODUCT IMAGE */
+.product img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* PRODUCT NAME */
+.p-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 8px 0 5px;
+  text-transform: capitalize;
+}
+
+/* MAIN PRICE */
+.p-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #38223f;
+  margin: 0;
+}
+
+/* OLD PRICE (DISCOUNT) */
+.discount-price {
+  font-size: 14px;
+  color: #888;
+  text-decoration: line-through;
+  margin-top: 3px;
+}
+
+
+
+
+
+
+
+
 
 
 

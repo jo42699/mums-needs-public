@@ -112,10 +112,44 @@
   align-items: center;
   justify-content: center;
 }
-  
+ 
 
 
-/* ============================ PAGINATION ============================ */ .pagination { display: flex; justify-content: center; gap: 10px; margin: 30px 0; } .pagination button { padding: 10px 16px; border: 2px solid #b57edc; background: #fff; color: #4a2c6d; font-weight: 600; border-radius: 6px; cursor: pointer; transition: 0.25s ease; } .pagination button:hover { background: #b57edc; color: white; } .pagination button.active { background: #6a0dad; color: white; border-color: #6a0dad; }
+.product-loader {
+   margin-left: 40px; 
+   padding: 10px; 
+    gap: 10px; 
+    display: grid; 
+   grid-template-columns: 
+   repeat(auto-fill, minmax(220px, 1fr));
+   }
+
+@media (min-width: 992px) {
+  .product-loader {
+    grid-template-columns: repeat(4, 1fr); /* FORCE 4 COLUMNS ON DESKTOP */
+  }
+}
+
+.loader-card {
+  height: 300px;
+  width: 280px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ececec, #f7f7f7, #ececec);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+
+
+
+
+/* ============================ PAGINATION ============================ */
+ .pagination { display: flex; justify-content: center; gap: 10px; margin: 30px 0; } .pagination button { padding: 10px 16px; border: 2px solid #b57edc; background: #fff; color: #4a2c6d; font-weight: 600; border-radius: 6px; cursor: pointer; transition: 0.25s ease; } .pagination button:hover { background: #b57edc; color: white; } .pagination button.active { background: #6a0dad; color: white; border-color: #6a0dad; }
 
 
 
@@ -148,4 +182,7 @@
     padding: 7px 15px;
     font-size: 14px;
   }
+
+  
+
 }

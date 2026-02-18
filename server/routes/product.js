@@ -4,11 +4,10 @@ const upload = require('../middleware/upload.js');
 const router = express.Router();
 
 
-//   GET ALL PRODUCTS
-
+// GET ALL PRODUCTS (NEWEST => OLDEST)
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort({ createdAt: -1 });
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -16,8 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 
-//   GET PRODUCT BY ID
-
+// GET PRODUCT BY ID
 router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -31,7 +29,6 @@ router.get("/:id", async (req, res) => {
     res.status(400).json({ message: "Invalid product ID" });
   }
 });
-
 
 
 // CREATE PRODUCT
@@ -52,15 +49,11 @@ router.post(
         section: data.section,
         keywords: data.keywords || [],
         discount: data.discount || 0,
-
-        // NEW: stock per size
         stockBySize: data.stockBySize || {},
-
-        // NEW: variants with stock per size
         variants: data.variants || []
       };
 
-      // Main product image
+      // Main image
       if (req.files.image && req.files.image[0]) {
         const mainImage = req.files.image[0];
         productData.image = {
@@ -91,7 +84,7 @@ router.post(
 );
 
 
-// ADD VARIANT TO PRODUCT
+// ADD VARIANT
 router.post("/:id/variants", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -102,7 +95,7 @@ router.post("/:id/variants", async (req, res) => {
 
     const variant = {
       variantName: req.body.variantName,
-      Variantimage: req.body.Variantimage, // optional if uploading separately
+      Variantimage: req.body.Variantimage,
       VariantStockBySize: req.body.VariantStockBySize || {}
     };
 
@@ -118,12 +111,11 @@ router.post("/:id/variants", async (req, res) => {
 
 
 
-//   GET VARIANT BY _id
-
+// GET VARIANT BY ID
 router.get("/:id/variants/:variantId", async (req, res) => {
   try {
     const product = await Product.findOne(
-      { id: req.params.id, "variants._id": req.params.variantId },
+      { _id: req.params.id, "variants._id": req.params.variantId },
       { "variants.$": 1 }
     );
 
@@ -138,12 +130,11 @@ router.get("/:id/variants/:variantId", async (req, res) => {
 });
 
 
-//   DELETE VARIANT
-
+// DELETE VARIANT
 router.delete("/:id/variants/:variantId", async (req, res) => {
   try {
     const result = await Product.updateOne(
-      { id: req.params.id },
+      { _id: req.params.id },
       { $pull: { variants: { _id: req.params.variantId } } }
     );
 
@@ -158,8 +149,7 @@ router.delete("/:id/variants/:variantId", async (req, res) => {
 });
 
 
-
-// DELETE PRODUCT
+// DELETE PRODUCT by ID
 router.delete("/:id", async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
@@ -178,12 +168,14 @@ router.delete("/:id", async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
 module.exports = router;
+
+
+
+
+
+
+// -------------------------------- MESSAGE ---
+// I needed help with multer file uploads for variants
+// So I kept the old code below for reference
+// -------------------------------- MESSAGE ---

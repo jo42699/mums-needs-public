@@ -1,15 +1,7 @@
+// middleware/firebaseAuth.js
 const admin = require("firebase-admin");
-const serviceAccount = require("../mums-needs-b074d-firebase-adminsdk-fbsvc-f09210c94e.json");
 
-// Initialize Firebase Admin SDK 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
-
-// Middleware to verify Firebase session cookie
-const firebaseAuthMiddleware = async (req, res, next) => {
+const firebaseAuth = async (req, res, next) => {
   try {
     const sessionCookie = req.cookies?.session;
 
@@ -24,7 +16,7 @@ const firebaseAuthMiddleware = async (req, res, next) => {
     req.user = {
       uid: decodedToken.uid,
       email: decodedToken.email,
-      provider: decodedToken.firebase?.sign_in_provider,
+      provider: decodedToken.firebase?.sign_in_provider
     };
 
     next();
@@ -34,10 +26,4 @@ const firebaseAuthMiddleware = async (req, res, next) => {
   }
 };
 
-
-
-
-
-
-
-module.exports = { firebaseAuthMiddleware };
+module.exports = firebaseAuth;

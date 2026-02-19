@@ -5,64 +5,89 @@ const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
 const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
+
+
+const admin = require("firebase-admin"); 
+const serviceAccount = require("./mums-needs-b074d-firebase-adminsdk-fbsvc-f09210c94e.json");
+admin.initializeApp({
+   credential: admin.credential.cert(serviceAccount),
+   });
+
+
+// Routers
 const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const customerRouter = require('./routes/customer');
-const { firebaseAuthMiddleware } = require('./middleware/firebaseMiddleware');
-const cookieParser = require('cookie-parser');
 const authRouter = require("./routes/auth");
 const adminRoutes = require("./routes/adminRoute");
 
-const app = express();
+// Middleware
+const firebaseAuth = require('./middleware/firebaseAuth');
 
+const app = express();
 
 // middleware
 app.use(cookieParser());
 app.use(cors({
   origin: [
-    'http://127.0.0.1:5500',
-    'http://127.0.0.1:5501'
+  'http://127.0.0.1:5500',
+  'http://127.0.0.1:5501',
+  'http://localhost:5500', 
+  'http://localhost:5501'
   ],
   credentials: true
 }));
 
 app.use(express.json());
 app.use(morgan('tiny'));
+
 app.disable("crossOriginOpenerPolicy");
 app.disable("crossOriginEmbedderPolicy");
+
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", "*"],
+      defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'", "*"],
-      connectSrc: ["'self'", "*"],
-      imgSrc: ["'self'", "*", "data:"]
+      connectSrc: ["'self'", "http://127.0.0.1:5000", "*"],
+      imgSrc: ["'self'", "*", "data:"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https:"],
+      fontSrc: ["'self'", "https:", "data:"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+      frameAncestors: ["'self'"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: []
     }
   })
 );
-app.get("/protected", firebaseAuthMiddleware, (req, res) => {
+
+// Test protected route
+app.get("/protected", firebaseAuth, (req, res) => {
   res.json({
     message: "You are authenticated",
     user: req.user,
   });
 });
-app.use("/auth", authRouter);
+
+// Auth routes
+app.use("/v1/auth", authRouter);
+
+// Static images
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
-
-
 
 // env variables
 const API = process.env.API || '/api';
 const PORT = process.env.PORT || 5000;
 
-// routes
+// API routes
 app.use(`${API}/product`, productRouter);
 app.use(`${API}/cart`, cartRouter);
 app.use(`${API}/customer`, customerRouter);
-app.use(`${API}/`, adminRoutes);  
 
-
-
+// Admin routes
+app.use("/v1/admin", adminRoutes);
 
 // start server
 const startServer = async () => {
@@ -81,4 +106,3 @@ const startServer = async () => {
 };
 
 startServer();
-

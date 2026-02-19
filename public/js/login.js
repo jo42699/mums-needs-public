@@ -1,6 +1,4 @@
 // ================= IMPORTS =================
-
-// Import EVERYTHING Firebase-related from your own auth.js
 import { 
   auth, 
   loginWithEmail, 
@@ -11,7 +9,6 @@ import {
   onAuthStateChanged
 } from "./auth.js";
 
-// Import cart merge logic
 import { handleLoginMerge } from "./cart.js";
 
 
@@ -55,6 +52,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       await loginWithEmail(email, password);
+
+      const idToken = await auth.currentUser.getIdToken(true);
+      console.log("ID TOKEN (email login):", idToken);
+
+      const res = await fetch("http://localhost:5000/v1/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken })
+      });
+
+      if (res.ok) console.log("SESSION COOKIE SET (email login)");
+
       showLoggedInUI(auth.currentUser);
     } catch (err) {
       alert(err.message);
@@ -70,6 +80,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       await signupWithEmail(email, password);
+
+      const idToken = await auth.currentUser.getIdToken(true);
+      console.log("ID TOKEN (signup):", idToken);
+
+      const res = await fetch("http://localhost:5000/v1/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken })
+      });
+
+      if (res.ok) console.log("SESSION COOKIE SET (signup)");
+
       showLoggedInUI(auth.currentUser);
     } catch (err) {
       alert(err.message);
@@ -82,6 +105,19 @@ document.addEventListener("DOMContentLoaded", () => {
     button.disabled = true;
     try {
       await loginWithGoogle();
+
+      const idToken = await auth.currentUser.getIdToken(true);
+      console.log("ID TOKEN (Google login):", idToken);
+
+      const res = await fetch("http://localhost:5000/v1/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken })
+      });
+
+      if (res.ok) console.log("SESSION COOKIE SET (Google login)");
+
       showLoggedInUI(auth.currentUser);
     } catch (err) {
       if (err.code === "auth/cancelled-popup-request") {
@@ -124,6 +160,14 @@ document.addEventListener("DOMContentLoaded", () => {
   logoutBtn?.addEventListener("click", async () => {
     try {
       await logout();
+
+      const res = await fetch("http://localhost:5000/v1/auth/logout", {
+        method: "POST",
+        credentials: "include"
+      });
+
+      if (res.ok) console.log("SESSION COOKIE CLEARED (logout)");
+
       authContainer.style.display = "flex";
       loggedInContainer.style.display = "none";
     } catch (err) {
@@ -148,12 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // ================= AUTH STATE LISTENER =================
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-
-      // ⭐ Merge guest cart → user cart
       await handleLoginMerge(user.uid);
-
       showLoggedInUI(user);
-
     } else {
       authContainer.style.display = "flex";
       loggedInContainer.style.display = "none";

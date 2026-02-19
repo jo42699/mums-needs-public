@@ -139,6 +139,8 @@ function updateSummary(items) {
     return;
   }
 
+
+
   const itemCount = items.length;
   addedtoCart.textContent = itemCount;
   checkoutCount.textContent = itemCount;

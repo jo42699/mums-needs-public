@@ -1,41 +1,23 @@
-const admin = require("firebase-admin");
-const serviceAccount = require("../mums-needs-b074d-firebase-adminsdk-fbsvc-f09210c94e.json");
+// middleware/verify-admin.js
+const { admins } = require("../config/admin");
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
+const verifyAdmin = (req, res, next) => {
+  try {
+    const uid = req.user?.uid;
 
-const firebaseAuthMiddleware = (requireAdmin = false) => {
-  return async (req, res, next) => {
-    try {
-      const authHeader = req.headers.authorization;
-
-      if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        return res.status(401).json({ error: "Missing Authorization header" });
-      }
-
-      const idToken = authHeader.split(" ")[1];
-
-      const decodedToken = await admin.auth().verifyIdToken(idToken, true);
-
-      req.user = {
-        uid: decodedToken.uid,
-        email: decodedToken.email,
-        role: decodedToken.role || decodedToken.customClaims?.role,
-      };
-
-      if (requireAdmin && req.user.role !== "admin") {
-        return res.status(403).json({ error: "Admin access required" });
-      }
-
-      next();
-    } catch (err) {
-      console.error("Token verification failed:", err);
-      return res.status(401).json({ error: "Invalid or expired token" });
+    if (!uid) {
+      return res.status(401).json({ error: "Not authenticated" });
     }
-  };
+
+    if (!admins.includes(uid)) {
+      return res.status(403).json({ error: "Admin access required" });
+    }
+
+    next();
+  } catch (error) {
+    console.error("Admin verification failed:", error);
+    return res.status(500).json({ error: "Server error verifying admin" });
+  }
 };
 
-module.exports = { firebaseAuthMiddleware, admin };
+module.exports = verifyAdmin;

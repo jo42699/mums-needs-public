@@ -1,15 +1,15 @@
 const express = require("express");
 const admin = require("firebase-admin");
-const verifyAdmin = require("../middleware/verify-admin");
 
 const router = express.Router();
 
-
 console.log("Auth router loaded");
 
-// Login: to the session cookie
+// Login: create session cookie
 router.post("/login", async (req, res) => {
   const { idToken } = req.body;
+
+    console.log("ID TOKEN RECEIVED:", idToken);
 
   if (!idToken) {
     return res.status(400).json({ error: "Missing ID token" });
@@ -23,12 +23,15 @@ router.post("/login", async (req, res) => {
       .createSessionCookie(idToken, { expiresIn });
 
     res.cookie("session", sessionCookie, {
-      httpOnly: true,
-      secure: false, 
-      sameSite: "lax",
-      maxAge: expiresIn,
-    });
+    httpOnly: true,
+    secure: false,
+    sameSite: "none",
+    maxAge: expiresIn,
+    domain: "127.0.0.1",
+    path: "/"
+  });
 
+      
     res.json({ status: "logged_in" });
   } catch (err) {
     res.status(401).json({ error: "Invalid token" });
@@ -40,20 +43,6 @@ router.post("/logout", (req, res) => {
   res.clearCookie("session");
   res.json({ status: "logged_out" });
 });
-
-
-/*  
-
-         |        |
-
-       \               /
-        \             /     take a look at this smily face 
-         \___________/  
-
-
-*/ 
-
-
 
 // Get total number of Firebase users
 router.get("/total-users", async (req, res) => {
@@ -68,32 +57,12 @@ router.get("/total-users", async (req, res) => {
     } while (nextPageToken);
 
     res.json({ totalUsers: total });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-
-// 
-
-
-
-
-
-
-
-
-
-
-
 module.exports = router;
-
-
-
-
-
-
 
 
 /*

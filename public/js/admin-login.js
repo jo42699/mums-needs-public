@@ -9,6 +9,10 @@ const firebaseConfig = {
   apiKey: "AIzaSyCsa7fMMu-ddRAsVK_CysTWzyyBexIjs4k",
   authDomain: "mums-needs-b074d.firebaseapp.com",
   projectId: "mums-needs-b074d",
+  storageBucket: "mums-needs-b074d.firebasestorage.app",
+  messagingSenderId: "537549708674",
+  appId: "1:537549708674:web:6543e06602bf369a82c39b",
+  measurementId: "G-NW1DMDXKYB"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -25,25 +29,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
 
     try {
+      // Firebase login
       const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-      // ⭐ UID is automatically here — you do NOT paste it:
-      // userCred.user.uid
-
+      // Get Firebase ID token
       const idToken = await getIdToken(userCred.user, true);
 
-      const adminCheck = await fetch("http://localhost:5000/v1/admin/check", {
-        headers: {
-          "Authorization": `Bearer ${idToken}`
-        }
+      // Send token to backend to create session cookie
+      const loginRes = await fetch("http://127.0.0.1:5000/v1/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken })
       });
 
-      const adminData = await adminCheck.json().catch(() => ({}));
+      if (!loginRes.ok) {
+        throw new Error("Failed to create session cookie");
+      }
+
+      // Check admin status
+      const adminCheck = await fetch("http://127.0.0.1:5000/v1/admin/check", {
+        credentials: "include"
+      });
+
+      const adminData = await adminCheck.json();
 
       if (!adminCheck.ok) {
         throw new Error(adminData.error || "Not an admin");
       }
 
+      // Redirect to dashboard
       window.location.href = "/admin-dashboard.html";
 
     } catch (err) {

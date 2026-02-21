@@ -7,13 +7,12 @@ const path = require('path');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 
-
-const admin = require("firebase-admin"); 
+const admin = require("firebase-admin");
 const serviceAccount = require("./mums-needs-b074d-firebase-adminsdk-fbsvc-f09210c94e.json");
-admin.initializeApp({
-   credential: admin.credential.cert(serviceAccount),
-   });
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // Routers
 const productRouter = require('./routes/product');
@@ -27,14 +26,14 @@ const firebaseAuth = require('./middleware/firebaseAuth');
 
 const app = express();
 
-// middleware
+// Cookie + CORS
 app.use(cookieParser());
 app.use(cors({
   origin: [
-  'http://127.0.0.1:5500',
-  'http://127.0.0.1:5501',
-  'http://localhost:5500', 
-  'http://localhost:5501'
+    'http://127.0.0.1:5500',
+    'http://127.0.0.1:5501',
+    'http://localhost:5500',
+    'http://localhost:5501'
   ],
   credentials: true
 }));
@@ -42,9 +41,11 @@ app.use(cors({
 app.use(express.json());
 app.use(morgan('tiny'));
 
+// Disable COOP/COEP for local dev
 app.disable("crossOriginOpenerPolicy");
 app.disable("crossOriginEmbedderPolicy");
 
+// Helmet CSP
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -68,6 +69,11 @@ app.use(
   })
 );
 
+// ⭐ Serve frontend files from /public
+
+app.use(express.static(path.join(__dirname, "../public")));
+
+
 // Test protected route
 app.get("/protected", firebaseAuth, (req, res) => {
   res.json({
@@ -82,7 +88,7 @@ app.use("/v1/auth", authRouter);
 // Static images
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
-// env variables
+// ENV
 const API = process.env.API || '/api';
 const PORT = process.env.PORT || 5000;
 
@@ -94,7 +100,7 @@ app.use(`${API}/customer`, customerRouter);
 // Admin routes
 app.use("/v1/admin", adminRoutes);
 
-// start server
+// Start server
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.DATABASE);

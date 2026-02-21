@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCsa7fMMu-ddRAsVK_CysTWzyyBexIjs4k",
   authDomain: "mums-needs-b074d.firebaseapp.com",
@@ -14,9 +15,11 @@ const firebaseConfig = {
   measurementId: "G-NW1DMDXKYB"
 };
 
+// Init Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// LOGIN HANDLER
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("adminForm");
   if (!form) return;
@@ -24,18 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
     try {
       // 1. Firebase login
       const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-      // 2. Get a FRESH Firebase ID token (critical fix)
+      // 2. Fresh ID token
       const idToken = await userCred.user.getIdToken(true);
-
-      // ⭐ Log the token
-      console.log("FRESH ID TOKEN:", idToken);
 
       // 3. Send token to backend to create session cookie
       const loginRes = await fetch("http://localhost:5000/v1/auth/login", {
@@ -45,30 +45,51 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ idToken })
       });
 
-      if (!loginRes.ok) {
-        throw new Error("Failed to create session cookie");
-      }
+      if (!loginRes.ok) throw new Error("Failed to create session cookie");
 
-      // 4. Give browser a moment to store the cookie
+      // 4. Give browser time to store cookie
       await new Promise(resolve => setTimeout(resolve, 150));
 
-      // 5. Check admin session
+      // 5. Verify admin
       const adminCheck = await fetch("http://localhost:5000/v1/admin/check", {
         credentials: "include"
       });
 
       const adminData = await adminCheck.json();
+      if (!adminCheck.ok) throw new Error(adminData.error || "Not an admin");
 
-      if (!adminCheck.ok) {
-        throw new Error(adminData.error || "Not an admin");
-      }
+      console.log("Admin verified:", adminData);
 
-      // 6. Redirect to dashboard
-      window.location.href = "/admin-dashboard.html";
+      // 6. Redirect to dashboard (Live Server)
+      window.location.href = "http://localhost:5501/public/admin-dashboard.html";
 
     } catch (err) {
       console.error(err);
       alert("Admin login failed: " + err.message);
+    }
+  });
+});
+
+// LOGOUT HANDLER (only runs if logoutBtn exists)
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (!logoutBtn) return; // prevents errors on login page
+
+  logoutBtn.addEventListener("click", async () => {
+    try {
+      const res = await fetch("http://localhost:5000/v1/auth/logout", {
+        method: "POST",
+        credentials: "include"
+      });
+
+      const data = await res.json();
+      console.log("Logout response:", data);
+
+      // Redirect to login page
+      window.location.href = "http://localhost:5501/public/admin-login.html";
+
+    } catch (err) {
+      console.error("Logout failed:", err);
     }
   });
 });

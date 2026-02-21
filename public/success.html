@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/success.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="icon" type="image/x-icon" href="./images/icons/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.ico">
 </head>
 <body>
 
@@ -31,12 +32,7 @@
         
                     
             <br>
-              <li class="nav-item cart-icon">
-                  <a href="cart.html" style="color: rgb(32, 19, 33);">
-                  <i class="fa-solid fa-cart-shopping"></i>
-                  <span class="cart-count">0</span>
-                </a>
-              </li>
+             
 
                     
             
@@ -135,131 +131,7 @@
    
 
 
-<script>
-  const searchIcon = document.getElementById("searchIcon");
-const searchBox = document.getElementById("searchBox");
-const closeSearch = document.getElementById("closeSearch");
 
-const mobileSearch = document.getElementById("mobileSearch");
-const closeMobileSearch = document.getElementById("closeMobileSearch");
-
-/* ---------- OPEN SEARCH ---------- */
-searchIcon.addEventListener("click", (e) => {
-  e.stopPropagation(); // 🔥 CRITICAL
-
-  if (window.innerWidth <= 768) {
-    mobileSearch.classList.add("active");
-  } else {
-    searchBox.classList.add("active");
-  }
-});
-
-/* ---------- CLOSE BUTTONS ---------- */
-closeSearch.addEventListener("click", (e) => {
-  e.stopPropagation();
-  searchBox.classList.remove("active");
-});
-
-closeMobileSearch.addEventListener("click", (e) => {
-  e.stopPropagation();
-  mobileSearch.classList.remove("active");
-});
-
-/* ---------- PREVENT AUTO CLOSE ---------- */
-searchBox.addEventListener("click", (e) => {
-  e.stopPropagation();
-});
-
-mobileSearch.addEventListener("click", (e) => {
-  e.stopPropagation();
-});
-
-/* ---------- CLICK OUTSIDE TO CLOSE ---------- */
-document.addEventListener("click", () => {
-  searchBox.classList.remove("active");
-  mobileSearch.classList.remove("active");
-});
-
-
-
-// maps 
-
-
-
-  // Reveal on scroll
-  const reveals = document.querySelectorAll(".reveal");
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-      }
-    });
-  }, { threshold: 0.15 });
-
-  reveals.forEach(el => observer.observe(el));
-
-  // Counter animation
-  const counters = document.querySelectorAll(".stat h3");
-
-  counters.forEach(counter => {
-    const updateCount = () => {
-      const target = +counter.dataset.count;
-      const count = +counter.innerText;
-      const speed = target / 60;
-
-      if (count < target) {
-        counter.innerText = Math.ceil(count + speed);
-        setTimeout(updateCount, 30);
-      } else {
-        counter.innerText = target;
-      }
-    };
-
-    observer.observe(counter);
-    counter.addEventListener("animationstart", updateCount);
-    updateCount();
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 </body>

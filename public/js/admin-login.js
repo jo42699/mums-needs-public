@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import {
   getAuth,
-  signInWithEmailAndPassword,
-  getIdToken
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -29,14 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
 
     try {
-      // Firebase login
+      // 1. Firebase login
       const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-      // Get Firebase ID token
-      const idToken = await getIdToken(userCred.user, true);
+      // 2. Get a FRESH Firebase ID token (critical fix)
+      const idToken = await userCred.user.getIdToken(true);
 
-      // Send token to backend to create session cookie
-      const loginRes = await fetch("http://127.0.0.1:5000/v1/auth/login", {
+      // ⭐ Log the token
+      console.log("FRESH ID TOKEN:", idToken);
+
+      // 3. Send token to backend to create session cookie
+      const loginRes = await fetch("http://localhost:5000/v1/auth/login", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -47,8 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Failed to create session cookie");
       }
 
-      // Check admin status
-      const adminCheck = await fetch("http://127.0.0.1:5000/v1/admin/check", {
+      // 4. Give browser a moment to store the cookie
+      await new Promise(resolve => setTimeout(resolve, 150));
+
+      // 5. Check admin session
+      const adminCheck = await fetch("http://localhost:5000/v1/admin/check", {
         credentials: "include"
       });
 
@@ -58,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(adminData.error || "Not an admin");
       }
 
-      // Redirect to dashboard
+      // 6. Redirect to dashboard
       window.location.href = "/admin-dashboard.html";
 
     } catch (err) {

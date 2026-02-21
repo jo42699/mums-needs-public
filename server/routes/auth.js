@@ -9,7 +9,7 @@ console.log("Auth router loaded");
 router.post("/login", async (req, res) => {
   const { idToken } = req.body;
 
-    console.log("ID TOKEN RECEIVED:", idToken);
+  console.log("ID TOKEN RECEIVED:", idToken);
 
   if (!idToken) {
     return res.status(400).json({ error: "Missing ID token" });
@@ -18,29 +18,35 @@ router.post("/login", async (req, res) => {
   try {
     const expiresIn = 5 * 24 * 60 * 60 * 1000; // 5 days
 
+    // Create Firebase session cookie
     const sessionCookie = await admin
       .auth()
       .createSessionCookie(idToken, { expiresIn });
 
+    //  FIXED COOKIE SETTINGS 
     res.cookie("session", sessionCookie, {
-    httpOnly: true,
-    secure: false,
-    sameSite: "none",
-    maxAge: expiresIn,
-    domain: "127.0.0.1",
-    path: "/"
-  });
+      httpOnly: true,
+      secure: true,        
+      sameSite: "none",    // REQUIRED for cross-site cookies
+      maxAge: expiresIn,
+      path: "/"
+    });
 
-      
     res.json({ status: "logged_in" });
   } catch (err) {
+    console.error("SESSION COOKIE ERROR:", err);
     res.status(401).json({ error: "Invalid token" });
   }
 });
 
 // Logout
 router.post("/logout", (req, res) => {
-  res.clearCookie("session");
+  res.clearCookie("session", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/"
+  });
   res.json({ status: "logged_out" });
 });
 
@@ -63,7 +69,6 @@ router.get("/total-users", async (req, res) => {
 });
 
 module.exports = router;
-
 
 /*
 MY THOUGHTS ON THIS FILE:

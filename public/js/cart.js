@@ -1,20 +1,17 @@
 import { auth } from "./auth.js"; // Firebase Auth instance
 
 
- // DOM ELEMENTS
-
+// DOM ELEMENTS
 const cartContainer = document.getElementById("cartContainer");
 const cartItemsDiv = document.getElementById("cart-items");
 // const cartLoader = document.getElementById("cartloader");
 
 
- // FORMATTER FOR NAIRA DISPLAY
-
+// FORMATTER FOR NAIRA DISPLAY
 const formatter = new Intl.NumberFormat("en-NG");
 
 
-//  UPDATE CART COUNT (NAV )
-
+// UPDATE CART COUNT (NAV)
 function updateCartCount(count) {
   const countEl = document.getElementById("cart-count");
   const addedEl = document.getElementById("added-to-cart");
@@ -24,8 +21,7 @@ function updateCartCount(count) {
 }
 
 
- // GLOBAL CART COUNT EXPORT (USED BY NAVBAR)
-
+// GLOBAL CART COUNT EXPORT (USED BY NAVBAR)
 export function getCartCount() {
   const user = auth.currentUser;
 
@@ -39,31 +35,26 @@ export function getCartCount() {
 }
 
 
-//  LOAD CART TO (ALWAYS UPDATES SESSION STORAGE)
-
+// LOAD CART (ALWAYS UPDATES SESSION STORAGE)
 export async function loadCart() {
   const user = auth.currentUser;
 
-  // SHOW LOADER, HIDE CART 
+  // SHOW LOADER, HIDE CART
   if (!cartContainer) return;
 
-
- 
-  // Guest user from load from localStorage
+  // Guest user → load from localStorage
   if (!user) {
     const guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
     renderCart(guestCart, false);
 
-    //  Keep global count updated
+    // Keep global count updated
     sessionStorage.setItem("user_cart_count", guestCart.length);
     updateCartCount(guestCart.length);
-
-   
 
     return;
   }
 
-  // Logged-in user to load from backend
+  // Logged-in user → load from backend
   try {
     const res = await fetch(`http://localhost:5000/v1/cart/user/${user.uid}`, {
       credentials: "include"
@@ -84,8 +75,7 @@ export async function loadCart() {
 }
 
 
-//  RENDER CART
-
+// RENDER CART
 function renderCart(items, isUserCart) {
   cartItemsDiv.innerHTML = "";
 
@@ -126,8 +116,7 @@ function renderCart(items, isUserCart) {
 }
 
 
-  //UPDATE ORDER SUMMARY
-
+// UPDATE ORDER SUMMARY
 function updateSummary(items) {
   const addedtoCart = document.getElementById("added-to-cart");
   const checkoutCount = document.getElementById("cart-count");
@@ -138,8 +127,6 @@ function updateSummary(items) {
   if (!addedtoCart || !checkoutCount || !subtotalEl || !shippingEl || !totalEl) {
     return;
   }
-
-
 
   const itemCount = items.length;
   addedtoCart.textContent = itemCount;
@@ -160,8 +147,7 @@ function updateSummary(items) {
 }
 
 
-//  DELETE CART ITEM
-
+// DELETE CART ITEM
 window.deleteCartItem = async function (itemId, isUserCart) {
   const user = auth.currentUser;
 
@@ -191,19 +177,25 @@ window.deleteCartItem = async function (itemId, isUserCart) {
 };
 
 
-//  MERGE GUEST CART => USER CART
-
+// MERGE GUEST CART → USER CART
 export async function handleLoginMerge(userId) {
   try {
     const guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
 
     if (guestCart.length === 0) return;
 
+    // ⭐ FIX: ensure totalPrice exists for backend merge route
+    const fixedCart = guestCart.map(item => ({
+      ...item,
+      totalPrice: item.unitPrice * item.quantity,
+      image: typeof item.image === "string" ? { url: item.image } : item.image
+    }));
+
     await fetch(`http://localhost:5000/v1/cart/merge/${userId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ cartItems: guestCart })
+      body: JSON.stringify({ cartItems: fixedCart })
     });
 
     localStorage.removeItem("guest_cart");
@@ -214,12 +206,11 @@ export async function handleLoginMerge(userId) {
 }
 
 
- // AUTO-LOAD CART ON PAGE LOAD
-
+// AUTO-LOAD CART ON PAGE LOAD
 auth.onAuthStateChanged(() => {
-  const el = document.getElementById("added-to-cart"); 
-  if (!el) return; 
+  const el = document.getElementById("added-to-cart");
+  if (!el) return;
   el.textContent = getCartCount();
 
-  loadCart(); //load cart on auth state change
+  loadCart(); // load cart on auth state change
 });

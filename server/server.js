@@ -50,7 +50,12 @@ app.use(
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'", "*"],
-      connectSrc: ["'self'", "http://127.0.0.1:5000", "*"],
+      connectSrc: [
+        "'self'",
+        "http://localhost:5000",
+        "http://127.0.0.1:5000",
+        "*"
+      ],
       imgSrc: ["'self'", "*", "data:"],
       styleSrc: ["'self'", "'unsafe-inline'", "https:"],
       fontSrc: ["'self'", "https:", "data:"],

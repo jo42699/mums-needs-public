@@ -44,7 +44,7 @@ router.post("/logout", (req, res) => {
   res.clearCookie("session", {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
+    sameSite: "none",         // This is important to ensure the cookie is cleared in cross-site context
     path: "/"
   });
   res.json({ status: "logged_out" });
@@ -82,7 +82,7 @@ so maybe for now, ill just use a firebase user as admin and set the custom claim
 
 
 
-
+So I finally figuured out the admin logic, its actually pretty simple. I will just create a firebase user and set a custom claim "admin" to true for that user. Then in the frontend, after login, i will check if the user has the admin claim and if they do, i will allow them to access the admin panel. If they dont have the admin claim, i will log them out immediately and show an error message. This way, even if someone hacks into the admin panel, they cant do anything because they wont have the admin claim. Also it was a reall headach because i kept getting these weird CORS errors and cookie issues, but i think i finally fixed it by setting the cookie options correctly and making sure the frontend is sending the credentials with the fetch requests.
 
 
 

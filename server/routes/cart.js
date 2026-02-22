@@ -1,242 +1,70 @@
 const express = require('express');
-const Cart = require('../models/cart.js');
 const router = express.Router();
+const Cart = require('../models/cart');
+const Customer = require('../models/customer');
 
-/*
-|--------------------------------------------------------------------------
-| GET ALL CARTS (ADMIN)
-|--------------------------------------------------------------------------
-*/
-router.get('/', async (req, res) => {
+// CREATE CART
+router.post('/', async (req, res) => {
   try {
-    const carts = await Cart.find();
-    res.status(200).json(carts);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    const cart = await Cart.create(req.body);
+    res.status(201).json(cart);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
-/*
-|--------------------------------------------------------------------------
-| GET CART BY USER (ALWAYS RETURNS A CART)
-|--------------------------------------------------------------------------
-*/
-router.get('/user/:customerId', async (req, res) => {
+// GET CART BY ID
+router.get('/:id', async (req, res) => {
   try {
-    const { customerId } = req.params;
+    const cart = await Cart.findById(req.params.id);
+    if (!cart) return res.status(404).json({ error: "Cart not found" });
 
-    let cart = await Cart.findOne({ customerId });
-
-    if (!cart) {
-      return res.status(200).json({
-        customerId,
-        cartItems: [],
-        cartTotal: 0
-      });
-    }
-
-    // Recalculate subtotal
-    const subtotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-
-    // Add ₦2000 shipping (200000 kobo)
-    const shipping = subtotal > 0 ? 200000 : 0;
-
-    cart.cartTotal = subtotal + shipping;
-
-    // Save updated total
-    await cart.save();
-
-    res.status(200).json(cart);
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.json(cart);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
-
-/*
-|--------------------------------------------------------------------------
-| ADD ITEM TO CART
-|--------------------------------------------------------------------------
-*/
-router.post('/add', async (req, res) => {
+// GET CART + CUSTOMER DETAILS (JOIN)
+router.get('/:id/details', async (req, res) => {
   try {
-    const { customerId, productId, quantity, size, name, unitPrice, image } = req.body;
+    const cart = await Cart.findById(req.params.id).populate('customerId');
 
-    let cart = await Cart.findOne({ customerId });
+    if (!cart) return res.status(404).json({ error: "Cart not found" });
 
-    if (!cart) {
-      cart = new Cart({
-        customerId,
-        cartItems: [],
-        cartTotal: 0
-      });
-    }
-
-    cart.cartItems.push({
-      productId,
-      quantity,
-      size,
-      name,
-      unitPrice,
-      totalPrice: unitPrice * quantity,
-      image
-    });
-
-    const subtotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-    const shipping = subtotal > 0 ? 200000 : 0; // ₦2000 in kobo
-
-    cart.cartTotal = subtotal + shipping;
-
-    await cart.save();
-
-    res.status(200).json(cart);
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.json(cart);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
-/*
-|--------------------------------------------------------------------------
-| UPDATE CART ITEM
-|--------------------------------------------------------------------------
-*/
-router.patch('/:customerId/item/:itemId', async (req, res) => {
+// UPDATE CART
+router.put('/:id', async (req, res) => {
   try {
-    const { customerId, itemId } = req.params;
-    const { quantity, size } = req.body;
-
-    const cart = await Cart.findOne({ customerId });
-
-    if (!cart) {
-      return res.status(200).json({ cartItems: [], cartTotal: 0 });
-    }
-
-    const item = cart.cartItems.id(itemId);
-
-    if (!item) {
-      return res.status(404).json({ message: "Cart item not found" });
-    }
-
-    if (quantity !== undefined) {
-      item.quantity = quantity;
-      item.totalPrice = item.unitPrice * quantity;
-    }
-
-    if (size !== undefined) {
-      item.size = size;
-    }
-
-    const subtotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-    const shipping = subtotal > 0 ? 200000 : 0;
-
-    cart.cartTotal = subtotal + shipping;
-
-    await cart.save();
-
-    res.status(200).json(cart);
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-
-/*
-|--------------------------------------------------------------------------
-| DELETE CART ITEM
-|--------------------------------------------------------------------------
-*/
-router.delete('/:customerId/item/:itemId', async (req, res) => {
-  try {
-    const { customerId, itemId } = req.params;
-
-    const cart = await Cart.findOne({ customerId });
-
-    if (!cart) {
-      return res.status(200).json({ cartItems: [], cartTotal: 0 });
-    }
-
-    cart.cartItems = cart.cartItems.filter(
-      item => item._id.toString() !== itemId
+    const cart = await Cart.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
     );
 
-    cart.cartTotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    if (!cart) return res.status(404).json({ error: "Cart not found" });
 
-    await cart.save();
-
-    res.status(200).json({ message: "Item removed", cart });
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.json(cart);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
-/*
-|--------------------------------------------------------------------------
-| CLEAR CART
-|--------------------------------------------------------------------------
-*/
-router.delete('/:customerId', async (req, res) => {
+// DELETE / CLEAR CART
+router.delete('/:id', async (req, res) => {
   try {
-    const { customerId } = req.params;
+    const cart = await Cart.findByIdAndDelete(req.params.id);
 
-    const cart = await Cart.findOne({ customerId });
+    if (!cart) return res.status(404).json({ error: "Cart not found" });
 
-    if (!cart) {
-      return res.status(200).json({ cartItems: [], cartTotal: 0 });
-    }
-
-    cart.cartItems = [];
-    cart.cartTotal = 0;
-
-    await cart.save();
-
-    res.status(200).json({ message: "Cart cleared", cart });
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-/*
-|--------------------------------------------------------------------------
-| MERGE GUEST CART → USER CART
-|--------------------------------------------------------------------------
-*/
-router.put('/merge/:customerId', async (req, res) => {
-  try {
-    const { customerId } = req.params;
-    const { cartItems } = req.body;
-
-    if (!Array.isArray(cartItems)) {
-      return res.status(400).json({ message: "cartItems must be an array" });
-    }
-
-    let cart = await Cart.findOne({ customerId });
-
-    if (!cart) {
-      cart = new Cart({
-        customerId,
-        cartItems: [],
-        cartTotal: 0
-      });
-    }
-
-    cart.cartItems = cartItems;
-
-    cart.cartTotal = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-
-    await cart.save();
-
-    res.status(200).json({
-      message: "Cart merged successfully",
-      cart
-    });
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.json({ message: "Cart deleted successfully" });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 

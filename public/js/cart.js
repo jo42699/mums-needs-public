@@ -56,7 +56,7 @@ export async function loadCart() {
 
   // Logged-in user → load from backend
   try {
-    const res = await fetch(`http://localhost:5000/v1/cart/user/${user.uid}`, {
+    const res = await fetch(`http://localhost:5000/v1/cartItems/user/${user.uid}`, {
       credentials: "include"
     });
 
@@ -164,7 +164,7 @@ window.deleteCartItem = async function (itemId, isUserCart) {
   }
 
   try {
-    await fetch(`http://localhost:5000/v1/cart/${user.uid}/item/${itemId}`, {
+    await fetch(`http://localhost:5000/v1/cartItems/${user.uid}/item/${itemId}`, {
       method: "DELETE",
       credentials: "include"
     });
@@ -191,7 +191,7 @@ export async function handleLoginMerge(userId) {
       image: typeof item.image === "string" ? { url: item.image } : item.image
     }));
 
-    await fetch(`http://localhost:5000/v1/cart/merge/${userId}`, {
+    await fetch(`http://localhost:5000/v1/cartItems/merge/${userId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

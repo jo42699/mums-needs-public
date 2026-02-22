@@ -16,11 +16,11 @@ admin.initializeApp({
 
 // Routers
 const productRouter = require('./routes/product');
-const cartRouter = require('./routes/cart');
+const cartItemsRouter = require('./routes/cart-item');
 const customerRouter = require('./routes/customer');
 const authRouter = require("./routes/auth");
 const adminRoutes = require("./routes/adminRoute");
-
+const cartRouter = require("./routes/cart");
 // Middleware
 const firebaseAuth = require('./middleware/firebaseAuth');
 
@@ -94,8 +94,9 @@ const PORT = process.env.PORT || 5000;
 
 // API routes
 app.use(`${API}/product`, productRouter);
-app.use(`${API}/cart`, cartRouter);
+app.use(`${API}/cartItems`, cartItemsRouter);
 app.use(`${API}/customer`, customerRouter);
+app.use(`${API}/cart`, cartRouter);
 
 // Admin routes
 app.use("/v1/admin", adminRoutes);

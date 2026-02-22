@@ -45,7 +45,6 @@ app.use(morgan('tiny'));
 app.disable("crossOriginOpenerPolicy");
 app.disable("crossOriginEmbedderPolicy");
 
-// Helmet CSP
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -60,17 +59,26 @@ app.use(
       imgSrc: ["'self'", "*", "data:"],
       styleSrc: ["'self'", "'unsafe-inline'", "https:"],
       fontSrc: ["'self'", "https:", "data:"],
-      baseUri: ["'self'"],
-      formAction: ["'self'"],
+
+      // Allow iframes from these sources (e.g. Google Maps)
+      frameSrc: [
+        "'self'",
+        "https://apis.google.com",
+        "https://*.firebaseapp.com",
+        "https://*.googleusercontent.com"
+      ],
+
       frameAncestors: ["'self'"],
       objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
       upgradeInsecureRequests: []
     }
   })
 );
 
-// ⭐ Serve frontend files from /public
 
+// Serve frontend files from /public
 app.use(express.static(path.join(__dirname, "../public")));
 
 

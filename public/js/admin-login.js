@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Admin verified:", adminData);
 
       // 6. Redirect to dashboard (Live Server)
-      window.location.href = "http://localhost:5501/public/admin-dashboard.html";
+      window.location.href = "/admin-dashboard.html";
 
     } catch (err) {
       console.error(err);
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Logout response:", data);
 
       // Redirect to login page
-      window.location.href = "http://localhost:5501/public/admin-login.html";
+      window.location.href = "/admin-login.html";
 
     } catch (err) {
       console.error("Logout failed:", err);

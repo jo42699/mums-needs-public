@@ -21,6 +21,8 @@ const customerRouter = require('./routes/customer');
 const authRouter = require("./routes/auth");
 const adminRoutes = require("./routes/adminRoute");
 const cartRouter = require("./routes/cart");
+const announcementRouter = require("./routes/announcement");
+
 // Middleware
 const firebaseAuth = require('./middleware/firebaseAuth');
 
@@ -50,24 +52,17 @@ app.use(
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'", "*"],
-      connectSrc: [
-        "'self'",
-        "http://localhost:5000",
-        "http://127.0.0.1:5000",
-        "*"
-      ],
-      imgSrc: ["'self'", "*", "data:"],
+      scriptSrcAttr: ["'unsafe-inline'"],   // Allow inline event handlers like onclick
+      connectSrc: ["'self'", "http://localhost:5000", "http://127.0.0.1:5000", "*"],
+      'img-src': ["'self'", "data:", "blob:", "*"],
       styleSrc: ["'self'", "'unsafe-inline'", "https:"],
       fontSrc: ["'self'", "https:", "data:"],
-
-      // Allow iframes from these sources (e.g. Google Maps)
       frameSrc: [
         "'self'",
         "https://apis.google.com",
         "https://*.firebaseapp.com",
         "https://*.googleusercontent.com"
       ],
-
       frameAncestors: ["'self'"],
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
@@ -76,7 +71,6 @@ app.use(
     }
   })
 );
-
 
 // Serve frontend files from /public
 app.use(express.static(path.join(__dirname, "../public")));
@@ -105,7 +99,7 @@ app.use(`${API}/product`, productRouter);
 app.use(`${API}/cartItems`, cartItemsRouter);
 app.use(`${API}/customer`, customerRouter);
 app.use(`${API}/cart`, cartRouter);
-
+app.use(`${API}/announcement`, announcementRouter);
 // Admin routes
 app.use("/v1/admin", adminRoutes);
 

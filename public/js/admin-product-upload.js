@@ -1,15 +1,31 @@
+// --- MINIMAL FIX: define previewImage globally ---
+window.previewImage = function (inputOrEvent, previewId) {
+  // Support both: previewImage(event, id) AND previewImage(input, id)
+  const inputElement = inputOrEvent.target ? inputOrEvent.target : inputOrEvent;
+
+  const file = inputElement.files[0];
+  if (!file) return;
+
+  const preview = document.getElementById(previewId);
+  if (!preview) return;
+
+  preview.src = URL.createObjectURL(file);
+
+  preview.onload = () => {
+    URL.revokeObjectURL(preview.src);
+  };
+};
+// -------------------------------------------------
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
- 
   // REMOVE ROW
-
   window.removeRow = function (btn) {
     btn.parentElement.remove();
   };
 
-
-  //  SIZE ROW FOR MAIN PRODUCT
-
+  // SIZE ROW FOR MAIN PRODUCT
   window.addRowOne = function () {
     const container = document.getElementById("sizes-container-1");
     const row = document.createElement("div");
@@ -22,9 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(row);
   };
 
-  
   // ADD SIZE ROW FOR VARIANT 1
- 
   window.addRowTwo = function () {
     const container = document.getElementById("sizes-container-2");
     const row = document.createElement("div");
@@ -37,9 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(row);
   };
 
- 
   // ADD SIZE ROW FOR VARIANT 2
-  
   window.addRowThree = function () {
     const container = document.getElementById("sizes-container-3");
     const row = document.createElement("div");
@@ -52,14 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(row);
   };
 
-  
   // FORM SUBMIT HANDLER
-
   document.getElementById("productForm").addEventListener("submit", function () {
 
-   
     // MAIN PRODUCT STOCK BY SIZE
-   
     const stockBySize = {};
     const mainRows = document.querySelectorAll("#sizes-container-1 .size-row");
 
@@ -69,12 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
       stockBySize[size] = stock;
     });
 
-    
     // VARIANTS (OPTIONAL)
-    
     const variants = [];
-
-    // Collect all variant name inputs
     const variantNameInputs = document.querySelectorAll("input[name='variant_name']");
 
     // Variant 1
@@ -111,9 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-   
-    //JSON OBJECT FOR ALL PRODUCT DATA
-    
+    // JSON OBJECT FOR ALL PRODUCT DATA
     const data = {
       name: document.querySelector("input[name='product_name']").value.trim(),
       description: document.querySelector("textarea[name='description']").value.trim(),
@@ -125,19 +127,19 @@ document.addEventListener("DOMContentLoaded", () => {
         .map(k => k.trim())
         .filter(k => k.length > 0),
       stockBySize,
-      variants 
+      variants
     };
 
-   
     // INJECT JSON INTO HIDDEN FIELD FOR SUBMISSION
-    
     document.getElementById("dataField").value = JSON.stringify(data);
   });
 
 });
 
 
+// SECOND DOMContentLoaded (image previews)
 document.addEventListener("DOMContentLoaded", () => {
+
   // Main product image
   const mainImageInput = document.querySelector("input[name='image']");
   if (mainImageInput) {
@@ -151,7 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
   variantInputs.forEach((input, index) => {
     const previewId = "preview_variant_" + index;
 
-    // Create preview <img> if image is not present
     let img = input.nextElementSibling;
     if (!img || img.tagName.toLowerCase() !== "img") {
       img = document.createElement("img");
@@ -166,4 +167,5 @@ document.addEventListener("DOMContentLoaded", () => {
       previewImage(input, previewId);
     });
   });
+
 });

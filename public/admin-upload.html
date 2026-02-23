@@ -53,111 +53,114 @@
 
    
 
-  <div class="card">
-    
+<div class="card">
+  <form id="productForm" action="http://localhost:5000/v1/product/" method="post" enctype="multipart/form-data">
 
-    <form id="productForm" action="http://localhost:5000/v1/product/" method="post" enctype="multipart/form-data">
+    <!-- Images -->
+    <h3>Upload Main Image</h3>
+    <input type="file" name="image" accept="image/*" onchange="previewImage(event, 'preview_main')">
+    <img id="preview_main" class="image-preview">
 
-      <!-- Images -->
-      <h3>Upload Main Image</h3>
-      <input type="file" name="image" accept="image/*" onchange="previewImage(event, 'preview1')">
-       <img id="preview1" class="image-preview">
-      <!-- Product Info -->
-      <h3>Product Name</h3>
-      <input type="text" name="product_name">
-      <h3>Product Sizes & Stock</h3>
+    <!-- Product Info -->
+    <h3>Product Name</h3>
+    <input type="text" name="product_name">
 
+    <h3>Product Sizes & Stock</h3>
     <div id="sizes-container-1">
-        <div class="size-row">
-            <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)" required>
-            <input type="number" name="stock[]" placeholder="Stock" min="0" required>
-            <button class="button-css" type="button" onclick="removeRow(this)">✕</button>
-        </div>
+      <div class="size-row">
+        <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)" required>
+        <input type="number" name="stock[]" placeholder="Stock" min="0" required>
+        <button class="button-css" type="button" onclick="removeRow(this)">✕</button>
+      </div>
     </div>
 
-    <button class="button-css" type="button" id="" onclick="addRowOne()">Add Size</button>
+    <button class="button-css" type="button" onclick="addRowOne()">Add Size</button>
 
     <br><br>
 
-      <h4>Amount in stock</h4>
-      <input min="0" type="number" name="stock_image1">
+    <h4>Amount in stock</h4>
+    <input min="0" type="number" name="stock_image1">
 
+    <h3>Product Price</h3>
+    <input type="number" name="price" min="0">
 
-      <h3>Product Price</h3>
-      <input type="number" name="price" min="0">
+    <h3>Product Discount in % (if any)</h3>
+    <input type="number" name="discount" min="0">
 
-      <h3>Product Discount in % (if any)</h3>
-      <input type="number" name="discount" min="0">
-<br>
-<br>
-<hr>
-<h2>Variants (if any)</h2>
-<br>
- <h3>Variant Name</h3>
-      <input type="text" name="variant_name">
-      <br>
-      <h3>Variant Image 1</h3> <input type="file" name="variantImages" accept="image/*" onchange="previewImage(event, 'preview1')"> <img id="preview1" class="image-preview">
-      <h3>Variant Sizes & Stock</h3>
+    <br><br>
+    <hr>
 
+    <h2>Variants (if any)</h2>
+    <br>
+
+    <!-- VARIANT 1 -->
+    <h3>Variant Name</h3>
+    <input type="text" name="variant_name">
+
+    <br>
+
+    <h3>Variant Image 1</h3>
+    <input type="file" name="variantImages" accept="image/*" onchange="previewImage(event, 'preview_variant_1')">
+    <img id="preview_variant_1" class="image-preview">
+
+    <h3>Variant Sizes & Stock</h3>
     <div id="sizes-container-2">
-        <div class="size-row">
-            <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)" >
-            <input type="number" name="stock[]" placeholder="Stock" min="0">
-            <button class="button-css" type="button" onclick="removeRow(this)">✕</button>
-        </div>
+      <div class="size-row">
+        <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)">
+        <input type="number" name="stock[]" placeholder="Stock" min="0">
+        <button class="button-css" type="button" onclick="removeRow(this)">✕</button>
+      </div>
     </div>
 
-    <button class="button-css" type="button" onclick="addRowTwo()">Add Size</button>  
+    <button class="button-css" type="button" onclick="addRowTwo()">Add Size</button>
 
-    <br><br>
-<br>
-<br>
- <h3>Variant Name</h3>
-      <input type="text" name="variant_name">
-      <br>
-      <h3>Variant Image 2</h3> <input type="file" name="variantImages" accept="image/*" onchange="previewImage(event, 'preview2')"> <img id="preview2" class="image-preview">
-      <h3>Variant Sizes & Stock</h3>
+    <br><br><br><br>
 
+    <!-- VARIANT 2 -->
+    <h3>Variant Name</h3>
+    <input type="text" name="variant_name">
+
+    <br>
+
+    <h3>Variant Image 2</h3>
+    <input type="file" name="variantImages" accept="image/*" onchange="previewImage(event, 'preview_variant_2')">
+    <img id="preview_variant_2" class="image-preview">
+
+    <h3>Variant Sizes & Stock</h3>
     <div id="sizes-container-3">
-        <div class="size-row">
-            <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)">
-            <input type="number" name="stock[]" placeholder="Stock" min="0" >
-            <button class="button-css" type="button" onclick="removeRowThree(this)">✕</button>
-        </div>
+      <div class="size-row">
+        <input type="text" name="sizes[]" placeholder="Size (e.g. S, M, L)">
+        <input type="number" name="stock[]" placeholder="Stock" min="0">
+        <button class="button-css" type="button" onclick="removeRowThree(this)">✕</button>
+      </div>
     </div>
 
-    <button class="button-css" type="button" onclick="addRowThree()">Add Size</button>  
-    <br><br>
+    <button class="button-css" type="button" onclick="addRowThree()">Add Size</button>
 
-<br>
-<br>
-<hr>
+    <br><br><br><br>
+    <hr>
 
-      
-      <h3>Product Description</h3>
-      <textarea name="description"></textarea>
+    <h3>Product Description</h3>
+    <textarea name="description"></textarea>
 
-      <h3>Product Keywords</h3>
-      <input type="text" name="keywords" placeholder="comma separated">
-
-
+    <h3>Product Keywords</h3>
+    <input type="text" name="keywords" placeholder="comma separated">
 
     <h3>Section</h3>
-  <select name="section" class="select-field">
-  <option value="">Select section</option>
-  <option value="section1">Section 1</option>
-  <option value="section2">Section 2</option>
-  <option value="section3">Section 3</option>
-  <option value="shopSection">Shop Section </option>
-  </select>
+    <select name="section" class="select-field">
+      <option value="">Select section</option>
+      <option value="section1">Section 1</option>
+      <option value="section2">Section 2</option>
+      <option value="section3">Section 3</option>
+      <option value="shopSection">Shop Section</option>
+    </select>
 
-      <!-- REQUIRED HIDDEN FIELD -->
-      <input type="hidden" name="data" id="dataField">
+    <input type="hidden" name="data" id="dataField">
 
-      <button type="submit">Submit</button>
-</form>
+    <button type="submit">Submit</button>
+  </form>
+</div>
 
-  </div>
 
 
    

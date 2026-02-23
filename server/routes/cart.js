@@ -55,6 +55,49 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+
+
+// UPDATE CUSTOMER DETAILS ONLY
+router.patch('/:id/customer', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { customerDetails } = req.body;
+
+    if (!customerDetails) {
+      return res.status(400).json({ error: "customerDetails is required" });
+    }
+
+    const cart = await Cart.findById(id);
+
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    cart.customerDetails = customerDetails;
+
+    await cart.save();
+
+    res.json({
+      message: "Customer details updated successfully",
+      cart
+    });
+
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
 // DELETE / CLEAR CART
 router.delete('/:id', async (req, res) => {
   try {

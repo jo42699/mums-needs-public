@@ -347,7 +347,7 @@ addToCartBtn.addEventListener("click", async () => {
 
   // USER CART
   try {
-    const response = await fetch("http://localhost:5000/v1/cart/add", {
+    const response = await fetch("http://localhost:5000/v1/cartItems/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

@@ -52,55 +52,30 @@
 
 <section class="payment-container">
 
-  <!-- ORDER SUMMARY -->
-  <div class="order-summary">
-    <h2>Review your order</h2>
-    <br>
+<!-- ORDER SUMMARY -->
+<div class="order-summary">
+  <h2>Review your order</h2>
+  <br>
 
-  <div class="order-item-render">
+  <!--  render items-->
+  <div class="order-item-render"></div>
 
-        <div class="order-item">
-        <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product">
-        <div>
-            <p class="product-name">Kids Cotton Dress</p>
-            <p class="product-meta">Size: <span>XL</span> • Quantity: <span>1</span></p>
-        </div>
-        <span class="price">₦25,000</span>
-        </div>
+  <br><br><br>
 
-         <div class="order-item">
-             <img src="images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product">
-            <div>
-            <p class="product-name">Kids Cotton Dress</p>
-            <p class="product-meta">Size: <span>XL</span> • Quantity: <span>1</span></p>
-            </div>
-            <span class="price">₦25,000</span>
-          </div>
+ <hr style="border: 1px solid purple; width: 60%;">
 
+  <div class="summary-line">
+    <span style="font-weight: 700;">Total</span>
+    <span style="font-weight: 700;"   id="summary-subtotal">₦0</span>
   </div>
 
-    
+ 
 
-<br>
-<br>
-<br>
+  <hr style="border: 1px solid purple; width: 60%;">
 
-    <div class="summary-line">
-      <span>Subtotal</span>
-      <span>₦25,000</span>
-    </div>
-    <div class="summary-line">
-      <span>Shipping</span>
-      <span>₦2,000</span>
-    </div>
 
-     <hr style="border: 1px solid purple; width: 60%;">  
 
-    <div class="summary-total">
-      <span>Total</span>
-      <span>₦27,000</span>
-    </div>
-  </div>
+</div>
 
 
 
@@ -182,6 +157,7 @@
 
 
 
+<script type="module" src="./js/order-summary.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>

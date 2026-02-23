@@ -1,81 +1,84 @@
 import { auth } from "./auth.js";
+import { startPayment } from "./paystack.js";
 
-const orderItemsContainer = document.querySelector(".order-item-render");
-const subtotalEl = document.querySelector(".summary-line span:nth-child(2)");
-const shippingEl = document.querySelector(".summary-line:nth-child(3) span:nth-child(2)");
-const totalEl = document.querySelector(".summary-total span:nth-child(2)");
+document.addEventListener("DOMContentLoaded", () => {
+  const orderItemsContainer = document.querySelector(".order-item-render");
+  const totalEl = document.getElementById("summary-subtotal");
+  const payBtn = document.getElementById("payNowBtn");
 
-const formatter = new Intl.NumberFormat("en-NG");
+  const formatter = new Intl.NumberFormat("en-NG");
 
-// Load order summary when user is authenticated
-auth.onAuthStateChanged(async (user) => {
-  if (!user) {
-    alert("Please sign in to view your order summary.");
-    window.location.href = "/login.html";
-    return;
-  }
-
-  try {
-    // Fetch the user's cart
-    const res = await fetch(`http://localhost:5000/v1/cartItems/user/${user.uid}`, {
-      credentials: "include"
-    });
-
-    const cart = await res.json();
-
-    if (!cart || !cart.cartItems || cart.cartItems.length === 0) {
-      orderItemsContainer.innerHTML = `<p>Your cart is empty.</p>`;
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      alert("Please sign in to view your order summary.");
+      window.location.href = "/login.html";
       return;
     }
 
-    renderOrderItems(cart.cartItems);
-    renderSummary(cart.cartItems);
+    try {
+      const res = await fetch(`http://localhost:5000/v1/cartItems/user/${user.uid}`, {
+        credentials: "include"
+      });
 
-  } catch (err) {
-    console.error("Error loading order summary:", err);
-  }
-});
+      const cart = await res.json();
 
+      if (!cart || !cart.cartItems || cart.cartItems.length === 0) {
+        orderItemsContainer.innerHTML = `<p>Your cart is empty.</p>`;
+        totalEl.textContent = "₦0";
+        return;
+      }
 
-// Render each cart item in the order summary
-function renderOrderItems(items) {
-  orderItemsContainer.innerHTML = "";
+      // Store email for Paystack
+      window.currentUserEmail = cart.customerDetails.email;
 
-  items.forEach(item => {
-    const imgURL = item.image.url.startsWith("http")
-      ? item.image.url
-      : `http://localhost:5000${item.image.url}`;
+      // ⭐ SUBTOTAL = BACKEND CART TOTAL
+      const totalInNaira = cart.cartTotal / 100;
+      totalEl.textContent = `₦${formatter.format(totalInNaira)}`;
 
-    const html = `
-      <div class="order-item">
-        <img src="${imgURL}" alt="${item.name}">
-        <div>
-          <p class="product-name">${item.name}</p>
-          <p class="product-meta">
-            Size: <span>${item.size}</span> • 
-            Quantity: <span>${item.quantity}</span>
-          </p>
-        </div>
-        <span class="price">₦${formatter.format(item.unitPrice / 100)}</span>
-      </div>
-    `;
+      // ⭐ This is the Paystack amount
+      window.cartTotalInKobo = cart.cartTotal;
 
-    orderItemsContainer.innerHTML += html;
+      console.log("Cart Total (kobo):", window.cartTotalInKobo);
+
+      renderOrderItems(cart.cartItems);
+
+    } catch (err) {
+      console.error("Error loading order summary:", err);
+    }
   });
-}
 
+  function renderOrderItems(items) {
+    orderItemsContainer.innerHTML = "";
 
-// Render subtotal, shipping, and total
-function renderSummary(items) {
-  const subtotal = items.reduce((sum, item) => {
-    const unitPrice = item.unitPrice / 100;
-    return sum + unitPrice * item.quantity;
-  }, 0);
+    items.forEach(item => {
+      const imgURL = item.image.url.startsWith("http")
+        ? item.image.url
+        : `http://localhost:5000${item.image.url}`;
 
-  const shipping = items.length > 0 ? 2000 : 0;
-  const total = subtotal + shipping;
+      const html = `
+        <div class="order-item">
+          <img src="${imgURL}" alt="${item.name}">
+          <div>
+            <p class="product-name">${item.name}</p>
+            <p class="product-meta">
+              Size: <span>${item.size}</span> • 
+              Quantity: <span>${item.quantity}</span>
+            </p>
+          </div>
+          <span class="price">₦${formatter.format(item.unitPrice / 100)}</span>
+        </div>
+      `;
 
-  subtotalEl.textContent = `₦${formatter.format(subtotal)}`;
-  shippingEl.textContent = `₦${formatter.format(shipping)}`;
-  totalEl.textContent = `₦${formatter.format(total)}`;
-}
+      orderItemsContainer.innerHTML += html;
+    });
+  }
+
+  // ⭐ CLICK LISTENER NOW WORKS
+  payBtn.addEventListener("click", () => {
+    console.log("PAY NOW CLICKED");
+    console.log("Email:", window.currentUserEmail);
+    console.log("Amount (kobo):", window.cartTotalInKobo);
+
+    startPayment(window.currentUserEmail, window.cartTotalInKobo);
+  });
+});

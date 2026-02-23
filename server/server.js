@@ -22,7 +22,7 @@ const authRouter = require("./routes/auth");
 const adminRoutes = require("./routes/adminRoute");
 const cartRouter = require("./routes/cart");
 const announcementRouter = require("./routes/announcement");
-
+const paymentRouter = require("./routes/paystack");
 // Middleware
 const firebaseAuth = require('./middleware/firebaseAuth');
 
@@ -46,23 +46,27 @@ app.use(morgan('tiny'));
 // Disable COOP/COEP for local dev
 app.disable("crossOriginOpenerPolicy");
 app.disable("crossOriginEmbedderPolicy");
-
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "*"],
-      scriptSrcAttr: ["'unsafe-inline'"],   // Allow inline event handlers like onclick
+      scriptSrc: ["'self'", "'unsafe-inline'", "*", "https://js.paystack.co"],
+      scriptSrcAttr: ["'unsafe-inline'"],
       connectSrc: ["'self'", "http://localhost:5000", "http://127.0.0.1:5000", "*"],
-      'img-src': ["'self'", "data:", "blob:", "*"],
+      imgSrc: ["'self'", "data:", "blob:", "*"],
       styleSrc: ["'self'", "'unsafe-inline'", "https:"],
       fontSrc: ["'self'", "https:", "data:"],
+
+      // Allow iframes from these sources (e.g. Paystack checkout, Google sign-in)
       frameSrc: [
         "'self'",
+        "https://checkout.paystack.com",
+        "https://js.paystack.co",
         "https://apis.google.com",
         "https://*.firebaseapp.com",
         "https://*.googleusercontent.com"
       ],
+
       frameAncestors: ["'self'"],
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
@@ -72,8 +76,7 @@ app.use(
   })
 );
 
-// Serve frontend files from /public
-app.use(express.static(path.join(__dirname, "../public")));
+
 
 
 // Test protected route
@@ -100,8 +103,20 @@ app.use(`${API}/cartItems`, cartItemsRouter);
 app.use(`${API}/customer`, customerRouter);
 app.use(`${API}/cart`, cartRouter);
 app.use(`${API}/announcement`, announcementRouter);
-// Admin routes
+app.use(`${API}/paystack`, paymentRouter);
 app.use("/v1/admin", adminRoutes);
+
+
+
+
+
+// Serve frontend files from /public
+app.use(express.static(path.join(__dirname, "../public")));
+
+
+
+
+
 
 // Start server
 const startServer = async () => {

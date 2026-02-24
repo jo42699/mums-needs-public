@@ -75,9 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ⭐ CLICK LISTENER NOW WORKS
   payBtn.addEventListener("click", () => {
-    console.log("PAY NOW CLICKED");
-    console.log("Email:", window.currentUserEmail);
-    console.log("Amount (kobo):", window.cartTotalInKobo);
+   
+  
 
     startPayment(window.currentUserEmail, window.cartTotalInKobo);
   });

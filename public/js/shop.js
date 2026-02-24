@@ -9,7 +9,7 @@ let allProducts = [];
 async function loadProducts() {
   try {
 
-    // SHOW LOADER, HIDE PRODUCTS ← ADDED
+    // SHOW LOADER, HIDE PRODUCTS <= ADDED
     loader.style.display = "grid";
     container.style.display = "none";
 
@@ -22,7 +22,7 @@ async function loadProducts() {
     allProducts = products;         
     renderProducts(products);        
 
-    // HIDE LOADER, SHOW PRODUCTS ← ADDED
+    // HIDE LOADER, SHOW PRODUCTS <= ADDED
     loader.style.display = "none";
     container.style.display = "flex";
 

@@ -28,19 +28,50 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Store email for Paystack
+      //  Store email for Paystack
       window.currentUserEmail = cart.customerDetails.email;
 
-      // ⭐ SUBTOTAL = BACKEND CART TOTAL
+      //  Totals
       const totalInNaira = cart.cartTotal / 100;
       totalEl.textContent = `₦${formatter.format(totalInNaira)}`;
 
-      // ⭐ This is the Paystack amount
       window.cartTotalInKobo = cart.cartTotal;
+      window.cartSubtotal = cart.subtotal;
+      window.cartShipping = cart.shipping;
 
       console.log("Cart Total (kobo):", window.cartTotalInKobo);
 
       renderOrderItems(cart.cartItems);
+
+      // CLICK HANDLER FOR PAY NOW BUTTON
+payBtn.addEventListener("click", () => {
+  // Load saved checkout info from checkout page
+  const checkoutInfo = JSON.parse(sessionStorage.getItem("checkout_info"));
+
+  if (!checkoutInfo) {
+    alert("Missing checkout info. Please go back to checkout.");
+    return;
+  }
+
+  // Save customerId for verify-payment
+  localStorage.setItem("customerId", user.uid);
+
+  // Build final checkout details
+  const checkoutDetails = {
+    customerDetails: checkoutInfo,      
+    items: cart.cartItems,               
+    cartTotal: window.cartTotalInKobo    
+  };
+
+  // Save for verify-payment
+  localStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
+
+  // Start Paystack
+  startPayment(window.currentUserEmail, window.cartTotalInKobo);
+});
+
+
+
 
     } catch (err) {
       console.error("Error loading order summary:", err);
@@ -72,12 +103,4 @@ document.addEventListener("DOMContentLoaded", () => {
       orderItemsContainer.innerHTML += html;
     });
   }
-
-  // ⭐ CLICK LISTENER NOW WORKS
-  payBtn.addEventListener("click", () => {
-   
-  
-
-    startPayment(window.currentUserEmail, window.cartTotalInKobo);
-  });
 });

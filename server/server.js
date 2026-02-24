@@ -23,6 +23,11 @@ const adminRoutes = require("./routes/adminRoute");
 const cartRouter = require("./routes/cart");
 const announcementRouter = require("./routes/announcement");
 const paymentRouter = require("./routes/paystack");
+const ordersRouter = require("./routes/orders");
+
+
+
+
 // Middleware
 const firebaseAuth = require('./middleware/firebaseAuth');
 
@@ -104,6 +109,7 @@ app.use(`${API}/customer`, customerRouter);
 app.use(`${API}/cart`, cartRouter);
 app.use(`${API}/announcement`, announcementRouter);
 app.use(`${API}/paystack`, paymentRouter);
+app.use(`${API}/orders`, ordersRouter);
 app.use("/v1/admin", adminRoutes);
 
 

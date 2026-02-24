@@ -5,8 +5,7 @@ const CartItemSchema = require('./cart-Item.js');
 const OrderSchema = new mongoose.Schema(
   {
     customer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer",
+      type: String,
       required: true
     },
 
@@ -21,10 +20,8 @@ const OrderSchema = new mongoose.Schema(
     // Items purchased
     items: [CartItemSchema],
 
-    // Totals
-    subtotal: { type: Number, required: true },
-    shipping: { type: Number, required: true },
-    cartTotal: { type: Number, required: true }, // subtotal + shipping
+    // (subtotal + shipping already included)
+    cartTotal: { type: Number, required: true },
     currency: { type: String, default: "NGN" },
 
     // Payment info
@@ -47,7 +44,7 @@ const OrderSchema = new mongoose.Schema(
 );
 
 // Auto-confirm order when payment is successful
-OrderSchema.pre("save", function (next) {
+OrderSchema.pre("save", function () {
   if (
     this.payment?.paymentStatus === true &&
     this.payment.amountPaid === this.cartTotal
@@ -55,8 +52,7 @@ OrderSchema.pre("save", function (next) {
     this.orderStatus = "confirmed";
     this.payment.paidAt = this.payment.paidAt || new Date();
   }
-
-  next();
 });
+
 
 module.exports = mongoose.model('Order', OrderSchema);

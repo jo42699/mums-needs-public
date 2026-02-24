@@ -1,12 +1,13 @@
-
+// routes/paystack.js
 const express = require("express");
 const axios = require("axios");
-const Payment = require("../models/payment"); 
+const Payment = require("../models/payment");
+const Order = require("../models/order");
+
 const router = express.Router();
 
 /**
  * INIT PAYMENT
-
  */
 router.post("/init", async (req, res) => {
   try {
@@ -16,14 +17,9 @@ router.post("/init", async (req, res) => {
       return res.status(400).json({ error: "Email and amount are required" });
     }
 
-    // Generate unique reference
     const reference = "ref_" + Date.now();
 
-    return res.json({
-      reference,
-      email,
-      amount 
-    });
+    return res.json({ reference, email, amount });
 
   } catch (error) {
     console.error("INIT ERROR:", error);
@@ -31,21 +27,26 @@ router.post("/init", async (req, res) => {
   }
 });
 
-
 /**
- * VERIFY PAYMENT
- * Frontend sends: { reference }
- * Backend verifies with Paystack and saves Payment document
+ * VERIFY PAYMENT + CREATE ORDER
  */
 router.post("/verify-payment", async (req, res) => {
-  const { reference } = req.body;
-
-  if (!reference) {
-    return res.status(400).json({ error: "Reference is required" });
-  }
-
   try {
-    // Verify with Paystack
+    console.log("BODY RECEIVED:", req.body);
+
+    const {
+      reference,
+      items,
+      customerDetails,
+      customerId,
+      cartTotal
+    } = req.body;
+
+    if (!reference) {
+      return res.status(400).json({ error: "Reference is required" });
+    }
+
+    // ⭐ VERIFY WITH PAYSTACK
     const response = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
@@ -57,34 +58,49 @@ router.post("/verify-payment", async (req, res) => {
 
     const data = response.data;
 
-    // SUCCESSFUL PAYMENT
-    if (data.data.status === "success") {
-      const paymentMethod = data.data.channel; 
-      const amountPaid = data.data.amount;     
-      const transactionId = data.data.id;     
-      const paidAt = data.data.paid_at;
+    if (data.data.status !== "success") {
+      return res.json({
+        success: false,
+        message: "Payment not successful",
+        data: data.data
+      });
+    }
 
-      // Save to MongoDB using YOUR schema
-      const payment = await Payment.create({
+    // ⭐ Extract payment info
+    const paymentMethod = data.data.channel;
+    const amountPaid = data.data.amount;
+    const transactionId = data.data.id;
+    const paidAt = data.data.paid_at;
+
+    // ⭐ Save Payment
+    const payment = await Payment.create({
+      paymentMethod,
+      paymentStatus: true,
+      amountPaid,
+      transactionId,
+      paidAt
+    });
+
+    // ⭐ CREATE ORDER (customer is STRING — Firebase UID)
+    const order = await Order.create({
+      customer: customerId,
+      customerDetails,
+      items,
+      cartTotal,
+      payment: {
         paymentMethod,
         paymentStatus: true,
         amountPaid,
         transactionId,
         paidAt
-      });
+      }
+    });
 
-      return res.json({
-        success: true,
-        message: "Payment verified",
-        payment
-      });
-    }
-
-    // FAILED PAYMENT
     return res.json({
-      success: false,
-      message: "Payment not successful",
-      data: data.data
+      success: true,
+      message: "Payment verified",
+      orderId: order._id,
+      order
     });
 
   } catch (error) {

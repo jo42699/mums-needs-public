@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ================= AUTH STATE LISTENER =================
+ // ================= CHECK AUTH STATE ON LOAD =================
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       await handleLoginMerge(user.uid);

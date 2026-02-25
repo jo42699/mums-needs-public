@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 3. Fill in dynamic values
     orderNumberEl.textContent = order._id;
-    amountPaidEl.textContent = "₦" + formatter.format(order.payment.amountPaid / 100);
+    amountPaidEl.textContent = "₦" + formatter.format(order.payment.amountPaid);
 
   } catch (err) {
     console.error("Error loading order:", err);

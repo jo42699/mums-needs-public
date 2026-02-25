@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await signupWithEmail(email, password);
 
       const idToken = await auth.currentUser.getIdToken(true);
-      console.log("ID TOKEN (signup):", idToken);
+     // console.log("ID TOKEN (signup):", idToken);
 
       const res = await fetch("http://localhost:5000/v1/auth/login", {
         method: "POST",
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await loginWithGoogle();
 
       const idToken = await auth.currentUser.getIdToken(true);
-      console.log("ID TOKEN (Google login):", idToken);
+      // console.log("ID TOKEN (Google login):", idToken);
 
       const res = await fetch("http://localhost:5000/v1/auth/login", {
         method: "POST",

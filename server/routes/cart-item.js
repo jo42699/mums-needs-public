@@ -46,11 +46,7 @@ router.get('/user/:customerId', async (req, res) => {
 });
 
 
-/*
-|--------------------------------------------------------------------------
-| ADD ITEM TO CART
-|--------------------------------------------------------------------------
-*/
+// CREATE OR UPDATE CART ITEM
 router.post('/add', async (req, res) => {
   try {
     const { customerId, productId, quantity, size, name, unitPrice, image } = req.body;
@@ -89,11 +85,7 @@ router.post('/add', async (req, res) => {
   }
 });
 
-/*
-|--------------------------------------------------------------------------
-| UPDATE CART ITEM
-|--------------------------------------------------------------------------
-*/
+// UPDATE CART ITEM (quantity and/or size)
 router.patch('/:customerId/item/:itemId', async (req, res) => {
   try {
     const { customerId, itemId } = req.params;

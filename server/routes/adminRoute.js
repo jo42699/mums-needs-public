@@ -5,9 +5,9 @@ const router = express.Router();
 const firebaseAuth = require("../middleware/firebaseAuth");
 const verifyAdmin = require("../middleware/verify-admin");
 
-// ---------------------------------------------
+
 // ADMIN CHECK (verifies session + UID admin)
-// ---------------------------------------------
+
 router.get("/check", firebaseAuth, verifyAdmin, (req, res) => {
   res.json({
     status: "admin_verified",
@@ -15,9 +15,9 @@ router.get("/check", firebaseAuth, verifyAdmin, (req, res) => {
   });
 });
 
-// ---------------------------------------------
+
 // ADMIN-ONLY DATA EXAMPLE
-// ---------------------------------------------
+
 router.get("/data", firebaseAuth, verifyAdmin, (req, res) => {
   res.json({
     secret: "This is admin-only data!",
@@ -25,9 +25,7 @@ router.get("/data", firebaseAuth, verifyAdmin, (req, res) => {
   });
 });
 
-// ---------------------------------------------
-// AUTHENTICATED USER PROFILE (no admin needed)
-// ---------------------------------------------
+// add more admin routes here as needed, all protected by firebaseAuth + verifyAdmin
 router.get("/profile", firebaseAuth, (req, res) => {
   res.json({
     user: req.user

@@ -189,12 +189,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const email = o.customerDetails?.email?.toLowerCase()||"";
       const orderId = o._id || "";
       const ammount = ((o.cartTotal||0)/100).toLocaleString();
-      return name.includes(query) || email.includes(query) || orderId.includes(query) || ammount.includes(query);
+      return name.includes(query) || email.includes(query) || orderId.includes(query) || ammount.includes(query) ;
     });
     currentPage=1;
     renderOrders();
   });
-
 
 
 

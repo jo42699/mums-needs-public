@@ -89,7 +89,7 @@
 
  <section class="about-hero">
   <div class="about-hero-content">
-    <h1>Mums who care</h1>
+    <h1>For Mothers who care.</h1>
     <p style="color: aliceblue;">More than clothes — we dress memories in the making.</p>
   </div>
 </section>
@@ -188,7 +188,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>© 2025 MumsNeeds. All rights reserved.</p>
+            <p>© <span id="year"></span> MumsNeeds. All rights reserved.</p>
         </div>
         </footer>
 
@@ -291,7 +291,10 @@ document.addEventListener("click", () => {
 
 
 
-
+// get current year for copyright
+const yearEl = document.getElementById("year");
+const currentYear = new Date().getFullYear();
+yearEl.textContent = currentYear;
 
 
 

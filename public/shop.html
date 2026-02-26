@@ -20,7 +20,7 @@
   <div class="container">
 <a href="index.html"> <img class="MumsNeeds-logo" src="./images/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.png" alt="Product"> </a>
 
-
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span><i id="bar" class="fa-solid fa-bars"></i> </span>
     </button>
@@ -182,7 +182,7 @@
   </div>
 
   <div class="footer-bottom">
-    <p>© 2025 MumsNeeds. All rights reserved.</p>
+    <p>© <span id="year"></span> MumsNeeds. All rights reserved.</p>
   </div>
 </footer>
 
@@ -196,7 +196,14 @@
 <script type="module" src="./js/cart.js"></script>
 <script type="module" src="./js/shop.js"  defer ></script>
 <script type="module" src="./js/main.js" ></script>
+<script>
+  // get current year for copyright
+const yearEl = document.getElementById("year");
+const currentYear = new Date().getFullYear();
+yearEl.textContent = currentYear;
 
+
+</script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 </body>

@@ -219,7 +219,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>© 2025 MumsNeeds. All rights reserved.</p>
+            <p>© <span id="year"></span> MumsNeeds. All rights reserved.</p>
         </div>
         </footer>
 
@@ -294,6 +294,11 @@ document.getElementById("goToSignin").addEventListener("click", (e) => {
 });
 
 
+
+// get current year for copyright
+const yearEl = document.getElementById("year");
+const currentYear = new Date().getFullYear();
+yearEl.textContent = currentYear;
 
 
 

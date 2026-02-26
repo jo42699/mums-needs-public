@@ -16,14 +16,25 @@ fetch("http://localhost:5000/v1/auth/total-users", {
 
 
 
-// Fetch total orders and display
 fetch("http://localhost:5000/v1/orders", {
   method: "GET",
   credentials: "include"
 })
   .then(res => res.json())
   .then(data => {
-    document.getElementById("total-orders").textContent = data.count;
+
+    // 1. Date one month ago
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    // 2. Filter orders created within the last month
+    const recentOrders = data.orders.filter(order => {
+      const createdAt = new Date(order.createdAt);
+      return createdAt >= oneMonthAgo;
+    });
+
+    // 3. Display count of recent orders
+    document.getElementById("total-orders").textContent = recentOrders.length;
   })
   .catch(err => {
     console.error(err);
@@ -32,15 +43,29 @@ fetch("http://localhost:5000/v1/orders", {
 
 
 
-// Fetch total revenue and display
+
 fetch("http://localhost:5000/v1/orders", {
   method: "GET",
   credentials: "include"
 })
-  .then(res => res.json()) 
+  .then(res => res.json())
   .then(data => {
-    const totalRevenue = data.orders.reduce((sum, order) => sum + order.cartTotal, 0);
-    document.getElementById("total-revenue").textContent = `₦${(totalRevenue/100).toLocaleString()}`;
+
+    // 1. Get date 30 days ago
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    // 2. Filter orders created within the last month
+    const recentOrders = data.orders.filter(order => {
+      const createdAt = new Date(order.createdAt);
+      return createdAt >= oneMonthAgo;
+    });
+
+    // 3. Calculate revenue from recent orders only
+    const totalRevenue = recentOrders.reduce((sum, order) => sum + order.cartTotal, 0);
+
+    document.getElementById("total-revenue").textContent =
+      `₦${(totalRevenue / 100).toLocaleString()}`;
   })
   .catch(err => {
     console.error(err);

@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="css/orders.css" />
   <link rel="stylesheet" href="css/admin-product.css" />
   <link rel="stylesheet" href="css/upload.css">
+  
     
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="./images/icons/BFCC82DA-F56B-44C1-9ADC-4446FB8ABD31.ico">
 </head>
 <body>
 
@@ -52,14 +54,15 @@
  </header>
 
    
-
 <div class="card">
   <form id="productForm" action="http://localhost:5000/v1/product/" method="post" enctype="multipart/form-data">
 
     <!-- Images -->
     <h3>Upload Main Image</h3>
-    <input type="file" name="image" accept="image/*" onchange="previewImage(event, 'preview_main')">
-    <img id="preview_main" class="image-preview">
+    <div class="image-group">
+      <input type="file" name="image" accept="image/*">
+      <img class="image-preview">
+    </div>
 
     <!-- Product Info -->
     <h3>Product Name</h3>
@@ -97,11 +100,11 @@
     <h3>Variant Name</h3>
     <input type="text" name="variant_name">
 
-    <br>
-
     <h3>Variant Image 1</h3>
-    <input type="file" name="variantImages" accept="image/*" onchange="previewImage(event, 'preview_variant_1')">
-    <img id="preview_variant_1" class="image-preview">
+    <div class="image-group">
+      <input type="file" name="variantImages" accept="image/*">
+      <img class="image-preview">
+    </div>
 
     <h3>Variant Sizes & Stock</h3>
     <div id="sizes-container-2">
@@ -120,11 +123,11 @@
     <h3>Variant Name</h3>
     <input type="text" name="variant_name">
 
-    <br>
-
     <h3>Variant Image 2</h3>
-    <input type="file" name="variantImages" accept="image/*" onchange="previewImage(event, 'preview_variant_2')">
-    <img id="preview_variant_2" class="image-preview">
+    <div class="image-group">
+      <input type="file" name="variantImages" accept="image/*">
+      <img class="image-preview">
+    </div>
 
     <h3>Variant Sizes & Stock</h3>
     <div id="sizes-container-3">

@@ -12,7 +12,7 @@ function loadPaystack() {
 
 // Separate async function (callback itself must NOT be async)
 async function verifyPayment(reference) {
-  // ⭐ Load checkout data FIRST
+  // Load checkout data FIRST
   const checkoutData = JSON.parse(localStorage.getItem("checkoutDetails"));
   const customerId = localStorage.getItem("customerId");
 
@@ -22,7 +22,7 @@ async function verifyPayment(reference) {
     return;
   }
 
-  // ⭐ Now it's safe to use it
+  //  Now it's safe to use it
   const cartItems = checkoutData.items;
 
   const verifyRes = await fetch("http://localhost:5000/v1/paystack/verify-payment", {
@@ -41,10 +41,10 @@ async function verifyPayment(reference) {
   console.log("Verification:", verifyData);
 
   if (verifyData.success) {
-    // ⭐ Clear cart
+    //  Clear cart
     localStorage.removeItem("cart");
 
-    // ⭐ Redirect to success page
+    //  Redirect to success page
     window.location.href = `/success.html?order=${verifyData.orderId}`;
   } else {
     alert("Payment failed");
@@ -95,3 +95,16 @@ export async function startPayment(userEmail, cartTotalInKobo) {
     console.error("Payment error:", error);
   }
 }
+
+
+
+
+
+/** 
+ * 
+ *  For this section i had issues with the Paystack callback not being triggered, which is why i moved the callback and verification logic to the global scope. I also had an isssue with the async callback which i tried to use but paystack does not support async callbacks, which is why the callback itself is not async but calls an async function to do the verification. I also made sure to load the checkout data before starting the payment process, so that it's available when the callback is triggered.
+ * 
+ * 
+ * 
+ * 
+ */

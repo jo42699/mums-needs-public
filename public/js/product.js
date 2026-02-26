@@ -22,8 +22,10 @@ const formatter = new Intl.NumberFormat("en-NG");
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
-// Disable Add to Cart initially until size is selected
-//addToCartBtn.disabled = true;
+// Helper: total stock
+function getTotalStock(stockObj) {
+  return Object.values(stockObj || {}).reduce((sum, qty) => sum + qty, 0);
+}
 
 // LOAD PRODUCT DETAILS
 async function loadProduct() {
@@ -32,6 +34,17 @@ async function loadProduct() {
     const product = await res.json();
 
     window.currentProduct = product;
+
+    const baseStock = getTotalStock(product.stockBySize);
+    const variantStock = product.variants.reduce((sum, v) => {
+      return sum + getTotalStock(v.VariantStockBySize);
+    }, 0);
+
+    if (baseStock + variantStock === 0) {
+      document.querySelector(".product-page").innerHTML =
+        "<p>This product is out of stock.</p>";
+      return;
+    }
 
     // MAIN IMAGE
     mainImage.src = `http://localhost:5000${product.image.url}`;
@@ -67,13 +80,17 @@ async function loadProduct() {
     // VARIANT DROPDOWN
     priceSelect.innerHTML = `<option value="base">Default</option>`;
     product.variants.forEach(v => {
-      priceSelect.innerHTML += `<option value="${v._id}">${v.variantName}</option>`;
+      if (getTotalStock(v.VariantStockBySize) > 0) {
+        priceSelect.innerHTML += `<option value="${v._id}">${v.variantName}</option>`;
+      }
     });
 
     // SIZE SELECT (BASE PRODUCT)
     sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
     Object.keys(product.stockBySize).forEach(size => {
-      sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+      if (product.stockBySize[size] > 0) {
+        sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+      }
     });
 
     // THUMBNAILS
@@ -86,6 +103,8 @@ async function loadProduct() {
     `;
 
     product.variants.forEach(v => {
+      if (getTotalStock(v.VariantStockBySize) === 0) return;
+
       smallImgGroup.innerHTML += `
         <div class="small-img-col">
           <img class="small-img"
@@ -108,7 +127,9 @@ async function loadProduct() {
 
           sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
           Object.keys(variant.VariantStockBySize).forEach(size => {
-            sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+            if (variant.VariantStockBySize[size] > 0) {
+              sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+            }
           });
 
         } else {
@@ -116,7 +137,9 @@ async function loadProduct() {
 
           sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
           Object.keys(product.stockBySize).forEach(size => {
-            sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+            if (product.stockBySize[size] > 0) {
+              sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+            }
           });
         }
 
@@ -136,13 +159,17 @@ async function loadProduct() {
 
       if (selected === "base") {
         Object.keys(product.stockBySize).forEach(size => {
-          sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+          if (product.stockBySize[size] > 0) {
+            sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+          }
         });
       } else {
         const variant = product.variants.find(v => v._id === selected);
 
         Object.keys(variant.VariantStockBySize).forEach(size => {
-          sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+          if (variant.VariantStockBySize[size] > 0) {
+            sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
+          }
         });
       }
 
@@ -236,24 +263,6 @@ async function loadMoreLikeThis(currentProduct) {
   }
 }
 
-// Increment cart count in UI
-
-/*function incrementCartCount() {
-  const countEl = document.getElementById("cart-count");
-  if (!countEl) return;
-
-  let current = parseInt(countEl.textContent) || 0;
-  countEl.textContent = current + 1;
-}
-
-
-*/
-
-
-
-
-
-
 // Render similar products
 function renderMoreLikeThis(list) {
   moreLikeThisContainer.innerHTML = "";
@@ -293,8 +302,8 @@ addToCartBtn.addEventListener("click", async () => {
   const user = auth.currentUser;
   const product = window.currentProduct;
 
-  const selectedVariant = priceSelect.value;
-  const selectedSize = sizeSelect.value;
+  const selectedVariant = priceSelect.value === "base" ? null : priceSelect.value;
+  const selectedSize = sizeSelect.value.trim();
   const quantity = parseInt(qtyInput.value);
 
   if (!selectedSize) {
@@ -302,17 +311,14 @@ addToCartBtn.addEventListener("click", async () => {
     return;
   }
 
-  // BASE PRICE (variants do NOT have their own price)
   let unitPrice = product.price;
 
-  // IMAGE
   let image = {
     url: product.image.url,
     alt: product.image.alt
   };
 
-  // VARIANT SELECTED
-  if (selectedVariant !== "base") {
+  if (selectedVariant) {
     const variant = product.variants.find(v => v._id === selectedVariant);
 
     image = {
@@ -328,10 +334,13 @@ addToCartBtn.addEventListener("click", async () => {
     quantity,
     unitPrice,
     totalPrice: unitPrice * quantity,
-    image
+    image,
+    variantId: selectedVariant,
+    variantName: selectedVariant
+      ? product.variants.find(v => v._id === selectedVariant).variantName
+      : null
   };
 
-  // GUEST CART
   if (!user) {
     let guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
 
@@ -345,7 +354,6 @@ addToCartBtn.addEventListener("click", async () => {
     return;
   }
 
-  // USER CART
   try {
     const response = await fetch("http://localhost:5000/v1/cartItems/add", {
       method: "POST",

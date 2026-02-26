@@ -6,27 +6,44 @@ const CartItemSchema = new mongoose.Schema({
     ref: 'Product',
     required: true
   },
+
+  //  REQUIRED FOR VARIANT STOCK UPDATES
+  variantId: {
+    type: String,
+    default: null
+  },
+
+  variantName: {
+    type: String,
+    default: null
+  },
+
   quantity: {
     type: Number,
     required: true,
     min: 1
   },
+
   size: {
     type: String,
     required: true
   },
+
   image: {
     url: String,
     alt: String
   },
+
   name: {
     type: String,
     required: true
   },
+
   unitPrice: {
     type: Number,
     required: true
   },
+
   totalPrice: {
     type: Number,
     required: true
@@ -34,8 +51,6 @@ const CartItemSchema = new mongoose.Schema({
 });
 
 module.exports = CartItemSchema;
-
-
 
 
 

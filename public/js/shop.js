@@ -5,11 +5,8 @@ const nairaFormatter = new Intl.NumberFormat("en-NG");
 
 let allProducts = []; 
 
-// LOAD PRODUCTS 
 async function loadProducts() {
   try {
-
-    // SHOW LOADER, HIDE PRODUCTS <= ADDED
     loader.style.display = "grid";
     container.style.display = "none";
 
@@ -17,33 +14,42 @@ async function loadProducts() {
     if (!response.ok) throw new Error(`Network Error: ${response.status}`);
 
     const products = await response.json();
-    //console.log("Loaded products:", products);
+    allProducts = products;
+    renderProducts(products);
 
-    allProducts = products;         
-    renderProducts(products);        
-
-    // HIDE LOADER, SHOW PRODUCTS <= ADDED
     loader.style.display = "none";
     container.style.display = "flex";
 
   } catch (error) {
     console.error('Error loading products:', error);
     container.innerHTML = '<p>Failed to load products.</p>';
-
     loader.style.display = "none";
     container.style.display = "block";
   }
 }
 
-// RENDER PRODUCTS (UPDATED WITH DISCOUNT LOGIC)
+function isProductInStock(product) {
+  const mainStock = Object.values(product.stockBySize || {})
+    .reduce((sum, qty) => sum + qty, 0);
+
+  const variantStock = (product.variants || []).reduce((total, variant) => {
+    const qty = Object.values(variant.VariantStockBySize || {})
+      .reduce((s, q) => s + q, 0);
+    return total + qty;
+  }, 0);
+
+  return (mainStock + variantStock) > 0;
+}
+
 function renderProducts(products) {
   container.innerHTML = "";
 
   products.forEach(product => {
+    if (!isProductInStock(product)) return;
+
     const imgURL = `http://localhost:5000${product.image.url}`;
     const originalPrice = product.price / 100;
 
-    // Calculate discounted price if discount exists
     let discountedPrice = null;
     if (product.discount > 0) {
       discountedPrice = (product.price * (100 - product.discount)) / 10000;
@@ -57,10 +63,10 @@ function renderProducts(products) {
         ${
           product.discount > 0
             ? `
-              <h4 class="p-price" style=" font-size: 19px;    color: purple; font-weight:bold;">
+              <h4 class="p-price" style="font-size: 19px; color: purple; font-weight:bold;">
                 ₦ ${nairaFormatter.format(discountedPrice)}
               </h4>
-              <h5 class="old-price" style=" font-size: 14px; text-decoration: line-through; color:#888;">
+              <h5 class="old-price" style="font-size: 14px; text-decoration: line-through; color:#888;">
                 ₦ ${nairaFormatter.format(originalPrice)}
               </h5>
             `
@@ -74,10 +80,9 @@ function renderProducts(products) {
     `;
   });
 
-  initPagination(); 
+  initPagination();
 }
 
-// FILTER PRODUCTS 
 function filterProducts(query) {
   query = query.toLowerCase();
 
@@ -85,14 +90,12 @@ function filterProducts(query) {
     const nameMatch = product.name.toLowerCase().includes(query);
     const descMatch = product.description?.toLowerCase().includes(query);
     const keywordMatch = product.keywords.some(k => k.toLowerCase().includes(query));
-
     return nameMatch || descMatch || keywordMatch;
   });
 
   renderProducts(filtered);
 }
 
-// PAGINATION
 function initPagination() {
   const products = document.querySelectorAll('.product');
   const productsPerPage = 20;
@@ -107,7 +110,6 @@ function initPagination() {
 
   function renderPagination() {
     pagination.innerHTML = "";
-
     for (let i = 1; i <= totalPages; i++) {
       const btn = document.createElement("button");
       btn.textContent = i;
@@ -132,7 +134,6 @@ function initPagination() {
   showPage(1);
 }
 
-// SEARCH INPUTS
 const desktopSearch = document.querySelector("#searchBox input");
 const mobileSearch = document.querySelector("#mobileSearch input");
 
@@ -149,12 +150,10 @@ document.getElementById("closeMobileSearch").addEventListener("click", () => {
   filterProducts("");
 });
 
- 
 (async () => {
   await loadProducts();
 })();
 
-// CART COUNT 
 const cartCountEl = document.querySelector(".cart-count");
 let cartCount = Number(localStorage.getItem("cartCount")) || 0;
 cartCountEl.textContent = cartCount;
@@ -165,7 +164,6 @@ function addToCart() {
   localStorage.setItem("cartCount", cartCount);
 }
 
-// ADD TO CART BUTTON 
 document.addEventListener("click", e => {
   if (e.target.classList.contains("addToCart-Btn")) {
     e.stopPropagation();
@@ -173,7 +171,6 @@ document.addEventListener("click", e => {
   }
 });
 
-// PRODUCT CLICK to the DETAILS PAGE 
 container.addEventListener("click", e => {
   const card = e.target.closest(".product");
   if (!card) return;

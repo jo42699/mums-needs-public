@@ -6,12 +6,10 @@ document.addEventListener("change", function (e) {
         const file = e.target.files[0];
         if (!file) return;
 
-        // Find the <img> immediately after the input
-        const previewImg = e.target.nextElementSibling;
+        const container = e.target.closest(".image-group");
+        const previewImg = container.querySelector(".image-preview");
 
-        if (previewImg && previewImg.tagName === "IMG") {
-            previewImg.src = URL.createObjectURL(file);
-            previewImg.style.display = "block";
-        }
+        previewImg.src = URL.createObjectURL(file);
+        previewImg.style.display = "block";
     }
 });

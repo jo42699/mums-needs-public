@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const Payment = require("../models/payment");
 const Order = require("../models/order");
+const Product = require("../models/products");
 const sendEmail = require("../utils/sendEmail");
 
 const router = express.Router();
@@ -18,8 +19,8 @@ router.post("/init", async (req, res) => {
     }
 
     const reference = "ref_" + Date.now();
-
     return res.json({ reference, email, amount });
+
   } catch (error) {
     console.error("INIT ERROR:", error);
     res.status(500).json({ error: "Payment initialization failed" });
@@ -27,7 +28,7 @@ router.post("/init", async (req, res) => {
 });
 
 /**
- * VERIFY PAYMENT + CREATE ORDER + SEND EMAIL
+ * VERIFY PAYMENT + CREATE ORDER + SEND EMAIL + REDUCE STOCK
  */
 router.post("/verify-payment", async (req, res) => {
   try {
@@ -55,7 +56,6 @@ router.post("/verify-payment", async (req, res) => {
 
     const data = response.data;
 
-    // STRICT CHECK
     if (data.data.status !== "success") {
       return res.json({
         success: false,
@@ -64,14 +64,13 @@ router.post("/verify-payment", async (req, res) => {
       });
     }
 
-    // Extract payment info
     const paymentMethod = data.data.channel;
-    const amountPaid = data.data.amount / 100; // convert kobo to naira
+    const amountPaid = data.data.amount / 100;
     const transactionId = data.data.id;
     const paidAt = data.data.paid_at;
 
     // SAVE PAYMENT
-    const payment = await Payment.create({
+    await Payment.create({
       paymentMethod,
       paymentStatus: true,
       amountPaid,
@@ -94,7 +93,77 @@ router.post("/verify-payment", async (req, res) => {
       }
     });
 
-    // ===== EMAIL TEMPLATE =====
+    // REDUCE STOCK (MAP-SAFE + LOGGING)
+    for (const item of items) {
+      const product = await Product.findById(item.productId);
+      if (!product) continue;
+
+      const size = String(item.size).trim();
+      const qty = Number(item.quantity);
+
+
+      // CASE 1: Variant selected
+      if (item.variantName) {
+        console.log("VARIANT MODE — variantName:", item.variantName);
+
+        const variant = product.variants.find(
+          v => v.variantName === item.variantName
+        );
+
+        if (!variant) {
+          console.log("Variant NOT FOUND in product. Available variants:", product.variants.map(v => v.variantName));
+          continue;
+        }
+
+        console.log("✔ Variant FOUND:", variant.variantName);
+
+        const stock = variant.VariantStockBySize;
+
+        console.log("VariantStockBySize TYPE:", stock instanceof Map ? "Map" : typeof stock);
+        console.log("VariantStockBySize CONTENTS:", stock);
+
+        if (!(stock instanceof Map)) {
+          console.log(" ERROR: VariantStockBySize is NOT a Map. Schema says it should be.");
+          continue;
+        }
+
+        console.log("Checking if size exists in Map:", size, "=>", stock.has(size));
+
+        if (!stock.has(size)) {
+          console.log(" SIZE NOT FOUND in variant stock map. Available sizes:", Array.from(stock.keys()));
+          continue;
+        }
+
+        const currentStock = Number(stock.get(size)) || 0;
+        const newStock = Math.max(currentStock - qty, 0);
+
+        console.log("Current stock:", currentStock);
+        console.log("New stock:", newStock);
+
+        stock.set(size, newStock);
+
+        console.log("✔ Stock updated in Map. New Map:", stock);
+      }
+
+      // CASE 2: Base product
+      else {
+        const stock = product.stockBySize;
+
+        if (stock instanceof Map) {
+          if (stock.has(size)) {
+            const currentStock = Number(stock.get(size)) || 0;
+            const newStock = Math.max(currentStock - qty, 0);
+            stock.set(size, newStock);
+          }
+        }
+      }
+
+      await product.save();
+      console.log("✔ PRODUCT SAVED");
+      
+    }
+
+    // EMAIL TEMPLATE
     const emailHTML = `
       <div style="margin:0; padding:0; background-color:#f4f6f9; font-family: 'Segoe UI', Arial, sans-serif;">
   
@@ -102,21 +171,18 @@ router.post("/verify-payment", async (req, res) => {
     <tr>
       <td align="center">
 
-        <!-- Main Card -->
         <table width="600" cellpadding="0" cellspacing="0" 
           style="background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
 
-          <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #27ae60, #2ecc71); padding:30px; text-align:center; color:white;">
-              <h1 style="margin:0; font-size:24px;">🎉 Payment Successful</h1>
+            <td style="background: linear-gradient(135deg, #cd0fba, #9a2ecc); padding:30px; text-align:center; color:white;">
+              <h1 style="margin:0; font-size:24px;">Payment Successful</h1>
               <p style="margin:8px 0 0; font-size:14px; opacity:0.9;">
                 Thank you for your purchase!
               </p>
             </td>
           </tr>
 
-          <!-- Body -->
           <tr>
             <td style="padding:30px; color:#333;">
               
@@ -130,9 +196,8 @@ router.post("/verify-payment", async (req, res) => {
                 <strong>2–3 business days</strong>.
               </p>
 
-              <!-- Order Summary Card -->
               <div style="margin-top:25px; border:1px solid #eee; border-radius:8px; padding:20px; background:#fafafa;">
-                <h3 style="margin-top:0; color:#2c3e50;">🧾 Order Summary</h3>
+                <h3 style="margin-top:0; color:#2c3e50;">Order Summary</h3>
 
                 <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse; font-size:14px;">
                   <thead>
@@ -158,7 +223,6 @@ router.post("/verify-payment", async (req, res) => {
                 </div>
               </div>
 
-              <!-- Payment Details -->
               <div style="margin-top:20px; font-size:13px; color:#777;">
                 <p><strong>Transaction ID:</strong> ${transactionId}</p>
                 <p><strong>Payment Method:</strong> ${paymentMethod}</p>
@@ -167,11 +231,10 @@ router.post("/verify-payment", async (req, res) => {
             </td>
           </tr>
 
-          <!-- Footer -->
           <tr>
             <td style="background:#f8f9fa; padding:20px; text-align:center; font-size:12px; color:#888;">
               <p style="margin:0;">
-                Thank you for shopping with us ❤️
+                Thank you for shopping with us
               </p>
               <p style="margin:5px 0 0;">
                 © ${new Date().getFullYear()} MumsNeeds. All rights reserved.
@@ -187,16 +250,15 @@ router.post("/verify-payment", async (req, res) => {
 </div>
     `;
 
-    // SEND CUSTOMER EMAIL
     await sendEmail(
       customerDetails.email,
-      "Payment Confirmation - Order Successful 🎉",
+      "Payment Confirmation - Order Successful",
       emailHTML
     );
 
     return res.json({
       success: true,
-      message: "Payment verified and email sent",
+      message: "Payment verified, stock updated, and email sent",
       orderId: order._id,
       order
     });

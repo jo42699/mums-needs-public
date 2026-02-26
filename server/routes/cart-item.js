@@ -2,7 +2,7 @@ const express = require('express');
 const Cart = require('../models/cart.js');
 const router = express.Router();
 
-// Get all carts (for testing/admin purposes)
+//CART ITEM (QUANTITY/SIZE)
 router.get('/', async (req, res) => {
   try {
     const carts = await Cart.find();
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get cart by customer ID
+// GET CART BY CUSTOMER ID
 router.get('/user/:customerId', async (req, res) => {
   try {
     const { customerId } = req.params;
@@ -27,15 +27,11 @@ router.get('/user/:customerId', async (req, res) => {
       });
     }
 
-    // Recalculate subtotal
     const subtotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-
-    // Add ₦2000 shipping (200000 kobo)
-    const shipping = subtotal > 0 ? 200000 : 0;
+    const shipping = subtotal > 0 ? 400000 : 0;
 
     cart.cartTotal = subtotal + shipping;
 
-    // Save updated total
     await cart.save();
 
     res.status(200).json(cart);
@@ -45,11 +41,20 @@ router.get('/user/:customerId', async (req, res) => {
   }
 });
 
-
-// CREATE OR UPDATE CART ITEM
+// CREATE CART
 router.post('/add', async (req, res) => {
   try {
-    const { customerId, productId, quantity, size, name, unitPrice, image } = req.body;
+    const {
+      customerId,
+      productId,
+      quantity,
+      size,
+      name,
+      unitPrice,
+      image,
+      variantId,      //  NEW
+      variantName     //  NEW
+    } = req.body;
 
     let cart = await Cart.findOne({ customerId });
 
@@ -68,11 +73,13 @@ router.post('/add', async (req, res) => {
       name,
       unitPrice,
       totalPrice: unitPrice * quantity,
-      image
+      image,
+      variantId: variantId || null,       //  SAVE VARIANT ID
+      variantName: variantName || null    //  SAVE VARIANT NAME
     });
 
     const subtotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-    const shipping = subtotal > 0 ? 200000 : 0; // ₦2000 in kobo
+    const shipping = subtotal > 0 ? 400000 : 0;
 
     cart.cartTotal = subtotal + shipping;
 
@@ -85,7 +92,7 @@ router.post('/add', async (req, res) => {
   }
 });
 
-// UPDATE CART ITEM (quantity and/or size)
+// UPDATE CART ITEM (QUANTITY/SIZE)
 router.patch('/:customerId/item/:itemId', async (req, res) => {
   try {
     const { customerId, itemId } = req.params;
@@ -113,7 +120,7 @@ router.patch('/:customerId/item/:itemId', async (req, res) => {
     }
 
     const subtotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-    const shipping = subtotal > 0 ? 200000 : 0;
+    const shipping = subtotal > 0 ? 400000 : 0;
 
     cart.cartTotal = subtotal + shipping;
 
@@ -126,12 +133,7 @@ router.patch('/:customerId/item/:itemId', async (req, res) => {
   }
 });
 
-
-/*
-|--------------------------------------------------------------------------
-| DELETE CART ITEM
-|--------------------------------------------------------------------------
-*/
+// DELETE CART ITEM
 router.delete('/:customerId/item/:itemId', async (req, res) => {
   try {
     const { customerId, itemId } = req.params;
@@ -157,11 +159,7 @@ router.delete('/:customerId/item/:itemId', async (req, res) => {
   }
 });
 
-/*
-|--------------------------------------------------------------------------
-| CLEAR CART
-|--------------------------------------------------------------------------
-*/
+// DELETE / CLEAR CART BY CUSTOMER ID
 router.delete('/:customerId', async (req, res) => {
   try {
     const { customerId } = req.params;
@@ -184,11 +182,7 @@ router.delete('/:customerId', async (req, res) => {
   }
 });
 
-/*
-|--------------------------------------------------------------------------
-| MERGE GUEST CART → USER CART
-|--------------------------------------------------------------------------
-*/
+/// MERGE CART (FOR LOGGED IN USERS)
 router.put('/merge/:customerId', async (req, res) => {
   try {
     const { customerId } = req.params;

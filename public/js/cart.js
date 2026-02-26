@@ -1,15 +1,11 @@
 import { auth } from "./auth.js"; // Firebase Auth instance
 
-
 // DOM ELEMENTS
 const cartContainer = document.getElementById("cartContainer");
 const cartItemsDiv = document.getElementById("cart-items");
-// const cartLoader = document.getElementById("cartloader");
-
 
 // FORMATTER FOR NAIRA DISPLAY
 const formatter = new Intl.NumberFormat("en-NG");
-
 
 // UPDATE CART COUNT (NAV)
 function updateCartCount(count) {
@@ -19,7 +15,6 @@ function updateCartCount(count) {
   if (countEl) countEl.textContent = count;
   if (addedEl) addedEl.textContent = count;
 }
-
 
 // GLOBAL CART COUNT EXPORT (USED BY NAVBAR)
 export function getCartCount() {
@@ -34,27 +29,21 @@ export function getCartCount() {
   return stored || 0;
 }
 
-
 // LOAD CART (ALWAYS UPDATES SESSION STORAGE)
 export async function loadCart() {
   const user = auth.currentUser;
 
-  // SHOW LOADER, HIDE CART
   if (!cartContainer) return;
 
-  // Guest user → load from localStorage
   if (!user) {
     const guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
     renderCart(guestCart, false);
 
-    // Keep global count updated
     sessionStorage.setItem("user_cart_count", guestCart.length);
     updateCartCount(guestCart.length);
-
     return;
   }
 
-  // Logged-in user → load from backend
   try {
     const res = await fetch(`http://localhost:5000/v1/cartItems/user/${user.uid}`, {
       credentials: "include"
@@ -65,7 +54,6 @@ export async function loadCart() {
 
     renderCart(items, true);
 
-    // Keep global count updated
     sessionStorage.setItem("user_cart_count", items.length);
     updateCartCount(items.length);
 
@@ -73,7 +61,6 @@ export async function loadCart() {
     console.error("Error loading cart:", err);
   }
 }
-
 
 // RENDER CART
 function renderCart(items, isUserCart) {
@@ -97,8 +84,9 @@ function renderCart(items, isUserCart) {
 
         <div class="item-info">
           <h4>${item.name}</h4>
-          <p>Quantity: <span>${item.quantity}</span></p>
+          ${item.variantName ? `<p>Variant: ${item.variantName}</p>` : ""}
           <p>Size: ${item.size}</p>
+          <p>Quantity: <span>${item.quantity}</span></p>
           <span class="price">₦ ${formatter.format(item.unitPrice / 100)}</span>
         </div>
 
@@ -115,7 +103,6 @@ function renderCart(items, isUserCart) {
   updateCartCount(items.length);
 }
 
-
 // UPDATE ORDER SUMMARY
 function updateSummary(items) {
   const addedtoCart = document.getElementById("added-to-cart");
@@ -124,9 +111,7 @@ function updateSummary(items) {
   const shippingEl = document.getElementById("shippingAmount");
   const totalEl = document.getElementById("totalAmount");
 
-  if (!addedtoCart || !checkoutCount || !subtotalEl || !shippingEl || !totalEl) {
-    return;
-  }
+  if (!addedtoCart || !checkoutCount || !subtotalEl || !shippingEl || !totalEl) return;
 
   const itemCount = items.length;
   addedtoCart.textContent = itemCount;
@@ -138,14 +123,13 @@ function updateSummary(items) {
     return sum + unitPrice * quantity;
   }, 0);
 
-  const shipping = itemCount > 0 ? 2000 : 0;
+  const shipping = itemCount > 0 ? 4000 : 0;
   const total = subtotal + shipping;
 
   subtotalEl.textContent = `₦ ${formatter.format(subtotal)}`;
   shippingEl.textContent = `₦ ${formatter.format(shipping)}`;
   totalEl.textContent = `₦ ${formatter.format(total)}`;
 }
-
 
 // DELETE CART ITEM
 window.deleteCartItem = async function (itemId, isUserCart) {
@@ -176,19 +160,18 @@ window.deleteCartItem = async function (itemId, isUserCart) {
   }
 };
 
-
 // MERGE GUEST CART → USER CART
 export async function handleLoginMerge(userId) {
   try {
     const guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];
-
     if (guestCart.length === 0) return;
 
-    // ⭐ FIX: ensure totalPrice exists for backend merge route
     const fixedCart = guestCart.map(item => ({
       ...item,
       totalPrice: item.unitPrice * item.quantity,
-      image: typeof item.image === "string" ? { url: item.image } : item.image
+      image: typeof item.image === "string" ? { url: item.image } : item.image,
+      variantId: item.variantId || null,
+      variantName: item.variantName || null
     }));
 
     await fetch(`http://localhost:5000/v1/cartItems/merge/${userId}`, {
@@ -205,12 +188,11 @@ export async function handleLoginMerge(userId) {
   }
 }
 
-
 // AUTO-LOAD CART ON PAGE LOAD
 auth.onAuthStateChanged(() => {
   const el = document.getElementById("added-to-cart");
   if (!el) return;
   el.textContent = getCartCount();
 
-  loadCart(); // load cart on auth state change
+  loadCart();
 });

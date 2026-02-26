@@ -1,4 +1,4 @@
-// ================= IMPORTS =================
+
 import { 
   auth, 
   loginWithEmail, 
@@ -12,10 +12,10 @@ import {
 import { handleLoginMerge } from "./cart.js";
 
 
-// ================= MAIN =================
+// main
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ================= DOM ELEMENTS =================
+ // DOM ELEMENTS
   const emailForm = document.getElementById("email-login-form");
   const signupForm = document.getElementById("email-signup-form");
   const googleSigninBtn = document.getElementById("googleSigninBtn");
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
 
 
-  // ================= PANEL TOGGLE =================
+  // panel toggle
   goToSignup?.addEventListener("click", (e) => {
     e.preventDefault();
     signInPanel.classList.remove("active");
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // ================= EMAIL LOGIN =================
+ // email login
   emailForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("emailInput").value;
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // ================= EMAIL SIGNUP =================
+// email signup
   signupForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("signupEmailInput").value;
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // ================= GOOGLE LOGIN/SIGNUP =================
+ // gooogle login/signup (same flow for both)
   async function handleGoogleAuth(button) {
     button.disabled = true;
     try {
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
   googleSignupBtn?.addEventListener("click", () => handleGoogleAuth(googleSignupBtn));
 
 
-  // ================= FORGOT PASSWORD =================
+// forgot password
   forgotPassword?.addEventListener("click", async (e) => {
     e.preventDefault();
     const email = document.getElementById("emailInput").value;
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // ================= LOGOUT =================
+// logout
   logoutBtn?.addEventListener("click", async () => {
     try {
       await logout();
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // ================= HELPER: SHOW LOGGED-IN UI =================
+// Show logged in UI
   function showLoggedInUI(user) {
     authContainer.style.display = "none";
     loggedInContainer.style.display = "block";
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
- // ================= CHECK AUTH STATE ON LOAD =================
+// Listen for auth state changes
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       await handleLoginMerge(user.uid);

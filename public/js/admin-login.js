@@ -31,13 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value.trim();
 
     try {
-      // 1. Firebase login
+      // Firebase login
       const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-      // 2. Fresh ID token
+      //  Fresh ID token
       const idToken = await userCred.user.getIdToken(true);
 
-      // 3. Send token to backend to create session cookie
+      //  Send token to backend to create session cookie
       const loginRes = await fetch("http://localhost:5000/v1/auth/login", {
         method: "POST",
         credentials: "include",
@@ -47,10 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!loginRes.ok) throw new Error("Failed to create session cookie");
 
-      // 4. Give browser time to store cookie
+      
       await new Promise(resolve => setTimeout(resolve, 150));
 
-      // 5. Verify admin
+      // Verify admin
       const adminCheck = await fetch("http://localhost:5000/v1/admin/check", {
         credentials: "include"
       });

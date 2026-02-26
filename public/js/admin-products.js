@@ -272,7 +272,7 @@ function openDrawer(product) {
 
   // VARIANTS SECTION
   const variantsContainer = drawer.querySelector(".variants-container");
-  variantsContainer.innerHTML = ""; // Clear old variants
+  variantsContainer.innerHTML = ""; 
 
   if (product.variants && product.variants.length > 0) {
     product.variants.forEach((variant, index) => {

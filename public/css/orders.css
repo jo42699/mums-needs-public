@@ -58,6 +58,22 @@
 }
 
 
+.customer .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ccc; /* border around icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.customer .avatar i {
+  color: rgb(211, 173, 255);
+}
+
+
 /* Pagination buttons styling */
 .pagination {
   display: flex;

@@ -1,4 +1,8 @@
-const apiURL = "http://localhost:5000/v1/product/";
+import { API } from "./config/config.js";
+import {API_URL} from "./config/config.js";
+
+
+const apiURL = `${API}/product/`;
 const naira = new Intl.NumberFormat("en-NG");
 
 // Home page sections
@@ -28,7 +32,7 @@ function renderHomeSections(products) {
   if (shopSection) shopSection.innerHTML = "";
 
   products.forEach(product => {
-    const imgURL = `http://localhost:5000${product.image.url}`;
+    const imgURL = `${API_URL}${product.image.url}`;
     const originalPrice = product.price / 100;
 
     let discountedPrice = null;

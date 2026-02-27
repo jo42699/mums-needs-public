@@ -9,6 +9,7 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { API} from "./config/config.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -24,7 +25,7 @@ const googleProvider = new GoogleAuthProvider();
 
 // Backend session helpers
 async function createSession(idToken) {
-  const res = await fetch("http://localhost:5000/v1/auth/login", {
+  const res = await fetch(`${API}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -34,7 +35,7 @@ async function createSession(idToken) {
 }
 
 async function destroySession() {
-  await fetch("http://localhost:5000/v1/auth/logout", {
+  await fetch(`${API}/auth/logout`, {
     method: "POST",
     credentials: "include",
   });

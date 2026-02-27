@@ -1,4 +1,6 @@
 import { auth } from "./auth.js";
+import { API } from "./config/config.js";
+
 
 const proceedBtn = document.getElementById("proceedToCheckoutBtn");
 
@@ -15,7 +17,7 @@ if (proceedBtn) {
 
     // Logged in → fetch cart
     try {
-      const res = await fetch(`http://localhost:5000/v1/cartItems/user/${user.uid}`, {
+      const res = await fetch(`${API}/cartItems/user/${user.uid}`, {
         credentials: "include"
       });
 

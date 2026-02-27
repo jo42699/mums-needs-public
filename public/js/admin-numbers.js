@@ -1,7 +1,11 @@
+
+import { API } from "./config/config.js";
+
+
 // THIS IS MY UTILS FILE FOR ADMIN NUMBERS PAGE
 
 // Fetch total users and display
-fetch("http://localhost:5000/v1/auth/total-users", {
+fetch(`${API}/auth/total-users`, {
   method: "GET",
   credentials: "include"
 })
@@ -16,7 +20,7 @@ fetch("http://localhost:5000/v1/auth/total-users", {
 
 
 
-fetch("http://localhost:5000/v1/orders", {
+fetch(`${API}/orders`, {
   method: "GET",
   credentials: "include"
 })
@@ -44,7 +48,7 @@ fetch("http://localhost:5000/v1/orders", {
 
 
 
-fetch("http://localhost:5000/v1/orders", {
+fetch(`${API}/orders`, {
   method: "GET",
   credentials: "include"
 })

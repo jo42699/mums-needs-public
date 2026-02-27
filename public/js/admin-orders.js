@@ -1,5 +1,8 @@
+import { API } from "./config/config.js";
+import { API_URL } from "./config/config.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "http://localhost:5000/v1/orders";
+  const API_URL = `${API}/orders`;
   const tableBody = document.querySelector("tbody");
   const drawer = document.getElementById("orderDrawer");
   const drawerContent = document.querySelector(".drawer-content");
@@ -89,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const itemsArray = order.items || order.cartItems || [];
     const itemsHTML = itemsArray.map(item => `
       <div class="drawer-item">
-        <img src="http://localhost:5000${item.image?.url||''}" width="50"/>
+        <img src="${item.image?.url||''}" width="50"/>
         <div>
           <div class="item-name">${item.name}</div>
           <div class="item-meta">Qty: ${item.quantity} · ₦${((item.totalPrice||0)/100).toLocaleString()}</div>
@@ -189,7 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const email = o.customerDetails?.email?.toLowerCase()||"";
       const orderId = o._id || "";
       const ammount = ((o.cartTotal||0)/100).toLocaleString();
-      return name.includes(query) || email.includes(query) || orderId.includes(query) || ammount.includes(query) ;
+      const status = isDelivered(o._id) ? "delivered" : o.orderStatus || "pending";
+      return name.includes(query) || email.includes(query) || orderId.includes(query) || ammount.includes(query) || status.includes(query);
     });
     currentPage=1;
     renderOrders();
@@ -200,3 +204,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchOrders();
 });
+
+
+
+
+
+
+fetch(`${API}/orders`, {
+  method: "GET",
+  credentials: "include"
+})
+  .then(res => res.json())
+  .then(data => {
+
+    // 1. Date one month ago
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    // 2. Filter orders created within the last month
+    const recentOrders = data.orders.filter(order => {
+      const createdAt = new Date(order.createdAt);
+      return createdAt >= oneMonthAgo;
+    });
+
+    // 3. Display count of recent orders
+    document.getElementById("total-orders").textContent = recentOrders.length;
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("total-orders").textContent = "Error loading total orders";
+  });
+
+

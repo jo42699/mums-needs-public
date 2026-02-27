@@ -1,3 +1,6 @@
+import { API } from "./config/config.js";
+
+
 function loadPaystack() {
   return new Promise((resolve, reject) => {
     if (window.PaystackPop) return resolve();
@@ -25,7 +28,7 @@ async function verifyPayment(reference) {
   //  Now it's safe to use it
   const cartItems = checkoutData.items;
 
-  const verifyRes = await fetch("http://localhost:5000/v1/paystack/verify-payment", {
+  const verifyRes = await fetch(`${API}/paystack/verify-payment`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -33,7 +36,7 @@ async function verifyPayment(reference) {
       items: cartItems,
       customerDetails: checkoutData.customerDetails,
       customerId,
-      cartTotal: checkoutData.cartTotal   // ⭐ ONLY TOTAL NEEDED
+      cartTotal: checkoutData.cartTotal   //ONLY TOTAL NEEDED
     })
   });
 
@@ -62,7 +65,7 @@ export async function startPayment(userEmail, cartTotalInKobo) {
     await loadPaystack();
 
     // INIT PAYMENT WITH BACKEND
-    const initRes = await fetch("http://localhost:5000/v1/paystack/init", {
+    const initRes = await fetch(`${API}/paystack/init`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: userEmail, amount: cartTotalInKobo })

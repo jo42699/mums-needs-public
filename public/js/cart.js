@@ -1,4 +1,7 @@
 import { auth } from "./auth.js"; // Firebase Auth instance
+import { API } from "./config/config.js";
+import { API_URL } from "./config/config.js"; 
+
 
 // DOM ELEMENTS
 const cartContainer = document.getElementById("cartContainer");
@@ -45,7 +48,7 @@ export async function loadCart() {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/v1/cartItems/user/${user.uid}`, {
+    const res = await fetch(`${API}/cartItems/user/${user.uid}`, {
       credentials: "include"
     });
 
@@ -76,7 +79,7 @@ function renderCart(items, isUserCart) {
   items.forEach(item => {
     const imgURL = item.image.url.startsWith("http")
       ? item.image.url
-      : `http://localhost:5000${item.image.url}`;
+      : `${API_URL}${item.image.url}`;
 
     const itemHTML = `
       <div class="cart-item">
@@ -148,7 +151,7 @@ window.deleteCartItem = async function (itemId, isUserCart) {
   }
 
   try {
-    await fetch(`http://localhost:5000/v1/cartItems/${user.uid}/item/${itemId}`, {
+    await fetch(`${API}/cartItems/${user.uid}/item/${itemId}`, {
       method: "DELETE",
       credentials: "include"
     });
@@ -174,7 +177,7 @@ export async function handleLoginMerge(userId) {
       variantName: item.variantName || null
     }));
 
-    await fetch(`http://localhost:5000/v1/cartItems/merge/${userId}`, {
+    await fetch(`${API}/cartItems/merge/${userId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

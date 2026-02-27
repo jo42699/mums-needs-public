@@ -3,6 +3,11 @@ import {
   getAuth,
   signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { API } from "./config/config.js";
+
+
+
+
 
 // Firebase config
 const firebaseConfig = {
@@ -38,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const idToken = await userCred.user.getIdToken(true);
 
       //  Send token to backend to create session cookie
-      const loginRes = await fetch("http://localhost:5000/v1/auth/login", {
+      const loginRes = await fetch(`${API}/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -51,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await new Promise(resolve => setTimeout(resolve, 150));
 
       // Verify admin
-      const adminCheck = await fetch("http://localhost:5000/v1/admin/check", {
+      const adminCheck = await fetch(`${API}/admin/check`, {
         credentials: "include"
       });
 
@@ -77,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   logoutBtn.addEventListener("click", async () => {
     try {
-      const res = await fetch("http://localhost:5000/v1/auth/logout", {
+      const res = await fetch(`${API}/auth/logout`, {
         method: "POST",
         credentials: "include"
       });

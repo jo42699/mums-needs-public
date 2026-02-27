@@ -1,6 +1,9 @@
+import { API } from "./config/config.js";
+import { API_URL } from "./config/config.js";
+
 const container = document.getElementById('productContainer');
 const loader = document.getElementById('productLoader'); 
-const apiURL = 'http://localhost:5000/v1/product/';
+const apiURL = `${API}/product/`;
 const nairaFormatter = new Intl.NumberFormat("en-NG");
 
 let allProducts = []; 
@@ -47,7 +50,7 @@ function renderProducts(products) {
   products.forEach(product => {
     if (!isProductInStock(product)) return;
 
-    const imgURL = `http://localhost:5000${product.image.url}`;
+    const imgURL = `${API_URL}${product.image.url}`;
     const originalPrice = product.price / 100;
 
     let discountedPrice = null;

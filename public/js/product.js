@@ -1,4 +1,6 @@
 import { auth } from "./auth.js";
+import { API_URL } from "./config/config.js";
+
 
 // ELEMENT REFERENCES
 const mainImage = document.getElementById("mainImage");
@@ -30,7 +32,7 @@ function getTotalStock(stockObj) {
 // LOAD PRODUCT DETAILS
 async function loadProduct() {
   try {
-    const res = await fetch(`http://localhost:5000/v1/product/${productId}`);
+    const res = await fetch(`${API_URL}/v1/product/${productId}`);
     const product = await res.json();
 
     window.currentProduct = product;
@@ -47,7 +49,7 @@ async function loadProduct() {
     }
 
     // MAIN IMAGE
-    mainImage.src = `http://localhost:5000${product.image.url}`;
+    mainImage.src = `${API_URL}${product.image.url}`;
     mainImage.alt = product.image.alt;
 
     // TITLE + DESCRIPTION
@@ -97,7 +99,7 @@ async function loadProduct() {
     smallImgGroup.innerHTML = `
       <div class="small-img-col">
         <img class="small-img"
-             src="http://localhost:5000${product.image.url}"
+             src="${API_URL}${product.image.url}"
              data-type="base">
       </div>
     `;
@@ -108,7 +110,7 @@ async function loadProduct() {
       smallImgGroup.innerHTML += `
         <div class="small-img-col">
           <img class="small-img"
-               src="http://localhost:5000${v.Variantimage.url}"
+               src="${API_URL}${v.Variantimage.url}"
                data-type="variant"
                data-variant-id="${v._id}">
         </div>
@@ -233,7 +235,7 @@ loadProduct();
 
 // MORE LIKE THIS SECTION
 const moreLikeThisContainer = document.querySelector(".products-wrapper");
-const allProductsURL = "http://localhost:5000/v1/product/";
+const allProductsURL = `${API_URL}/v1/product/`;
 
 // Load similar products
 async function loadMoreLikeThis(currentProduct) {
@@ -273,7 +275,7 @@ function renderMoreLikeThis(list) {
   }
 
   list.forEach(product => {
-    const imgURL = `http://localhost:5000${product.image.url}`;
+    const imgURL = `${API_URL}${product.image.url}`;
     const price = product.price / 100;
     const discount = product.discount / 100;
 
@@ -355,7 +357,7 @@ addToCartBtn.addEventListener("click", async () => {
   }
 
   try {
-    const response = await fetch("http://localhost:5000/v1/cartItems/add", {
+    const response = await fetch(`${API_URL}/v1/cartItems/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

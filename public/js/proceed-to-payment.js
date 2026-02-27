@@ -1,4 +1,6 @@
 import { auth } from "./auth.js";
+import { API } from "./config/config.js";
+
 
 const form = document.querySelector(".checkout-form");
 
@@ -18,7 +20,7 @@ if (form) {
     // 2. Fetch cart to ensure it's not empty
     let cart;
     try {
-      const res = await fetch(`http://localhost:5000/v1/cartItems/user/${user.uid}`, {
+      const res = await fetch(`${API}/cartItems/user/${user.uid}`, {
         credentials: "include"
       });
 
@@ -54,7 +56,7 @@ if (form) {
 
     // 5. Update customer details in the cart
     try {
-      await fetch(`http://localhost:5000/v1/cart/${cart._id}/customer`, {
+      await fetch(`${API}/cart/${cart._id}/customer`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

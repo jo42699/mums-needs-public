@@ -1,4 +1,8 @@
-const apiURL = "http://localhost:5000/v1/product/";
+import { API } from "./config/config.js";
+import {API_URL} from "./config/config.js";
+
+
+const apiURL = `${API}/product/`;
 const tableBody = document.querySelector("tbody");
 const productCountEl = document.querySelector(".section-header span");
 const paginationEl = document.getElementById("pagination");
@@ -45,7 +49,7 @@ function renderPage(page) {
   const pageProducts = allProducts.slice(start, end);
 
   pageProducts.forEach(product => {
-    const imgURL = `http://localhost:5000${product.image.url}`;
+    const imgURL = `${API_URL}${product.image.url}`;
     const price = product.price / 100;
 
     const inStock = Object.values(product.stockBySize).some(qty => qty > 0);
@@ -143,7 +147,7 @@ function renderFiltered(products) {
   const pageProducts = products.slice(start, end);
 
   pageProducts.forEach(product => {
-    const imgURL = `http://localhost:5000${product.image.url}`;
+    const imgURL = `${API_URL}${product.image.url}`;
     const price = product.price / 100;
     const inStock = Object.values(product.stockBySize).some(qty => qty > 0);
 
@@ -267,7 +271,7 @@ function openDrawer(product) {
 
   // MAIN PRODUCT IMAGE
   const mainImg = drawer.querySelector(".drawer-items img");
-  mainImg.src = `http://localhost:5000${product.image.url}`;
+  mainImg.src = `${API_URL}${product.image.url}`;
   mainImg.alt = product.image.alt;
 
   // VARIANTS SECTION
@@ -282,7 +286,7 @@ function openDrawer(product) {
 
           <div class="drawer-item">
           </br>
-            <img src="http://localhost:5000${variant.Variantimage.url}" 
+            <img src="${API_URL}${variant.Variantimage.url}" 
                  alt="${variant.Variantimage.alt}">
           </div>
 

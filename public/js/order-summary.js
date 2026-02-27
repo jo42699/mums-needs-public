@@ -1,5 +1,7 @@
 import { auth } from "./auth.js";
 import { startPayment } from "./paystack.js";
+import { API } from "./config/config.js";
+import {API_URL} from "./config/config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const orderItemsContainer = document.querySelector(".order-item-render");
@@ -16,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/v1/cartItems/user/${user.uid}`, {
+      const res = await fetch(`${API}/cartItems/user/${user.uid}`, {
         credentials: "include"
       });
 
@@ -84,7 +86,7 @@ payBtn.addEventListener("click", () => {
     items.forEach(item => {
       const imgURL = item.image.url.startsWith("http")
         ? item.image.url
-        : `http://localhost:5000${item.image.url}`;
+        : `${API_URL}${item.image.url}`;
 
       const html = `
         <div class="order-item">

@@ -1,3 +1,7 @@
+import { API } from "./config/config.js";
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("updateSectionsForm");
 
@@ -22,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/v1/announcement", {
+      const res = await fetch(`${API}/announcement`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

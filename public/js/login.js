@@ -10,7 +10,7 @@ import {
 } from "./auth.js";
 
 import { handleLoginMerge } from "./cart.js";
-
+import { API} from "./config/config.js";
 
 // main
 document.addEventListener("DOMContentLoaded", () => {
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const idToken = await auth.currentUser.getIdToken(true);
       console.log("ID TOKEN (email login):", idToken);
 
-      const res = await fetch("http://localhost:5000/v1/auth/login", {
+      const res = await fetch(`${API}/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const idToken = await auth.currentUser.getIdToken(true);
      // console.log("ID TOKEN (signup):", idToken);
 
-      const res = await fetch("http://localhost:5000/v1/auth/login", {
+      const res = await fetch(`${API}/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const idToken = await auth.currentUser.getIdToken(true);
       // console.log("ID TOKEN (Google login):", idToken);
 
-      const res = await fetch("http://localhost:5000/v1/auth/login", {
+      const res = await fetch(`${API}/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await logout();
 
-      const res = await fetch("http://localhost:5000/v1/auth/logout", {
+      const res = await fetch(`${API}/auth/logout`, {
         method: "POST",
         credentials: "include"
       });

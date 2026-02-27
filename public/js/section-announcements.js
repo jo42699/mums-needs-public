@@ -1,4 +1,7 @@
-fetch("http://localhost:5000/v1/announcement")
+import { API_URL } from "./config/config.js";
+
+
+fetch(`${API_URL}/v1/announcement`)
   .then(res => res.json())
   .then(data => {
     const sections = data.sections;

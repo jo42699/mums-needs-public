@@ -8,7 +8,9 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 
 const admin = require("firebase-admin");
-const serviceAccount = require("./mums-needs-b074d-firebase-adminsdk-fbsvc-f09210c94e.json");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
+serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, "\n");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -99,7 +101,7 @@ app.use("/v1/auth", authRouter);
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
 // ENV
-const API = process.env.API || '/api';
+const API = process.env.API ;
 const PORT = process.env.PORT || 5000;
 
 // API routes
@@ -110,7 +112,7 @@ app.use(`${API}/cart`, cartRouter);
 app.use(`${API}/announcement`, announcementRouter);
 app.use(`${API}/paystack`, paymentRouter);
 app.use(`${API}/orders`, ordersRouter);
-app.use("/v1/admin", adminRoutes);
+app.use(`${API}/admin`, adminRoutes);
 
 
 

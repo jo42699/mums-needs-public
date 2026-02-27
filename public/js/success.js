@@ -1,3 +1,6 @@
+import { API } from "./config/config.js";
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   const orderNumberEl = document.getElementById("order-number");
   const amountPaidEl = document.getElementById("amount-paid");
@@ -16,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     // 2. Fetch order from backend
-    const res = await fetch(`http://localhost:5000/v1/orders/${orderId}`);
+    const res = await fetch(`${API}/orders/${orderId}`);
     const data = await res.json();
 
     if (!data.success || !data.order) {

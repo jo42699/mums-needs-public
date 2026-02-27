@@ -4,7 +4,6 @@ const Payment = require("../models/payment");
 const Order = require("../models/order");
 const Product = require("../models/products");
 const sendEmail = require("../utils/sendEmail");
-
 const router = express.Router();
 
 /**
@@ -28,7 +27,7 @@ router.post("/init", async (req, res) => {
 });
 
 /**
- * VERIFY PAYMENT + CREATE ORDER + SEND EMAIL + REDUCE STOCK
+ * VERIFY PAYMENT + CREATE ORDER + SEND EMAIL + REDUCE STOCK + CLEAR CART
  */
 router.post("/verify-payment", async (req, res) => {
   try {
@@ -262,9 +261,19 @@ router.post("/verify-payment", async (req, res) => {
       console.error("Email failed but payment succeeded:", emailError.message);
     }
 
+    // CLEAR CART 
+    try {
+      await axios.delete(
+        `https://mums-needs-production.up.railway.app/v1/cart/${customerId}`
+      );
+      console.log("Cart cleared successfully");
+    } catch (cartError) {
+      console.error("Failed to clear cart:", cartError.message);
+    }
+
     return res.json({
       success: true,
-      message: "Payment verified, stock updated, and email sent",
+      message: "Payment verified, stock updated, cart cleared, and email sent",
       orderId: order._id,
       order
     });

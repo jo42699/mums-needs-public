@@ -35,22 +35,12 @@ const app = express();
 // Cookie + CORS
 app.use(cookieParser());
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(',')
-  : [];
-
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (Postman, curl, server-to-server)
-    if (!origin) return callback(null, true);
-
-    // allow requests from allowed origins
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-
-    // block everything else
-    return callback(new Error("Not allowed by CORS"));
+    if (!origin) return callback(null, true); // Postman, server-to-server
+    callback(null, origin); 
   },
-  credentials: true,
+  credentials: true
 }));
 
 app.use(express.json());

@@ -138,6 +138,7 @@ app.use(`${API}/admin`, adminRoutes);
 
 
 
+
 // 2️⃣ Static
 const publicPath = path.join(process.cwd(), "public");
 app.use(express.static(publicPath));

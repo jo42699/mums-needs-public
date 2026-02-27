@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // Postman, server-to-server
+    if (!origin) return callback(null, true); 
     callback(null, origin); 
   },
   credentials: true

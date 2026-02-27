@@ -144,6 +144,8 @@ app.use(`${API}/admin`, adminRoutes);
 const publicPath = path.join(process.cwd(), "public");
 app.use(express.static(publicPath));
 
+app.use('/js', express.static(path.join(__dirname, '../public/js')));
+
 
 app.use((req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));

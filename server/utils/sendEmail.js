@@ -1,28 +1,29 @@
-const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.sendinblue.com",
-  port: 587,
-  secure: false, 
-  auth: {
-    user: process.env.BREVO_SMTP_USER,
-    pass: process.env.BREVO_SMTP_PASS,
-  },
-});
+const axios = require("axios");
 
 const sendEmail = async (to, subject, html) => {
   try {
-    const mailOptions = {
-      from: `"Mums Needs" <${process.env.EMAIL_FROM}>`,
-      to,
-      subject,
-      html,
-    };
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "Mums Needs",
+          email: process.env.EMAIL_FROM, // your no-reply or verified email
+        },
+        to: [{ email: to }],
+        subject,
+        htmlContent: html,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY, // NOT SMTP password
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
+    console.log("Email sent successfully:", response.data);
   } catch (error) {
-    console.error("Email sending failed:", error);
+    console.error("Email sending failed:", error.response?.data || error.message);
     throw error;
   }
 };

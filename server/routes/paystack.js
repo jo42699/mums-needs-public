@@ -250,11 +250,17 @@ router.post("/verify-payment", async (req, res) => {
 </div>
     `;
 
-    await sendEmail(
-      customerDetails.email,
-      "Payment Confirmation - Order Successful",
-      emailHTML
-    );
+   // SEND EMAIL
+    try {
+      await sendEmail(
+        customerDetails.email,
+        "Payment Confirmation - Order Successful",
+        emailHTML
+      );
+      console.log("Email sent successfully");
+    } catch (emailError) {
+      console.error("Email failed but payment succeeded:", emailError.message);
+    }
 
     return res.json({
       success: true,

@@ -58,7 +58,7 @@ app.disable("crossOriginEmbedderPolicy");
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
+      defaultSrc: ["'self'","https://mums-needs-production.up.railway.app" ],
       scriptSrc: [
         "'self'",
         "'unsafe-inline'",

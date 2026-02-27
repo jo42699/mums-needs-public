@@ -40,8 +40,17 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   : [];
 
 app.use(cors({
-  origin: "*",
-  credentials: true
+  origin: function (origin, callback) {
+    // allow requests with no origin (Postman, curl, server-to-server)
+    if (!origin) return callback(null, true);
+
+    // allow requests from allowed origins
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    // block everything else
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
 }));
 
 app.use(express.json());
@@ -55,7 +64,7 @@ app.disable("crossOriginEmbedderPolicy");
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'","https://mums-needs-production.up.railway.app" ],
+      defaultSrc: ["'self'","https://mums-needs-production.up.railway.app", ],
       scriptSrc: [
         "'self'",
         "'unsafe-inline'",

@@ -70,7 +70,7 @@ app.use(
       connectSrc: [
         "'self'",
         ...(process.env.NODE_ENV === 'development'
-            ? ["http://localhost:5000", "http://127.0.0.1:5000"]
+            ? ["http://localhost:5000", "http://127.0.0.1:5000", "https://mums-needs-production.up.railway.app"]
             : []),
         "https://*.firebaseio.com",
         "https://*.firebaseapp.com",
@@ -79,6 +79,7 @@ app.use(
         "https://www.googleapis.com",
         "https://identitytoolkit.googleapis.com",
         "https://cdn.jsdelivr.net",
+        "https://mums-needs-production.up.railway.app",
         "https://api.paystack.co"
       ],
       imgSrc: ["'self'", "data:", "blob:", "*"],

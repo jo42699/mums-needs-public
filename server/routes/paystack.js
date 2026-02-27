@@ -264,7 +264,7 @@ router.post("/verify-payment", async (req, res) => {
     // CLEAR CART 
     try {
       await axios.delete(
-        `https://mums-needs-production.up.railway.app/v1/cart/${customerId}`
+        `https://mums-needs-production.up.railway.app/v1/cartItems/${customerId}`
       );
       console.log("Cart cleared successfully");
     } catch (cartError) {

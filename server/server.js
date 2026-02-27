@@ -121,7 +121,8 @@ app.use("/v1/auth", authRouter);
 
 // Static images
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
-
+// Serve frontend files from /public
+app.use(express.static(path.join(__dirname, "../public")));
 // ENV
 const API = process.env.API ;
 const PORT = process.env.PORT || 5000;
@@ -140,8 +141,7 @@ app.use(`${API}/admin`, adminRoutes);
 
 
 
-// Serve frontend files from /public
-app.use(express.static(path.join(__dirname, "../public")));
+
 
 
 

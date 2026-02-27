@@ -65,9 +65,22 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'",   "https://cdn.jsdelivr.net", "https://www.gstatic.com", "https://js.paystack.co"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://apis.google.com", "https://cdn.jsdelivr.net", "https://www.gstatic.com", "https://js.paystack.co"],
       scriptSrcAttr: ["'unsafe-inline'"],
-      connectSrc: ["'self'", "http://localhost:5000", "http://127.0.0.1:5000", "*"],
+      connectSrc: [
+        "'self'",
+        ...(process.env.NODE_ENV === 'development'
+            ? ["http://localhost:5000", "http://127.0.0.1:5000"]
+            : []),
+        "https://*.firebaseio.com",
+        "https://*.firebaseapp.com",
+        "https://apis.google.com",
+        "https://securetoken.googleapis.com",
+        "https://www.googleapis.com",
+        "https://identitytoolkit.googleapis.com",
+        "https://cdn.jsdelivr.net",
+        "https://api.paystack.co"
+      ],
       imgSrc: ["'self'", "data:", "blob:", "*"],
       styleSrc: ["'self'", "'unsafe-inline'", "https:"],
       fontSrc: ["'self'", "https:", "data:"],

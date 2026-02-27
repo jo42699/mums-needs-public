@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div>
           <div class="item-name">${item.name}</div>
           <div class="item-meta">Qty: ${item.quantity} · ₦${((item.totalPrice||0)/100).toLocaleString()}</div>
+           <div class="item-meta">size: ${item.size||"N/A"} </div>
         </div>
       </div>
     `).join("");

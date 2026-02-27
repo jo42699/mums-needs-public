@@ -120,11 +120,8 @@ app.get("/protected", firebaseAuth, (req, res) => {
 // Auth routes
 app.use("/v1/auth", authRouter);
 
-// Static images
-app.use('/images', express.static(path.join(process.cwd(), 'public/images')));
 
-// Serve frontend files from /public
-app.use(express.static(path.join(process.cwd(), 'public')));
+
 // ENV
 const API = process.env.API ;
 const PORT = process.env.PORT || 5000;
@@ -141,7 +138,14 @@ app.use(`${API}/admin`, adminRoutes);
 
 
 
+// 2️⃣ Static
+const publicPath = path.join(process.cwd(), "public");
+app.use(express.static(publicPath));
 
+// 3️⃣ Fallback
+app.get("*", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
 
 
 

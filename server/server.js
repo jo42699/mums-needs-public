@@ -65,8 +65,9 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'","'unsafe-eval'", "https://apis.google.com", "https://cdn.jsdelivr.net", "https://www.gstatic.com", "https://js.paystack.co"],
-      scriptSrcElem: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://apis.google.com", "https://cdn.jsdelivr.net", "https://www.gstatic.com", "https://js.paystack.co"],
+      scriptSrc: ["'self'", "'unsafe-inline'","'unsafe-eval'", "https://apis.google.com", "https://cdn.jsdelivr.net", "https://www.gstatic.com", "https://js.paystack.co", "https://mums-needs-production.up.railway.app"
+],
+      scriptSrcElem: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://apis.google.com", "https://cdn.jsdelivr.net", "https://www.gstatic.com", "https://js.paystack.co", "https://mums-needs-production.up.railway.app"],
       scriptSrcAttr: ["'unsafe-inline'"],
       connectSrc: [
         "'self'",

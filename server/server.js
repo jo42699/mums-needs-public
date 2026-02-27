@@ -143,7 +143,7 @@ const publicPath = path.join(process.cwd(), "public");
 app.use(express.static(publicPath));
 
 // 3️⃣ Fallback
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));
 });
 

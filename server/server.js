@@ -120,9 +120,10 @@ app.get("/protected", firebaseAuth, (req, res) => {
 app.use("/v1/auth", authRouter);
 
 // Static images
-app.use('/images', express.static(path.join(__dirname, '../public/images')));
+app.use('/images', express.static(path.join(process.cwd(), 'public/images')));
+
 // Serve frontend files from /public
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(process.cwd(), 'public')));
 // ENV
 const API = process.env.API ;
 const PORT = process.env.PORT || 5000;

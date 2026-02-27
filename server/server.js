@@ -65,7 +65,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'","'unsafe-eval'", "https://apis.google.com", "https://cdn.jsdelivr.net", "https://www.gstatic.com", "https://js.paystack.co"],
+      scriptSrc: ["'self'", "'unsafe-inline'","'unsafe-eval'", "https://apis.google.com", "https://cdn.jsdelivr.net", "https://www.gstatic.com", "https://js.paystack.co", "*"],
       scriptSrcAttr: ["'unsafe-inline'"],
       connectSrc: [
         "'self'",

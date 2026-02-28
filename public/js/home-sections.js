@@ -32,7 +32,7 @@ function renderHomeSections(products) {
 
     if (!hasStock) return;
 
-    const imgURL = `${API_URL}${product.image.url}`;
+    const imgURL = `${product.image.url}`;
     const originalPrice = product.price / 100;
 
     let discountedPrice = null;

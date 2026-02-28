@@ -49,7 +49,7 @@ async function loadProduct() {
     }
 
     // MAIN IMAGE
-    mainImage.src = `${API_URL}${product.image.url}`;
+    mainImage.src = product.image.url;
     mainImage.alt = product.image.alt;
 
     // TITLE + DESCRIPTION
@@ -99,7 +99,7 @@ async function loadProduct() {
     smallImgGroup.innerHTML = `
       <div class="small-img-col">
         <img class="small-img"
-             src="${API_URL}${product.image.url}"
+             src="${product.image.url}"
              data-type="base">
       </div>
     `;
@@ -110,7 +110,7 @@ async function loadProduct() {
       smallImgGroup.innerHTML += `
         <div class="small-img-col">
           <img class="small-img"
-               src="${API_URL}${v.Variantimage.url}"
+               src="${v.Variantimage.url}"
                data-type="variant"
                data-variant-id="${v._id}">
         </div>
@@ -300,7 +300,7 @@ function renderMoreLikeThis(list) {
       return;
     }
 
-    const imgURL = `${API_URL}${product.image.url}`;
+    const imgURL = product.image.url;
     const price = product.price / 100;
 
     let discountedPrice = null;
@@ -414,4 +414,45 @@ addToCartBtn.addEventListener("click", async () => {
     console.error("Error adding to cart:", err);
     alert("Something went wrong");
   }
+});
+
+
+const sliders = document.querySelectorAll(".products-wrapper");
+// Drag to scroll functionality
+   sliders.forEach((slider) => {
+  let isDragging = false;
+  let startX;
+  let scrollStart;
+
+  slider.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    slider.classList.add("dragging");
+    startX = e.pageX;
+    scrollStart = slider.scrollLeft;
+  });
+
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    slider.classList.remove("dragging");
+  });
+
+  slider.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const walk = e.pageX - startX;
+    slider.scrollLeft = scrollStart - walk;
+  });
+
+  slider.addEventListener("mouseleave", () => {
+    isDragging = false;
+    slider.classList.remove("dragging");
+  });
+
+  slider.addEventListener("click", (e) => {
+    if (isDragging) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
 });

@@ -137,6 +137,7 @@ app.use(`${API}/orders`, ordersRouter);
 app.use(`${API}/admin`, adminRoutes);
 
 // Static files
+
 const publicPath = path.join(process.cwd(), "public");
 app.use(express.static(publicPath));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));

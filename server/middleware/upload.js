@@ -1,16 +1,5 @@
-const multer = require('multer');
-const path = require('path');
-
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/images'); 
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
+const multer = require("multer");
+const path = require("path");
 
 // File filter
 const fileFilter = (req, file, cb) => {
@@ -28,27 +17,18 @@ const fileFilter = (req, file, cb) => {
   } else {
     cb(
       new Error(
-        'Invalid file type. Allowed: images, videos, audio, documents, archives.'
+        "Invalid file type. Allowed: images, videos, audio, documents, archives."
       )
     );
   }
 };
 
-
-// Multer instance
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(), 
   fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
-  }
+    fileSize: 5 * 1024 * 1024, // 5MB
+  },
 });
 
 module.exports = upload;
-
-
-
-
-
-
-// used AI to help with this multer file upload middleware to add more file types

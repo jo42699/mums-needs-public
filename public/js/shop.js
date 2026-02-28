@@ -50,7 +50,7 @@ function renderProducts(products) {
   products.forEach(product => {
     if (!isProductInStock(product)) return;
 
-    const imgURL = `${API_URL}${product.image.url}`;
+    const imgURL = `${product.image.url}`;
     const originalPrice = product.price / 100;
 
     let discountedPrice = null;

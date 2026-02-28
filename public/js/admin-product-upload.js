@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(result.message || "Upload failed");
       }
 
-      alert("Product uploaded successfully!");
+      alert("Product uploaded successfully !");
       form.reset();
 
     } catch (error) {

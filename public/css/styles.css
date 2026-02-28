@@ -242,7 +242,7 @@ button:hover {
     align-items: center;
     gap: 12px;
     padding: 0 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 30px rgba(198, 196, 198, 0.25);
     transform: translateY(-100%);
     transition: transform 0.35s ease;
     z-index: 999;

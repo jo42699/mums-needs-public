@@ -210,7 +210,31 @@ closeSidebar.addEventListener('click', () => {
 
 
 
+// automatically logout anyone who is not authenticated
+async function checkAdminAccess() {
+  try {
+    const res = await fetch("https://mums-needs-production.up.railway.app/v1/admin/check", {
+      method: "GET",
+      credentials: "include" // ensures the session cookie is sent
+    });
 
+    if (!res.ok) {
+      // if not 2xx, redirect to login
+      window.location.href = "admin-login.html";
+      return;
+    }
+
+    const data = await res.json();
+    
+
+  } catch (error) {
+    console.error("Error checking admin access:", error);
+    window.location.href = "admin-login.html";
+  }
+}
+
+// run on page load
+checkAdminAccess();
 
 
 

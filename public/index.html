@@ -20,6 +20,15 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span><i id="bar" class="fa-solid fa-bars"></i> </span>
     </button>
+
+       <!-- Mobile Search Overlay -->
+    <div class="mobile-search" id="mobileSearch">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search products..." />
+      <i class="fa-solid fa-xmark" id="closeMobileSearch"></i>
+    </div>
+
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         
@@ -57,12 +66,7 @@
       </div>
     </div>
 
-    <!-- Mobile Search Overlay -->
-    <div class="mobile-search" id="mobileSearch">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="Search products..." />
-      <i class="fa-solid fa-xmark" id="closeMobileSearch"></i>
-    </div>
+ 
 
             <!-- Cart -->
     <br>
@@ -281,10 +285,10 @@
 
 
 
-<script type="module" src="/js/cart.js"></script>
-<script type="module" src="/js/home-sections.js"></script>
-<script type="module" src="/js/main.js"></script>
-<script type="module" src="/js/section-announcements.js"></script>
+<script type="module" src="./js/cart.js"></script>
+<script type="module" src="./js/home-sections.js"></script>
+<script type="module" src="./js/main.js"></script>
+<script type="module" src="./js/section-announcements.js"></script>
 <script>
   // get current year for copyright
 const yearEl = document.getElementById("year");

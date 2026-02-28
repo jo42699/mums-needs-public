@@ -388,7 +388,7 @@ addToCartBtn.addEventListener("click", async () => {
     guestCart.push(cartItem);
     localStorage.setItem("guest_cart", JSON.stringify(guestCart));
     
-    alert("Added to cart!");
+    alert("Added to cart ! 🎉🛒");
     return;
   }
 

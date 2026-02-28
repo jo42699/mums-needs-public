@@ -9,11 +9,35 @@ const closeMobileSearch = document.getElementById("closeMobileSearch");
 const sliders = document.querySelectorAll(".products-wrapper");
 
 searchIcon.addEventListener("click", () => {
-  if (window.innerWidth <= 768) {
-    mobileSearchBox.classList.add("active");
+
+  const navbarCollapse = document.getElementById("navbarSupportedContent");
+  const isMobile = window.innerWidth <= 768;
+
+  if (navbarCollapse.classList.contains("show")) {
+
+    navbarCollapse.addEventListener("hidden.bs.collapse", function handler() {
+      navbarCollapse.removeEventListener("hidden.bs.collapse", handler);
+
+      // Open search AFTER nav fully closes
+      if (isMobile) {
+        mobileSearchBox.classList.add("active");
+      } else {
+        searchBox.classList.add("active");
+      }
+    });
+
+    const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navbarCollapse);
+    bsCollapse.hide();
+
   } else {
-    searchBox.classList.add("active");
+    // If navbar already closed
+    if (isMobile) {
+      mobileSearchBox.classList.add("active");
+    } else {
+      searchBox.classList.add("active");
+    }
   }
+
 });
 
 closeSearch.addEventListener("click", () => {

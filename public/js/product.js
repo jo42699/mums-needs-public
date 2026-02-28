@@ -265,7 +265,6 @@ async function loadMoreLikeThis(currentProduct) {
   }
 }
 
-// Render similar products
 function renderMoreLikeThis(list) {
   moreLikeThisContainer.innerHTML = "";
 
@@ -275,20 +274,57 @@ function renderMoreLikeThis(list) {
   }
 
   list.forEach(product => {
+
+    // CHECK BASE STOCK
+    let baseStockTotal = 0;
+    if (product.stockBySize) {
+      Object.values(product.stockBySize).forEach(qty => {
+        baseStockTotal += Number(qty) || 0;
+      });
+    }
+
+    // CHECK VARIANT STOCK
+    let variantStockTotal = 0;
+    if (product.variants && product.variants.length > 0) {
+      product.variants.forEach(variant => {
+        if (variant.VariantStockBySize) {
+          Object.values(variant.VariantStockBySize).forEach(qty => {
+            variantStockTotal += Number(qty) || 0;
+          });
+        }
+      });
+    }
+
+    // SKIP IF TOTAL STOCK IS 0
+    if (baseStockTotal + variantStockTotal === 0) {
+      return;
+    }
+
     const imgURL = `${API_URL}${product.image.url}`;
     const price = product.price / 100;
-    const discount = product.discount / 100;
+
+    let discountedPrice = null;
+    if (product.discount > 0) {
+      discountedPrice = (product.price * (100 - product.discount)) / 10000;
+    }
 
     moreLikeThisContainer.innerHTML += `
       <div class="product text-center" data-id="${product._id}">
         <img src="${imgURL}" alt="${product.name}">
         <h5 class="p-name">${product.name}</h5>
-        <h4 class="p-price">₦ ${price.toLocaleString()}</h4>
-        <h5 class="discount-price">₦ ${discount.toLocaleString()}</h5>
+        <h4 class="p-price">₦ ${(discountedPrice ?? price).toLocaleString()}</h4>
+        ${
+          product.discount > 0
+            ? `<h5 class="discount-price" style="text-decoration:line-through; color:red;">
+                 ₦ ${price.toLocaleString()}
+               </h5>`
+            : ""
+        }
       </div>
     `;
   });
 }
+
 
 // Make similar products clickable
 moreLikeThisContainer.addEventListener("click", e => {

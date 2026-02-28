@@ -1,0 +1,44 @@
+#cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  padding: 1.2rem 1.5rem;
+  background: linear-gradient(135deg, #4b1d7a, #7a3bb5);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  display: none; /* shown via JS if no consent cookie */
+  font-family: system-ui, sans-serif;
+}
+
+#cookie-banner button {
+  margin-left: 0.6rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+/* Accept button — bright purple */
+#accept-cookies {
+  background: #b26bff;
+  color: #fff;
+}
+#accept-cookies:hover {
+  background: #c58aff;
+}
+
+/* Reject button — darker purple outline */
+#reject-cookies {
+  background: transparent;
+  border: 2px solid #d2a8ff;
+  color: #f0d9ff;
+}
+#reject-cookies:hover {
+  background: rgba(255,255,255,0.15);
+}

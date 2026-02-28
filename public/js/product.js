@@ -408,7 +408,7 @@ addToCartBtn.addEventListener("click", async () => {
       return;
     }
    
-    alert("Added to cart!");
+    alert("Added to cart ! 🛒💖");
 
   } catch (err) {
     console.error("Error adding to cart:", err);

@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const paymentClass = order.payment?.paymentStatus?"paid":"pending";
       const statusValue = isDelivered(order._id)? "delivered": order.orderStatus || "pending";
       const statusClass = statusValue==="delivered"?"delivered":"pending";
-      const totalAmount = ((order.cartTotal||0)/100).toLocaleString();
+      const totalAmount = ((order.payment?.amountPaid ?? 0) / 100).toLocaleString();
       const row = document.createElement("tr");
       row.classList.add("order-row");
       row.dataset.id = order._id;
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="drawer-items">${itemsHTML}</div>
       <hr>
       <br>
-      <p><strong>Total:</strong> ₦${((order.cartTotal||0)/100).toLocaleString()}</p>
+      <p><strong>Total:</strong> ₦${((order.payment?.amountPaid ?? 0) / 100).toLocaleString()}</p>
       <div class="drawer-actions">
         <button class="primary-btn" id="markDeliveredBtn">Mark as delivered</button>
         <button class="secondary-btn" id="deleteOrderBtn">Delete &nbsp;<i class="fa-solid fa-trash"></i></button>
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const name = o.customerDetails?.name?.toLowerCase()||"";
       const email = o.customerDetails?.email?.toLowerCase()||"";
       const orderId = o._id || "";
-      const ammount = ((o.cartTotal||0)/100).toLocaleString();
+      const ammount = ((o.payment?.amountPaid ?? 0) / 100).toLocaleString();
       const status = isDelivered(o._id) ? "delivered" : o.orderStatus || "pending";
       return name.includes(query) || email.includes(query) || orderId.includes(query) || ammount.includes(query) || status.includes(query);
     });
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
+  console.log("Orders from backend:", orders);
   fetchOrders();
 });
 

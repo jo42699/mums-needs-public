@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    // 2. Fetch order from backend
+    //  Fetch order from backend
     const res = await fetch(`${API}/orders/${orderId}`);
     const data = await res.json();
 
@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const order = data.order;
 
-    // 3. Fill in dynamic values
+   
     orderNumberEl.textContent = order._id;
-    amountPaidEl.textContent = "₦" + formatter.format(order.payment.amountPaid);
+    amountPaidEl.textContent = "₦" + formatter.format(order.payment.amountPaid/100);
 
   } catch (err) {
     console.error("Error loading order:", err);

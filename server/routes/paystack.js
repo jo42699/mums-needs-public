@@ -4,46 +4,70 @@ const Payment = require("../models/payment");
 const Order = require("../models/order");
 const Product = require("../models/products");
 const sendEmail = require("../utils/sendEmail");
+const crypto = require("crypto");
 const router = express.Router();
 
-/**
- * INIT PAYMENT
- */
+const SHIPPING_FEE = 400000;
+
 router.post("/init", async (req, res) => {
   try {
-    const { email, amount } = req.body;
+    const { email, items } = req.body;
 
-    if (!email || !amount) {
-      return res.status(400).json({ error: "Email and amount are required" });
+    if (!email || !items || !Array.isArray(items)) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and items are required"
+      });
     }
 
-    const reference = "ref_" + Date.now();
-    return res.json({ reference, email, amount });
+    let cartTotal = 0;
+
+    for (const item of items) {
+      const product = await Product.findById(item.productId).lean();
+      if (!product) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid product in cart"
+        });
+      }
+
+      const unitPrice = product.discount
+        ? product.price - (product.price * product.discount) / 100
+        : product.price;
+
+      cartTotal += unitPrice * item.quantity;
+    }
+
+    const finalAmount = cartTotal + SHIPPING_FEE;
+
+    const reference = crypto.randomBytes(16).toString("hex");
+
+    return res.json({
+      success: true,
+      reference,
+      email,
+      cartTotal,
+      shippingFee: SHIPPING_FEE,
+      finalAmount
+    });
 
   } catch (error) {
     console.error("INIT ERROR:", error);
-    res.status(500).json({ error: "Payment initialization failed" });
+    return res.status(500).json({
+      success: false,
+      message: "Payment initialization failed"
+    });
   }
 });
 
-/**
- * VERIFY PAYMENT + CREATE ORDER + SEND EMAIL + REDUCE STOCK + CLEAR CART
- */
 router.post("/verify-payment", async (req, res) => {
   try {
-    const {
-      reference,
-      items,
-      customerDetails,
-      customerId,
-      cartTotal
-    } = req.body;
+    const { reference, items, customerDetails, customerId } = req.body;
 
     if (!reference) {
       return res.status(400).json({ error: "Reference is required" });
     }
 
-    // VERIFY WITH PAYSTACK
     const response = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
@@ -64,11 +88,42 @@ router.post("/verify-payment", async (req, res) => {
     }
 
     const paymentMethod = data.data.channel;
-    const amountPaid = data.data.amount / 100;
+    const amountPaid = data.data.amount;
     const transactionId = data.data.id;
     const paidAt = data.data.paid_at;
 
-    // SAVE PAYMENT
+    let serverCartTotal = 0;
+
+    for (const item of items) {
+      const product = await Product.findById(item.productId).lean();
+      if (!product) continue;
+
+      const unitPrice = product.discount
+        ? product.price - (product.price * product.discount) / 100
+        : product.price;
+
+      serverCartTotal += unitPrice * item.quantity;
+    }
+
+    const expectedTotal = serverCartTotal + SHIPPING_FEE;
+
+    if (expectedTotal !== amountPaid) {
+      return res.status(400).json({
+        success: false,
+        message: "Amount mismatch — possible tampering"
+      });
+    }
+
+    const existingPayment = await Payment.findOne({ transactionId });
+    if (existingPayment) {
+      return res.status(400).json({
+        success: false,
+        message: "Duplicate transaction detected"
+      });
+    }
+
+
+
     await Payment.create({
       paymentMethod,
       paymentStatus: true,
@@ -77,12 +132,13 @@ router.post("/verify-payment", async (req, res) => {
       paidAt
     });
 
-    // CREATE ORDER
     const order = await Order.create({
       customer: customerId,
       customerDetails,
       items,
-      cartTotal,
+      cartTotal: serverCartTotal,
+      shippingFee: SHIPPING_FEE,
+      grandTotal: expectedTotal,
       payment: {
         paymentMethod,
         paymentStatus: true,
@@ -92,7 +148,6 @@ router.post("/verify-payment", async (req, res) => {
       }
     });
 
-    // REDUCE STOCK (MAP-SAFE + LOGGING)
     for (const item of items) {
       const product = await Product.findById(item.productId);
       if (!product) continue;
@@ -100,163 +155,118 @@ router.post("/verify-payment", async (req, res) => {
       const size = String(item.size).trim();
       const qty = Number(item.quantity);
 
-
-      // CASE 1: Variant selected
       if (item.variantName) {
-        console.log("VARIANT MODE — variantName:", item.variantName);
-
         const variant = product.variants.find(
           v => v.variantName === item.variantName
         );
 
-        if (!variant) {
-          console.log("Variant NOT FOUND in product. Available variants:", product.variants.map(v => v.variantName));
-          continue;
-        }
-
-        console.log("✔ Variant FOUND:", variant.variantName);
+        if (!variant) continue;
 
         const stock = variant.VariantStockBySize;
-
-        console.log("VariantStockBySize TYPE:", stock instanceof Map ? "Map" : typeof stock);
-        console.log("VariantStockBySize CONTENTS:", stock);
-
-        if (!(stock instanceof Map)) {
-          console.log(" ERROR: VariantStockBySize is NOT a Map. Schema says it should be.");
-          continue;
-        }
-
-        console.log("Checking if size exists in Map:", size, "=>", stock.has(size));
-
-        if (!stock.has(size)) {
-          console.log(" SIZE NOT FOUND in variant stock map. Available sizes:", Array.from(stock.keys()));
-          continue;
-        }
+        if (!(stock instanceof Map)) continue;
+        if (!stock.has(size)) continue;
 
         const currentStock = Number(stock.get(size)) || 0;
         const newStock = Math.max(currentStock - qty, 0);
-
-        console.log("Current stock:", currentStock);
-        console.log("New stock:", newStock);
-
         stock.set(size, newStock);
-
-        console.log("✔ Stock updated in Map. New Map:", stock);
-      }
-
-      // CASE 2: Base product
-      else {
+      } else {
         const stock = product.stockBySize;
 
-        if (stock instanceof Map) {
-          if (stock.has(size)) {
-            const currentStock = Number(stock.get(size)) || 0;
-            const newStock = Math.max(currentStock - qty, 0);
-            stock.set(size, newStock);
-          }
+        if (stock instanceof Map && stock.has(size)) {
+          const currentStock = Number(stock.get(size)) || 0;
+          const newStock = Math.max(currentStock - qty, 0);
+          stock.set(size, newStock);
         }
       }
 
       await product.save();
-      console.log("✔ PRODUCT SAVED");
-      
     }
-
-    // EMAIL TEMPLATE
+    // EMAIL TEMPLATE FOR BREVO 
     const emailHTML = `
       <div style="margin:0; padding:0; background-color:#f4f6f9; font-family: 'Segoe UI', Arial, sans-serif;">
-  
-  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0;">
-    <tr>
-      <td align="center">
-
-        <table width="600" cellpadding="0" cellspacing="0" 
-          style="background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
-
+        <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0;">
           <tr>
-            <td style="background: linear-gradient(135deg, #cd0fba, #9a2ecc); padding:30px; text-align:center; color:white;">
-              <h1 style="margin:0; font-size:24px;">Payment Successful</h1>
-              <p style="margin:8px 0 0; font-size:14px; opacity:0.9;">
-                Thank you for your purchase!
-              </p>
+            <td align="center">
+              <table width="600" cellpadding="0" cellspacing="0" 
+                style="background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+
+                <tr>
+                  <td style="background: linear-gradient(135deg, #cd0fba, #9a2ecc); padding:30px; text-align:center; color:white;">
+                    <h1 style="margin:0; font-size:24px;">Payment Successful</h1>
+                    <p style="margin:8px 0 0; font-size:14px; opacity:0.9;">
+                      Thank you for your purchase!
+                    </p>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:30px; color:#333;">
+                    <p style="font-size:16px;">
+                      Hello <strong>${customerDetails?.name || "Customer"}</strong>,
+                    </p>
+
+                    <p style="font-size:15px; line-height:1.6; color:#555;">
+                      Your payment has been confirmed and your order is now being processed.
+                      You will receive your order within 
+                      <strong>2–3 business days</strong>.
+                    </p>
+
+                    <div style="margin-top:25px; border:1px solid #eee; border-radius:8px; padding:20px; background:#fafafa;">
+                      <h3 style="margin-top:0; color:#2c3e50;">Order Summary</h3>
+
+                      <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse; font-size:14px;">
+                        <thead>
+                          <tr style="background:#f1f1f1; text-align:left;">
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          ${items.map(item => `
+                            <tr style="border-bottom:1px solid #eee;">
+                              <td>${item.name}</td>
+                              <td>${item.quantity}</td>
+                              <td>₦${(item.unitPrice / 100).toLocaleString()}</td>
+                            </tr>
+                          `).join("")}
+                        </tbody>
+                      </table>
+
+                      <div style="color:black; margin-top:15px; text-align:right; font-size:16px;">
+                        <strong>Total Paid: ₦${(expectedTotal / 100).toLocaleString()}</strong>
+                      </div>
+                    </div>
+
+                    <div style="margin-top:20px; font-size:13px; color:#777;">
+                      <p><strong>Transaction ID:</strong> ${transactionId}</p>
+                      <p><strong>Payment Method:</strong> ${paymentMethod}</p>
+                    </div>
+
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="background:#f8f9fa; padding:20px; text-align:center; font-size:12px; color:#888;">
+                    <p style="margin:0;">Thank you for shopping with us</p>
+                    <p style="margin:5px 0 0;">© ${new Date().getFullYear()} MumsNeeds. All rights reserved.</p>
+                  </td>
+                </tr>
+
+              </table>
             </td>
           </tr>
-
-          <tr>
-            <td style="padding:30px; color:#333;">
-              
-              <p style="font-size:16px;">
-                Hello <strong>${customerDetails?.name || "Customer"}</strong>,
-              </p>
-
-              <p style="font-size:15px; line-height:1.6; color:#555;">
-                Your payment has been confirmed and your order is now being processed.
-                You will receive your order within 
-                <strong>2–3 business days</strong>.
-              </p>
-
-              <div style="margin-top:25px; border:1px solid #eee; border-radius:8px; padding:20px; background:#fafafa;">
-                <h3 style="margin-top:0; color:#2c3e50;">Order Summary</h3>
-
-                <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse; font-size:14px;">
-                  <thead>
-                    <tr style="background:#f1f1f1; text-align:left;">
-                      <th>Item</th>
-                      <th>Qty</th>
-                      <th>Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${items.map(item => `
-                      <tr style="border-bottom:1px solid #eee;">
-                        <td>${item.name}</td>
-                        <td>${item.quantity}</td>
-                        <td>₦${(item.unitPrice / 100).toLocaleString()}</td>
-                      </tr>
-                    `).join("")}
-                  </tbody>
-                </table>
-
-                <div style="margin-top:15px; text-align:right; font-size:16px;">
-                  <strong>Total Paid: ₦${(cartTotal / 100).toLocaleString()}</strong>
-                </div>
-              </div>
-
-              <div style="margin-top:20px; font-size:13px; color:#777;">
-                <p><strong>Transaction ID:</strong> ${transactionId}</p>
-                <p><strong>Payment Method:</strong> ${paymentMethod}</p>
-              </div>
-
-            </td>
-          </tr>
-
-          <tr>
-            <td style="background:#f8f9fa; padding:20px; text-align:center; font-size:12px; color:#888;">
-              <p style="margin:0;">
-                Thank you for shopping with us
-              </p>
-              <p style="margin:5px 0 0;">
-                © ${new Date().getFullYear()} MumsNeeds. All rights reserved.
-              </p>
-            </td>
-          </tr>
-
         </table>
-
-      </td>
-    </tr>
-  </table>
-</div>
+      </div>
     `;
 
-   // SEND EMAIL
+    // SEND EMAIL
     try {
       await sendEmail(
         customerDetails.email,
         "Payment Confirmation - Order Successful",
         emailHTML
       );
-      console.log("Email sent successfully");
     } catch (emailError) {
       console.error("Email failed but payment succeeded:", emailError.message);
     }
@@ -266,7 +276,6 @@ router.post("/verify-payment", async (req, res) => {
       await axios.delete(
         `https://mums-needs-production.up.railway.app/v1/cartItems/${customerId}`
       );
-      console.log("Cart cleared successfully");
     } catch (cartError) {
       console.error("Failed to clear cart:", cartError.message);
     }

@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       console.log("Admin verified:", adminData);
 
-      // 6. Redirect to dashboard (Live Server)
+      //  Redirect to dashboard 
       window.location.href = "/admin-dashboard.html";
 
     } catch (err) {
@@ -75,10 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// LOGOUT HANDLER (only runs if logoutBtn exists)
+// LOGOUT HANDLER 
 document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
-  if (!logoutBtn) return; // prevents errors on login page
+  if (!logoutBtn) return; 
 
   logoutBtn.addEventListener("click", async () => {
     try {

@@ -27,17 +27,17 @@ fetch(`${API}/orders`, {
   .then(res => res.json())
   .then(data => {
 
-    // 1. Date one month ago
+    //  Date one month ago
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-    // 2. Filter orders created within the last month
+    // Filter orders created within the last month
     const recentOrders = data.orders.filter(order => {
       const createdAt = new Date(order.createdAt);
       return createdAt >= oneMonthAgo;
     });
 
-    // 3. Display count of recent orders
+    //  Display count of recent orders
     document.getElementById("total-orders").textContent = recentOrders.length;
   })
   .catch(err => {

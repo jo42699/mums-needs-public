@@ -1,4 +1,4 @@
-// middleware/verify-admin.js
+
 const { admins } = require("../config/admin");
 
 const verifyAdmin = (req, res, next) => {

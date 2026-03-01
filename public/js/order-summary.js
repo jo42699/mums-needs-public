@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.cartSubtotal = cart.subtotal;
       window.cartShipping = cart.shipping;
 
-      console.log("Cart Total (kobo):", window.cartTotalInKobo);
+    //  console.log("Cart Total (kobo):", window.cartTotalInKobo);
 
       renderOrderItems(cart.cartItems);
 

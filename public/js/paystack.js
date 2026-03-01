@@ -36,7 +36,7 @@ async function verifyPayment(reference) {
       items: cartItems,
       customerDetails: checkoutData.customerDetails,
       customerId,
-      cartTotal: checkoutData.cartTotal   //ONLY TOTAL NEEDED
+      cartTotal: checkoutData.cartTotal   
     })
   });
 
@@ -72,7 +72,7 @@ export async function startPayment(userEmail, cartTotalInKobo) {
     });
 
     const initData = await initRes.json();
-    console.log("INIT DATA:", initData);
+    //console.log("INIT DATA:", initData);
 
     // CALLBACK MUST NOT BE ASYNC
     window.paystackPaymentCallback = function (response) {

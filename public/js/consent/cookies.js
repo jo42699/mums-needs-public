@@ -2,7 +2,7 @@
     // Helper: set cookie
     function setCookie(name, value, days) {
       const d = new Date();
-      d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+      d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); 
       const expires = "expires=" + d.toUTCString();
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
@@ -33,12 +33,12 @@
     acceptBtn.addEventListener('click', function () {
       setCookie('cookie_consent', 'accepted', 365);
       banner.style.display = 'none';
-      // here you could enable analytics, etc.
+      
     });
 
     rejectBtn.addEventListener('click', function () {
       setCookie('cookie_consent', 'rejected', 365);
       banner.style.display = 'none';
-      // here you could disable/avoid non-essential scripts
+    
     });
  

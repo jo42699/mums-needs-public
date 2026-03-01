@@ -112,6 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
       <br>
       <p><strong>Status:</strong> ${statusValue}</p>
       <br>
+      <br>
+      <p><strong>date:</strong> ${order.createdAt ? new Date(order.createdAt).toLocaleString() : "N/A"}</p>
+      <br>
       <hr>
       <h4>Items</h4>
       <div class="drawer-items">${itemsHTML}</div>

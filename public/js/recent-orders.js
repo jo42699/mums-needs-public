@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const paymentClass = order.payment?.paymentStatus ? "paid" : "pending";
       const statusValue = isDelivered(order._id) ? "delivered" : order.orderStatus || "pending";
       const statusClass = statusValue === "delivered" ? "delivered" : "pending";
-      const totalAmount = ((order.cartTotal || 0) / 100).toLocaleString();
+      const totalAmount = ((order.payment?.amountPaid ?? 0) / 100).toLocaleString();
 
       const row = document.createElement("tr");
       row.classList.add("order-row");
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="drawer-items">${itemsHTML}</div>
       <hr>
       <br>
-      <p><strong>Total:</strong> ₦${((order.cartTotal || 0) / 100).toLocaleString()}</p>
+      <p><strong>Total:</strong> ₦${((order.payment?.amountPaid ?? 0) / 100).toLocaleString()}</p>
       <div class="drawer-actions">
         <button class="primary-btn" id="markDeliveredBtn">Mark as delivered</button>
         <button class="secondary-btn" id="deleteOrderBtn">Delete &nbsp;<i class="fa-solid fa-trash"></i></button>

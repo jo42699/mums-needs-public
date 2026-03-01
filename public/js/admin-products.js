@@ -271,7 +271,7 @@ function openDrawer(product) {
 
   // MAIN PRODUCT IMAGE
   const mainImg = drawer.querySelector(".drawer-items img");
-  mainImg.src = `${API_URL}${product.image.url}`;
+  mainImg.src = `${product.image.url}`;
   mainImg.alt = product.image.alt;
 
   // VARIANTS SECTION
@@ -286,7 +286,7 @@ function openDrawer(product) {
 
           <div class="drawer-item">
           </br>
-            <img src="${API_URL}${variant.Variantimage.url}" 
+            <img src="${variant.Variantimage.url}" 
                  alt="${variant.Variantimage.alt}">
           </div>
 

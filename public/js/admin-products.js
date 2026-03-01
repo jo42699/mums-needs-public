@@ -147,7 +147,7 @@ function renderFiltered(products) {
   const pageProducts = products.slice(start, end);
 
   pageProducts.forEach(product => {
-    const imgURL = `${API_URL}${product.image.url}`;
+    const imgURL = product.image.url;
     const price = product.price / 100;
     const inStock = Object.values(product.stockBySize).some(qty => qty > 0);
 

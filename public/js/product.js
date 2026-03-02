@@ -41,7 +41,15 @@ async function loadProduct() {
       return sum + getTotalStock(v.VariantStockBySize);
     }, 0);
 
+    //  if base product is out of stock but variants exist
+    if (baseStock === 0 && variantStock > 0) {
+      alert("The main product is out of stock. Please select a variant.");
+    }
+
+    // EXISTING: Alert + replace page if EVERYTHING is out of stock
     if (baseStock + variantStock === 0) {
+      alert("This product is out of stock");
+      
       document.querySelector(".product-page").innerHTML =
         "<p>This product is out of stock.</p>";
       return;
@@ -87,12 +95,21 @@ async function loadProduct() {
     });
 
     // SIZE SELECT (BASE PRODUCT)
-    sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
+    sizeSelect.innerHTML = `<option value="" disabled selected>Select a size!</option>`;
+
+    let hasBaseStock = false;
+
     Object.keys(product.stockBySize).forEach(size => {
-      if (product.stockBySize[size] > 0) {
+      const qty = product.stockBySize[size];
+      if (qty > 0) {
+        hasBaseStock = true;
         sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
       }
     });
+
+    if (!hasBaseStock) {
+      sizeSelect.innerHTML = `<option disabled selected>Out of stock :( </option>`;
+    }
 
     // THUMBNAILS
     smallImgGroup.innerHTML = `
@@ -137,16 +154,22 @@ async function loadProduct() {
           priceSelect.value = "base";
 
           sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
+
+          let hasStock = false;
           Object.keys(product.stockBySize).forEach(size => {
             if (product.stockBySize[size] > 0) {
+              hasStock = true;
               sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
             }
           });
+
+          if (!hasStock) {
+            sizeSelect.innerHTML = `<option disabled selected>Out of stock</option>`;
+          }
         }
 
         qtyControl.dataset.stock = 0;
         qtyInput.value = 1;
-        addToCartBtn.disabled = true;
         updateQtyButtons();
       });
     });
@@ -156,14 +179,21 @@ async function loadProduct() {
       const selected = priceSelect.value;
 
       sizeSelect.innerHTML = `<option disabled selected>Select a size!</option>`;
-      addToCartBtn.disabled = true;
 
       if (selected === "base") {
+        let hasStock = false;
+
         Object.keys(product.stockBySize).forEach(size => {
           if (product.stockBySize[size] > 0) {
+            hasStock = true;
             sizeSelect.innerHTML += `<option value="${size}">${size}</option>`;
           }
         });
+
+        if (!hasStock) {
+          sizeSelect.innerHTML = `<option disabled selected>Out of stock</option>`;
+        }
+
       } else {
         const variant = product.variants.find(v => v._id === selected);
 
@@ -195,7 +225,6 @@ async function loadProduct() {
       qtyInput.value = 1;
 
       updateQtyButtons();
-      addToCartBtn.disabled = false;
     });
 
     // QUANTITY BUTTONS
@@ -339,8 +368,9 @@ addToCartBtn.addEventListener("click", async () => {
   const selectedSize = sizeSelect.value.trim();
   const quantity = parseInt(qtyInput.value);
 
-  if (!selectedSize) {
-    alert("Please select a size");
+  // ALERT ALWAYS WORKS NOW
+  if (sizeSelect.selectedIndex === 0) {
+    alert("Please select a size or option before adding to cart 😄 ");
     return;
   }
 
@@ -374,7 +404,6 @@ addToCartBtn.addEventListener("click", async () => {
       ? product.variants.find(v => v._id === selectedVariant).variantName
       : null,
 
-    // NEW FIELDS
     discount: product.discount || 0,
     discountedPrice:
       product.discount > 0
@@ -410,7 +439,7 @@ addToCartBtn.addEventListener("click", async () => {
       alert("Could not add to cart");
       return;
     }
-   
+
     alert("Added to cart ! 🛒💖");
 
   } catch (err) {

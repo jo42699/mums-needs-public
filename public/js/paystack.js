@@ -91,7 +91,7 @@ export async function startPayment(userEmail) {
     }
 
     const initData = await initRes.json();
-   // console.log("INIT DATA:", initData);
+    console.log("INIT DATA:", initData);
 
     if (!initData.success || !initData.reference || !initData.cartTotal) {
       alert("Payment initialization failed");

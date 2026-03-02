@@ -44,7 +44,7 @@ async function verifyPayment(reference) {
     }
 
     const verifyData = await verifyRes.json();
-    console.log("Verification:", verifyData);
+   // console.log("Verification:", verifyData);
 
     if (verifyData.success) {
       // Clear cart  after backend confirms success
@@ -91,7 +91,7 @@ export async function startPayment(userEmail) {
     }
 
     const initData = await initRes.json();
-    console.log("INIT DATA:", initData);
+   // console.log("INIT DATA:", initData);
 
     if (!initData.success || !initData.reference || !initData.cartTotal) {
       alert("Payment initialization failed");

@@ -1,7 +1,6 @@
 import { auth } from "./auth.js";
 import { API_URL } from "./config/config.js";
 
-
 // ELEMENT REFERENCES
 const mainImage = document.getElementById("mainImage");
 const smallImgGroup = document.getElementById("variantImages");
@@ -64,7 +63,7 @@ async function loadProduct() {
         (product.price * (100 - product.discount)) / 10000;
 
       productPrice.innerHTML = `
-        <span style="font-size: 18px; text-decoration: line-through; color: #888; display:block;">
+        <span style="font-size: 18px; text-decoration: line-through; color: #ed0808; display:block;">
           ₦ ${formatter.format(originalPrice)}
         </span>
         <span style="color: #1d1420; font-weight: bold; display:block;">
@@ -275,7 +274,6 @@ function renderMoreLikeThis(list) {
 
   list.forEach(product => {
 
-    // CHECK BASE STOCK
     let baseStockTotal = 0;
     if (product.stockBySize) {
       Object.values(product.stockBySize).forEach(qty => {
@@ -283,7 +281,6 @@ function renderMoreLikeThis(list) {
       });
     }
 
-    // CHECK VARIANT STOCK
     let variantStockTotal = 0;
     if (product.variants && product.variants.length > 0) {
       product.variants.forEach(variant => {
@@ -295,7 +292,6 @@ function renderMoreLikeThis(list) {
       });
     }
 
-    // SKIP IF TOTAL STOCK IS 0
     if (baseStockTotal + variantStockTotal === 0) {
       return;
     }
@@ -324,7 +320,6 @@ function renderMoreLikeThis(list) {
     `;
   });
 }
-
 
 // Make similar products clickable
 moreLikeThisContainer.addEventListener("click", e => {
@@ -365,6 +360,7 @@ addToCartBtn.addEventListener("click", async () => {
     };
   }
 
+  // DISCOUNT + DISCOUNTED PRICE
   const cartItem = {
     productId,
     name: product.name,
@@ -376,7 +372,14 @@ addToCartBtn.addEventListener("click", async () => {
     variantId: selectedVariant,
     variantName: selectedVariant
       ? product.variants.find(v => v._id === selectedVariant).variantName
-      : null
+      : null,
+
+    // NEW FIELDS
+    discount: product.discount || 0,
+    discountedPrice:
+      product.discount > 0
+        ? (product.price * (100 - product.discount)) / 100
+        : product.price
   };
 
   if (!user) {
@@ -416,10 +419,9 @@ addToCartBtn.addEventListener("click", async () => {
   }
 });
 
-
 const sliders = document.querySelectorAll(".products-wrapper");
-// Drag to scroll functionality
-   sliders.forEach((slider) => {
+
+sliders.forEach((slider) => {
   let isDragging = false;
   let startX;
   let scrollStart;

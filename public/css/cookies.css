@@ -10,7 +10,7 @@
   color: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  display: none; /* shown via JS if no consent cookie */
+  display: none; /* shown if no consent cookie */
   font-family: system-ui, sans-serif;
   z-index: 1000;
 }

@@ -27,6 +27,7 @@ router.get('/user/:customerId', async (req, res) => {
       });
     }
 
+    // subtotal uses discounted totalPrice
     const subtotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
     const shipping = subtotal > 0 ? 400000 : 0;
 
@@ -52,8 +53,10 @@ router.post('/add', async (req, res) => {
       name,
       unitPrice,
       image,
-      variantId,      //  NEW
-      variantName     //  NEW
+      variantId,
+      variantName,
+      discount,
+      discountedPrice
     } = req.body;
 
     let cart = await Cart.findOne({ customerId });
@@ -66,16 +69,21 @@ router.post('/add', async (req, res) => {
       });
     }
 
+    // FIX: use discounted price if discount exists
+    const finalUnitPrice = discount > 0 ? discountedPrice : unitPrice;
+
     cart.cartItems.push({
       productId,
       quantity,
       size,
       name,
       unitPrice,
-      totalPrice: unitPrice * quantity,
       image,
-      variantId: variantId || null,       //  SAVE VARIANT ID
-      variantName: variantName || null    //  SAVE VARIANT NAME
+      variantId: variantId || null,
+      variantName: variantName || null,
+      discount: discount || 0,
+      discountedPrice: discountedPrice || unitPrice,
+      totalPrice: finalUnitPrice * quantity
     });
 
     const subtotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
@@ -112,7 +120,10 @@ router.patch('/:customerId/item/:itemId', async (req, res) => {
 
     if (quantity !== undefined) {
       item.quantity = quantity;
-      item.totalPrice = item.unitPrice * quantity;
+
+      // FIX: recalc totalPrice using discounted price
+      const finalUnitPrice = item.discount > 0 ? item.discountedPrice : item.unitPrice;
+      item.totalPrice = finalUnitPrice * quantity;
     }
 
     if (size !== undefined) {
@@ -182,7 +193,7 @@ router.delete('/:customerId', async (req, res) => {
   }
 });
 
-/// MERGE CART (FOR LOGGED IN USERS)
+// MERGE CART (FOR LOGGED IN USERS)
 router.put('/merge/:customerId', async (req, res) => {
   try {
     const { customerId } = req.params;
@@ -202,9 +213,16 @@ router.put('/merge/:customerId', async (req, res) => {
       });
     }
 
-    cart.cartItems = cartItems;
+    // FIX: recalc totalPrice for merged items
+    cart.cartItems = cartItems.map(item => {
+      const finalUnitPrice = item.discount > 0 ? item.discountedPrice : item.unitPrice;
+      return {
+        ...item,
+        totalPrice: finalUnitPrice * item.quantity
+      };
+    });
 
-    cart.cartTotal = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    cart.cartTotal = cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
 
     await cart.save();
 

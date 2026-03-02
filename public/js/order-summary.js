@@ -1,7 +1,7 @@
 import { auth } from "./auth.js";
 import { startPayment } from "./paystack.js";
 import { API } from "./config/config.js";
-import {API_URL} from "./config/config.js";
+import { API_URL } from "./config/config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const orderItemsContainer = document.querySelector(".order-item-render");
@@ -30,50 +30,50 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      //  Store email for Paystack
       window.currentUserEmail = cart.customerDetails.email;
 
-      //  Totals
-      const totalInNaira = cart.cartTotal / 100;
+      //  Recompute subtotal from discounted prices
+      const subtotalInKobo = cart.cartItems.reduce((sum, item) => {
+        const hasDiscount = item.discount && item.discount > 0;
+        const unit = hasDiscount ? item.discountedPrice : item.unitPrice; 
+        return sum + unit * (item.quantity || 1);
+      }, 0);
+
+      //  Add shipping (₦4000 = 400000 kobo)
+      const shippingInKobo = 400000;
+
+      // Final total
+      const totalInKobo = subtotalInKobo + shippingInKobo;
+
+      // Display total
+      const totalInNaira = totalInKobo / 100;
       totalEl.textContent = `₦${formatter.format(totalInNaira)}`;
 
-      window.cartTotalInKobo = cart.cartTotal;
-      window.cartSubtotal = cart.subtotal;
-      window.cartShipping = cart.shipping;
-
-    //  console.log("Cart Total (kobo):", window.cartTotalInKobo);
+      // Save for Paystack
+      window.cartTotalInKobo = totalInKobo;
 
       renderOrderItems(cart.cartItems);
 
-      // CLICK HANDLER FOR PAY NOW BUTTON
-payBtn.addEventListener("click", () => {
-  // Load saved checkout info from checkout page
-  const checkoutInfo = JSON.parse(sessionStorage.getItem("checkout_info"));
+      payBtn.addEventListener("click", () => {
+        const checkoutInfo = JSON.parse(sessionStorage.getItem("checkout_info"));
 
-  if (!checkoutInfo) {
-    alert("Missing checkout info. Please go back to checkout.");
-    return;
-  }
+        if (!checkoutInfo) {
+          alert("Missing checkout info. Please go back to checkout.");
+          return;
+        }
 
-  // Save customerId for verify-payment
-  localStorage.setItem("customerId", user.uid);
+        localStorage.setItem("customerId", user.uid);
 
-  // Build final checkout details
-  const checkoutDetails = {
-    customerDetails: checkoutInfo,      
-    items: cart.cartItems,               
-    cartTotal: window.cartTotalInKobo    
-  };
+        const checkoutDetails = {
+          customerDetails: checkoutInfo,
+          items: cart.cartItems,
+          cartTotal: window.cartTotalInKobo
+        };
 
-  // Save for verify-payment
-  localStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
+        localStorage.setItem("checkoutDetails", JSON.stringify(checkoutDetails));
 
-  // Start Paystack
-  startPayment(window.currentUserEmail, window.cartTotalInKobo);
-});
-
-
-
+        startPayment(window.currentUserEmail, window.cartTotalInKobo);
+      });
 
     } catch (err) {
       console.error("Error loading order summary:", err);
@@ -88,6 +88,11 @@ payBtn.addEventListener("click", () => {
         ? item.image.url
         : `${API_URL}${item.image.url}`;
 
+      const hasDiscount = item.discount && item.discount > 0;
+      const finalNaira = hasDiscount
+        ? item.discountedPrice / 100
+        : item.unitPrice / 100;
+
       const html = `
         <div class="order-item">
           <img src="${imgURL}" alt="${item.name}">
@@ -98,7 +103,7 @@ payBtn.addEventListener("click", () => {
               Quantity: <span>${item.quantity}</span>
             </p>
           </div>
-          <span class="price">₦${formatter.format(item.unitPrice / 100)}</span>
+          <span class="price">₦${formatter.format(finalNaira)}</span>
         </div>
       `;
 

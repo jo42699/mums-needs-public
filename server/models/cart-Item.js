@@ -7,7 +7,6 @@ const CartItemSchema = new mongoose.Schema({
     required: true
   },
 
-  //  REQUIRED FOR VARIANT STOCK UPDATES
   variantId: {
     type: String,
     default: null
@@ -47,11 +46,21 @@ const CartItemSchema = new mongoose.Schema({
   totalPrice: {
     type: Number,
     required: true
+  },
+
+ 
+  discount: {
+    type: Number,
+    default: 0
+  },
+
+  discountedPrice: {
+    type: Number,
+    default: 0
   }
 });
 
 module.exports = CartItemSchema;
-
 
 
 // REQUIRED 

@@ -2,7 +2,6 @@ import { auth } from "./auth.js"; // Firebase Auth instance
 import { API } from "./config/config.js";
 import { API_URL } from "./config/config.js"; 
 
-
 // DOM ELEMENTS
 const cartContainer = document.getElementById("cartContainer");
 const cartItemsDiv = document.getElementById("cart-items");
@@ -81,6 +80,25 @@ function renderCart(items, isUserCart) {
       ? item.image.url
       : `${API_URL}${item.image.url}`;
 
+    // --- DISCOUNT CALCULATION ---
+    const hasDiscount = item.discount && item.discount > 0;
+    const originalNaira = item.unitPrice / 100;
+    const discountedNaira = hasDiscount
+      ? item.discountedPrice / 100
+      : originalNaira;
+
+    const priceHTML = hasDiscount
+      ? `
+        <p class="discounted-price">₦ ${formatter.format(discountedNaira)}</p>
+        <p class="original-price" style="text-decoration: line-through; color: red;">
+          ₦ ${formatter.format(originalNaira)}
+        </p>
+        <p class="discount-tag">${item.discount}% OFF</p>
+      `
+      : `
+        <span class="price">₦ ${formatter.format(originalNaira)}</span>
+      `;
+
     const itemHTML = `
       <div class="cart-item">
         <img src="${imgURL}" alt="${item.name}">
@@ -90,7 +108,8 @@ function renderCart(items, isUserCart) {
           ${item.variantName ? `<p>Variant: ${item.variantName}</p>` : ""}
           <p>Size: ${item.size}</p>
           <p>Quantity: <span>${item.quantity}</span></p>
-          <span class="price">₦ ${formatter.format(item.unitPrice / 100)}</span>
+
+          ${priceHTML}
         </div>
 
         <div class="item-actions">
@@ -120,10 +139,15 @@ function updateSummary(items) {
   addedtoCart.textContent = itemCount;
   checkoutCount.textContent = itemCount;
 
+  // --- DISCOUNT-AWARE SUBTOTAL ---
   const subtotal = items.reduce((sum, item) => {
-    const unitPrice = item.unitPrice ? item.unitPrice / 100 : 0;
-    const quantity = item.quantity || 1;
-    return sum + unitPrice * quantity;
+    const hasDiscount = item.discount && item.discount > 0;
+
+    const price = hasDiscount
+      ? item.discountedPrice / 100
+      : item.unitPrice / 100;
+
+    return sum + price * item.quantity;
   }, 0);
 
   const shipping = itemCount > 0 ? 4000 : 0;

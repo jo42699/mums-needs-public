@@ -110,7 +110,7 @@ router.post("/verify-payment", async (req, res) => {
     if (expectedTotal !== amountPaid) {
       return res.status(400).json({
         success: false,
-        message: "Amount mismatch — possible tampering"
+        message: "HAHA Wilson not today"
       });
     }
 

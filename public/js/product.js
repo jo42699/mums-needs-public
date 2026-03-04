@@ -43,7 +43,7 @@ async function loadProduct() {
 
     //  if base product is out of stock but variants exist
     if (baseStock === 0 && variantStock > 0) {
-      alert("The main product is out of stock. Please select a variant.");
+      alert("The main product is out of stock. Please select a variant");
     }
 
     // EXISTING: Alert + replace page if EVERYTHING is out of stock
@@ -368,7 +368,7 @@ addToCartBtn.addEventListener("click", async () => {
   const selectedSize = sizeSelect.value.trim();
   const quantity = parseInt(qtyInput.value);
 
-  // ALERT ALWAYS WORKS NOW
+  // ALERT IF NO SIZE SELECTED
   if (sizeSelect.selectedIndex === 0) {
     alert("Please select a size or option before adding to cart 😄 ");
     return;

@@ -1,5 +1,5 @@
 import { API } from "./config/config.js";
-import { API_URL } from "./config/config.js";
+import { API_URL } from "./config/config.js"; // NOT USED YET, BUT MAYBE LATER FOR IMAGE URLS OR OTHER ASSETS
 
 const apiURL = `${API}/product/`;
 const naira = new Intl.NumberFormat("en-NG");

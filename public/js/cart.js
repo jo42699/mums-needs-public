@@ -1,4 +1,4 @@
-import { auth } from "./auth.js"; // Firebase Auth instance
+import { auth } from "./auth.js"; 
 import { API } from "./config/config.js";
 import { API_URL } from "./config/config.js"; 
 
@@ -187,7 +187,7 @@ window.deleteCartItem = async function (itemId, isUserCart) {
   }
 };
 
-// MERGE GUEST CART → USER CART
+// MERGE GUEST CART TO USER CART
 export async function handleLoginMerge(userId) {
   try {
     const guestCart = JSON.parse(localStorage.getItem("guest_cart")) || [];

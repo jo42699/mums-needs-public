@@ -123,7 +123,7 @@ export async function startPayment(userEmail) {
      * Amount MUST be in kobo.
      */
     const handler = window.PaystackPop.setup({
-      key: "pk_test_f850fa31d213443914e7f3d9fd64cf33041379ce",
+      key: "$$$$$$$$$$$$$$$$$$$$$$$$", // Replace with your Paystack public key
       email: initData.email,
       amount: initData.finalAmount, // already in kobo
       reference: initData.reference, // your secure backend reference

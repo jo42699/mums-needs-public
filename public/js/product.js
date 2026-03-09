@@ -440,7 +440,7 @@ addToCartBtn.addEventListener("click", async () => {
       return;
     }
 
-    alert("Added to cart ! 🛒💖");
+    alert("Added to cart ! 🛒💖"); // EMOJI HERE
 
   } catch (err) {
     console.error("Error adding to cart:", err);
@@ -487,3 +487,11 @@ sliders.forEach((slider) => {
     }
   });
 });
+
+
+
+
+
+// The above code is for the product details page, handling variant selection, stock management, similar products, and adding to cart functionality.
+
+// This page is a bit too long, but I wanted to keep all product-related logic in one place for easier maintenance. The code is well-commented to explain each section's purpose. Let me know if you want me to break it down into smaller modules or files

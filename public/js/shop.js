@@ -1,5 +1,5 @@
 import { API } from "./config/config.js";
-import { API_URL } from "./config/config.js";
+import { API_URL } from "./config/config.js"; // Used for image URLs
 
 const container = document.getElementById('productContainer');
 const loader = document.getElementById('productLoader'); 

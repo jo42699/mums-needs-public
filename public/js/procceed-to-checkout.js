@@ -23,9 +23,9 @@ if (proceedBtn) {
 
       const cart = await res.json();
 
-      // Logged in BUT cart is empty → alert only
+      // Logged in BUT cart is empty alert only
       if (!cart || !cart.cartItems || cart.cartItems.length === 0) {
-        alert("Your cart is empty 🛍️");
+        alert("Your cart is empty 🛍️");  //EMOJI 
         return;
       }
 

@@ -13,9 +13,9 @@ import { API} from "./config/config.js";
 
 // Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyCsa7fMMu-ddRAsVK_CysTWzyyBexIjs4k",
-  authDomain: "mums-needs-b074d.firebaseapp.com",
-  projectId: "mums-needs-b074d",
+  apiKey: "##########################################",
+  authDomain: "###########################################",
+  projectId: "##########################################",
 };
 
 // Init

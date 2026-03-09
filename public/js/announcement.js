@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       console.log(data);
 
-      alert("Sections updated successfully  📢🚀");
+      alert("Sections updated successfully  📢🚀"); // EMOJI ;)
 
     } catch (err) {
       console.error(err);

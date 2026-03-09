@@ -10,14 +10,14 @@ if (form) {
 
     const user = auth.currentUser;
 
-    // 1. Must be logged in
+    //  Must be logged in
     if (!user) {
       alert("Please sign in to continue your checkout.");
       window.location.href = "/login.html";
       return;
     }
 
-    // 2. Fetch cart to ensure it's not empty
+    //  Fetch cart to ensure it's not empty
     let cart;
     try {
       const res = await fetch(`${API}/cartItems/user/${user.uid}`, {
@@ -35,7 +35,7 @@ if (form) {
       return;
     }
 
-    // 3. Collect checkout form data
+    //  Collect checkout form data
     const fullname = document.getElementById("fullname").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -46,7 +46,7 @@ if (form) {
       return;
     }
 
-    // 4. Build customerDetails object
+    //  Build customerDetails object
     const customerDetails = {
       name: fullname,
       email: email,
@@ -54,7 +54,7 @@ if (form) {
       phone: phone
     };
 
-    // 5. Update customer details in the cart
+    //  Update customer details in the cart
     try {
       await fetch(`${API}/cart/${cart._id}/customer`, {
         method: "PATCH",
@@ -66,13 +66,13 @@ if (form) {
       console.error("Error updating customer details:", err);
     }
 
-    // 6. Save checkout info locally
+    //  Save checkout info locally
     sessionStorage.setItem("checkout_info", JSON.stringify(customerDetails));
 
-    // 7. Save cartId for payment page
+    //  Save cartId for payment page
     sessionStorage.setItem("checkout_cartId", cart._id);
 
-    // 8. Redirect to final payment page
+    //  Redirect to final payment page
     window.location.href = "/order-summary.html";
   });
 }

@@ -11,13 +11,13 @@ import { API } from "./config/config.js";
 
 // Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyCsa7fMMu-ddRAsVK_CysTWzyyBexIjs4k",
-  authDomain: "mums-needs-b074d.firebaseapp.com",
-  projectId: "mums-needs-b074d",
-  storageBucket: "mums-needs-b074d.firebasestorage.app",
-  messagingSenderId: "537549708674",
-  appId: "1:537549708674:web:6543e06602bf369a82c39b",
-  measurementId: "G-NW1DMDXKYB"
+  apiKey: "##########################################",
+  authDomain: "###########################################",
+  projectId: "##########################################",
+  storageBucket: "#######################################3##",
+  messagingSenderId: "#########################################",
+  appId: "############################################",
+  measurementId: "###############"
 };
 
 // Init Firebase
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Firebase login
       const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-      //  Fresh ID token
+      //   ID token
       const idToken = await userCred.user.getIdToken(true);
 
       //  Send token to backend to create session cookie

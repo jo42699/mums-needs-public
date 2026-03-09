@@ -40,3 +40,7 @@ this page is for all the emojis i might use or already using
 👠 👡 👢 🥿 👞
 👟 🧥 🧢 🎩 👜
 👛 👝 🧳 💼 👓
+
+
+## COOKIES
+🍪 🍪🍪

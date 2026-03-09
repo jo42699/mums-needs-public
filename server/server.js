@@ -151,7 +151,7 @@ app.use((req, res) => {
 // Start server
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.DATABASE);
+    await mongoose.connect(process.env.DATABASE); // used async/await for better error handling
     console.log('DATABASE is connected');
 
     app.listen(PORT, () => {

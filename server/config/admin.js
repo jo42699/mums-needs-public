@@ -1,8 +1,9 @@
 // config/admins.js
 module.exports = {
   admins: [
-    "cXyXV9tQ71YVx2VhDKDpcmXAcds1",
-    "JJQWcf4CUkVeDt8qgCd7VilD1V62"
-   
+   process.env.ADMIN_UID
   ]
 };
+
+
+// PROBABLY NOT THE BEST WAY TO DO THIS, BUT IT WORKS FOR NOW. IN THE FUTURE, MAYBE ADD A PROPER USER MANAGEMENT SYSTEM WITH ROLES AND PERMISSIONS.

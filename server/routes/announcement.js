@@ -25,8 +25,8 @@ router.post("/", async (req, res) => {
     const { sections } = req.body;
 
     const updated = await Sections.findOneAndUpdate(
-      {},                 // find the only document
-      { sections },       // update the sections array
+      {},                 
+      { sections },       
       { upsert: true, new: true }
     );
 

@@ -6,7 +6,7 @@ const firebaseAuth = require("../middleware/firebaseAuth");
 const verifyAdmin = require("../middleware/verify-admin");
 
 
-// ADMIN CHECK (verifies session + UID admin)
+// ADMIN CHECK 
 
 router.get("/check", firebaseAuth, verifyAdmin, (req, res) => {
   res.json({
@@ -16,7 +16,7 @@ router.get("/check", firebaseAuth, verifyAdmin, (req, res) => {
 });
 
 
-// ADMIN-ONLY DATA EXAMPLE
+
 
 router.get("/data", firebaseAuth, verifyAdmin, (req, res) => {
   res.json({

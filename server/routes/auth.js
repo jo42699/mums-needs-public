@@ -103,10 +103,10 @@ So I finally figuured out the admin logic, its actually pretty simple. I will ju
 
 
 
-// if you hack into this file, just know that i am watching you.
+// if you hack me, just know that i am watching you.
 // and i will find you. 
 // and when i do, i will make you write "hello world" in every programming language known to man
-// and you are gay 
+
 
 
 

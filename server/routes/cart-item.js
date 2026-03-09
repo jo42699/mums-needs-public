@@ -69,7 +69,7 @@ router.post('/add', async (req, res) => {
       });
     }
 
-    // FIX: use discounted price if discount exists
+    // use discounted price if discount exists
     const finalUnitPrice = discount > 0 ? discountedPrice : unitPrice;
 
     cart.cartItems.push({
@@ -213,7 +213,7 @@ router.put('/merge/:customerId', async (req, res) => {
       });
     }
 
-    // FIX: recalc totalPrice for merged items
+    //  recalc totalPrice for merged items
     cart.cartItems = cartItems.map(item => {
       const finalUnitPrice = item.discount > 0 ? item.discountedPrice : item.unitPrice;
       return {

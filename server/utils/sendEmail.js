@@ -7,7 +7,7 @@ const sendEmail = async (to, subject, html) => {
       {
         sender: {
           name: "Mums Needs",
-          email: process.env.EMAIL_FROM, // your no-reply or verified email
+          email: process.env.EMAIL_FROM, 
         },
         to: [{ email: to }],
         subject,
@@ -15,7 +15,7 @@ const sendEmail = async (to, subject, html) => {
       },
       {
         headers: {
-          "api-key": process.env.BREVO_API_KEY, // NOT SMTP password
+          "api-key": process.env.BREVO_API_KEY, 
           "Content-Type": "application/json",
         },
       }

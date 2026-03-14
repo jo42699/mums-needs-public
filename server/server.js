@@ -46,11 +46,11 @@ app.use(cors({
 app.use(express.json());
 app.use(morgan('tiny'));
 
-// Disable COOP/COEP for local dev
+
 app.disable("crossOriginOpenerPolicy");
 app.disable("crossOriginEmbedderPolicy");
 
-// Helmet CSP (patched to allow Railway domain)
+// Helmet CSP 
 app.use(
   helmet.contentSecurityPolicy({
     directives: {

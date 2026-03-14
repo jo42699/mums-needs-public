@@ -5,11 +5,11 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Made%20With-Love-red?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Contributions-Welcome-blue?style=for-the-badge" />
+  
 </p>
 
 <p align="center">
-  A modern and responsive **E-Commerce Web Application** designed to provide a smooth online shopping experience with a clean UI, secure checkout, and powerful product management.
+  A modern and responsive E-Commerce Web Application designed to provide a smooth online shopping experience with a clean UI, secure checkout, and powerful product management.
 </p>
 
 ---
@@ -53,23 +53,18 @@
 
 ## 📂 Project Structure
 
+
 MumsNeeds
-│
 ├── frontend
-│ ├── components
-│ ├── pages
-│ └── styles
-│
+│   ├── components
+│   ├── pages
+│   └── styles
 ├── backend
-│ ├── routes
-│ ├── controllers
-│ └── models
-│
+│   ├── routes
+│   ├── controllers
+│   └── models
 ├── database
-│
 └── README.md
-
-
 
 ## 💡 Thoughts & Problems Overcome
 
